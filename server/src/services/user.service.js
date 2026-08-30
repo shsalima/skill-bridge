@@ -1,5 +1,6 @@
 import User from "../models/User.js"
 import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken"
 
 
 export const registerUser= async(userData)=>{
@@ -23,4 +24,30 @@ export const registerUser= async(userData)=>{
         dateNaissance
       })
       return utilisateur
+}
+
+export const loginUser= async(email, motDePasse)=>{
+
+  const utilisateur=await User.findOne({email})
+
+  if(!utilisateur){
+    throw new Error("email incorrect ")
+
+  }
+  const motDePasseCorrect=await bcrypt.compare(motDePasse,utilisateur.motDePasse)
+
+  if(!motDePasseCorrect){
+    throw new Error("mot de passe incorrect")
+  }
+
+  const token =jwt.sign(
+    {id:utilisateur._id,role:utilisateur.role},
+    process.env.JWT_SECRET,
+    {expiresIn:"1d"}
+  )
+  return {
+    utilisateur,
+    token
+  }
+
 }
