@@ -13,23 +13,35 @@ export const registerValidator=[
         .withMessage("L'adresse e-mail est obligatoire")
         .isEmail()
         .withMessage("L'adresse e-mail est invalide"),
-    body("motDePasse")
+        body("motDePasse")
         .notEmpty()
         .withMessage("Le mot de passe est obligatoire")
         .isLength({min:6})
         .withMessage("Le mot de passe doit contenir au moins 6 caractères"),
-    body("telephone")
+        body("telephone")
         .optional()
         .isMobilePhone()
         .withMessage("Le numéro de téléphone est invalide"),
-    body("role")
+        body("role")
         .optional()
         .isIn(["Candidat", "Entreprise", "Administrateur"])
         .withMessage("Le rôle est invalide"),
-    body("dateNaissance")
+        body("dateNaissance")
         .optional()
         .isISO8601()
         .withMessage("La date de naissance est invalide"),
-
-
+        
+        
+    ]
+    
+    
+    export const loginValidator =[
+        body("email")
+        .notEmpty()
+        .withMessage("L'adresse e-mail est obligatoire")
+        .isEmail()
+        .withMessage(" mettez une adresse email valide"),
+       body("motDePass")
+        .notEmpty()
+        .withMessage("Mot de passe requis")
 ]
