@@ -1,4 +1,4 @@
-import { loginUser, registerUser } from "../services/user.service.js"
+import { getUserProfileService, loginUser, registerUser } from "../services/user.service.js"
 
 
 export const register = async(req,res)=>{
@@ -40,3 +40,17 @@ export const login = async(req,res)=>{
 
 }
 
+export const getProfile= async (req,res)=>{
+    try{
+        const user=await getUserProfileService(req.user.id)
+        return res.status(200).json({
+            success:true,
+            data:user,
+        })
+    }catch(error){
+        return res.status(404).json({
+            success:false,
+            message:error.message
+        })
+    }
+}

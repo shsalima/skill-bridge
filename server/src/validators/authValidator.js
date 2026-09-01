@@ -41,7 +41,7 @@ export const registerValidator=[
         .withMessage("L'adresse e-mail est obligatoire")
         .isEmail()
         .withMessage(" mettez une adresse email valide"),
-       body("motDePass")
+       body("motDePasse")
         .notEmpty()
         .withMessage("Mot de passe requis")
 ]
