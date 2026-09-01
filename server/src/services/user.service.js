@@ -61,3 +61,21 @@ export const getUserProfileService=async (userId)=>{
   }
   return user
 }
+
+
+export const updateUserProfileService= async (userId,updateData)=>{
+  delete updateData.motDePasse
+  delete updateData.email
+
+  const updateUser= await User.findByIdAndUpdate(
+    userId,
+    {$set:updateData},
+    {new: true,runValidators:true}
+  ).select("-motDePasse")
+
+  if(!updateUser){
+    throw new Error("Utilisateur introuvable")
+
+  }
+  return updateUser
+}
