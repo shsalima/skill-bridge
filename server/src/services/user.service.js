@@ -64,8 +64,6 @@ export const getUserProfileService=async (userId)=>{
 
 
 export const updateUserProfileService= async (userId,updateData)=>{
-  delete updateData.motDePasse
-  delete updateData.email
 
   const updateUser= await User.findByIdAndUpdate(
     userId,

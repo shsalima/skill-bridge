@@ -58,7 +58,7 @@ export const getProfile= async (req,res)=>{
 
 export const updateProfile=async(req,res)=>{
     try{
-        const updateUser=await updateUserProfileService(req.user.id,body)
+        const updateUser=await updateUserProfileService(req.user.id,req.body)
         return res.status(200).json({
             success:true,
             message:"Profil mis à jour avec succès",
