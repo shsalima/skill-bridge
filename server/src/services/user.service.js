@@ -51,3 +51,13 @@ export const loginUser= async(email, motDePasse)=>{
   }
 
 }
+
+
+
+export const getUserProfileService=async (userId)=>{
+  const user= await User.findById(userId).select("-motDePasse")
+  if(!user){
+    throw new Error("Utilisateur introuvable")
+  }
+  return user
+}
