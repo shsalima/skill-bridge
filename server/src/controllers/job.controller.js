@@ -1,4 +1,4 @@
-import { createJobService } from "../services/job.services"
+import { createJobService } from "../services/job.services.js"
 
 
 export const createJob= async (req,res)=>{

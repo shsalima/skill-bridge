@@ -20,9 +20,9 @@ export const createJobValidator=[
     body("competencesRequises")
         .isArray({min:1})
         .withMessage("Au moins deux compétences doivent être incluses"),
-    body("dateLimite"
-        .isIS08601()
+    body("dateLimite")
+        .isISO8601()
         .withMessage("Date d'expiration de l'offre non valable")
-    )
+    
     
 ]
