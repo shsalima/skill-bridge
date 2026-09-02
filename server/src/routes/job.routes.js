@@ -7,6 +7,5 @@ import { authorizationCheck } from "../middleware/authorization.middleware.js";
 
 const router = express.Router();
 
-
 router.post("/",authentificationCheck,authorizationCheck("Entreprise"),createJobValidator,validate,createJob);
 export default router;
