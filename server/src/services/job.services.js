@@ -30,8 +30,8 @@ export const getAllJobsService =async (filters)=>{
     }
 
     const jobs=await Job.find(query)
-        .populate("entreprise", "nomPrenom nomEntreprise email photo telephone")
-        .sort({createAt: -1})
+        .populate("entreprise", "nom prenom email photo telephone")
+        .sort({createdAt: -1})
     return jobs
 
 }
