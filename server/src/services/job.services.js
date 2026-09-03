@@ -58,3 +58,13 @@ export const updateJobService= async (jobId,updateData)=>{
     return updateJob
 
 }
+
+
+export const deleteJobService =async(jobId)=>{
+    const job=await Job.findById(jobId)
+    if(!job){
+        throw new Error("Aucune offre d'emploi disponible")
+    }
+    await Job.findByIdAndDelete(jobId)
+    return true
+}

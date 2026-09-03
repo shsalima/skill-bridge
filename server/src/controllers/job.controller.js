@@ -1,4 +1,4 @@
-import { createJobService, getAllJobsService, getJobByIdServices, updateJobService } from "../services/job.services.js"
+import { createJobService, deleteJobService, getAllJobsService, getJobByIdServices, updateJobService } from "../services/job.services.js"
 
 
 export const createJob= async (req,res)=>{
@@ -62,6 +62,23 @@ export const updateJob= async(req,res)=>{
     }catch(error){
         return res.status(400).json({
             success:false,
+            message:error.message
+        })
+    }
+}
+
+
+
+export const deleteJob =async (req,res)=>{
+    try{
+        await deleteJobService(req.params.id)
+        return res.status(200).json({
+            success:true,
+            message:"L'offre a été supprimée avec succès."
+        })
+    }catch(error){
+        return res.status(400).json({
+            success:true,
             message:error.message
         })
     }

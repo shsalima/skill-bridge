@@ -2,7 +2,7 @@ import express from "express";
 import { authentificationCheck } from "../middleware/authentication.middleware.js";
 import { createJobValidator } from "../validators/jobValidator.js";
 import { validate } from "../middleware/validate.js";
-import { createJob, getAllJobs, getJobById, updateJob } from "../controllers/job.controller.js";
+import { createJob, deleteJob, getAllJobs, getJobById, updateJob } from "../controllers/job.controller.js";
 import { authorizationCheck } from "../middleware/authorization.middleware.js";
 import { checkJobOwnership } from "../middleware/checkJobOwnership.middleware.js";
 
@@ -21,4 +21,7 @@ router.post(
 );
 
 router.put("/:id",authentificationCheck,authorizationCheck("Entreprise"),checkJobOwnership,updateJob)
+
+router.delete("/:id",authentificationCheck,authorizationCheck("Entreprise", "Administrateur"),checkJobOwnership,deleteJob)
+
 export default router;
