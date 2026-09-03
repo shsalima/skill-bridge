@@ -41,11 +41,11 @@ const jobSechema= mongoose.Schema(
             ref:"User",
             required:true,
         },
-        status:{
-            type:String,
-            enum:["overte", "fermée"],
-            default:"ouverte"
-        }
+      statut: {
+      type: String,
+      enum: ["Ouverte", "Fermée"], 
+      default: "Ouverte",
+    },
     },
     {timestamps:true}
 )

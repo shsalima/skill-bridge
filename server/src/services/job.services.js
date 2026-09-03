@@ -8,3 +8,30 @@ export const createJobService= async (jobData,entrepriseId)=>{
     return newJob
 
 }
+
+
+export const getAllJobsService =async (filters)=>{
+    const query={statut:"Ouverte"}
+
+    if(filters.keyword){
+        query.$or=[
+            {tittre:{ $regex:filters.keyword,$options:"i"}},
+            {description:{$regex: filters.keyword, $options:"i"}}
+        ]
+    }
+    if(filters.ville){
+        query.ville={$regex:filters.ville, $options:"i"}
+    }
+    if(filters.domaine){
+        query.domaine={$regex:filters.domaine,$options:"i"}
+    }
+    if(filters.typeContrat){
+        query.typeContrat=filters.typeContrat
+    }
+
+    const jobs=await Job.find(query)
+        .populate("entreprise", "nomPrenom nomEntreprise email photo telephone")
+        .sort({createAt: -1})
+    return jobs
+
+}

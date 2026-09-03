@@ -1,4 +1,4 @@
-import { createJobService } from "../services/job.services.js"
+import { createJobService, getAllJobsService } from "../services/job.services.js"
 
 
 export const createJob= async (req,res)=>{
@@ -11,6 +11,22 @@ export const createJob= async (req,res)=>{
         })
     }catch(error){
         return res.status(400).json({
+            success:false,
+            message:error.message
+        })
+    }
+}
+
+export const getAllJobs= async(req,res)=>{
+    try{
+        const jobs=await getAllJobsService(req.query)
+        return res.status(200).json({
+            success:true,
+            count:jobs.length,
+            data:jobs
+        })
+    }catch(error){
+        return res.status(500).json({
             success:false,
             message:error.message
         })
