@@ -2,12 +2,13 @@ import express from "express";
 import { authentificationCheck } from "../middleware/authentication.middleware.js";
 import { createJobValidator } from "../validators/jobValidator.js";
 import { validate } from "../middleware/validate.js";
-import { createJob, getAllJobs } from "../controllers/job.controller.js";
+import { createJob, getAllJobs, getJobById } from "../controllers/job.controller.js";
 import { authorizationCheck } from "../middleware/authorization.middleware.js";
 
 const router = express.Router();
 
 router.get("/", getAllJobs);
+router.get("/:id",getJobById)
 
 router.post(
   "/",

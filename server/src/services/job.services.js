@@ -35,3 +35,16 @@ export const getAllJobsService =async (filters)=>{
     return jobs
 
 }
+
+
+export const getJobByIdServices =async (jobId)=>{
+    const job=await Job.findById(jobId).populate(
+        "entreprise",
+        "nom prenom email photo telephone"
+    )
+    
+    if(!job){
+        throw new Error("Aucune offre d'emploi disponible")
+    }
+    return job
+}
