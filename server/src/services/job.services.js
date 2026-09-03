@@ -48,3 +48,13 @@ export const getJobByIdServices =async (jobId)=>{
     }
     return job
 }
+
+export const updateJobService= async (jobId,updateData)=>{
+    const updateJob=await Job.findByIdAndUpdate(
+        jobId,
+        {$set:updateData},
+        {new:true, runValidators:true}
+    )
+    return updateJob
+
+}
