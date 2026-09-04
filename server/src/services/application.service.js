@@ -27,6 +27,16 @@ export const createCandidatureService = async (
     job: jobId,
     cv: cvToUse,
     lettreMotivation: applicationData.lettreMotivation || "",
-    scoreMatching: scoreMatching,
+    scoreMatching: scoreMatching
   });
-};
+}
+
+
+export const getMyApplicationsService=async(candidatId)=>{
+    return (await Application.find({candidat:candidatId}))
+        .populate({
+            path:"job",
+            populate:{path:"entreprise", select:"nom prenom nomEntreprise photo "}
+        })
+        .sort({createdAt: -1})
+}
