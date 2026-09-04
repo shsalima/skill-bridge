@@ -13,7 +13,7 @@ const applicationSchema=new mongoose.Schema(
             ref:"Job",
             required:true
         },
-        cvUrl:{
+        cv:{
             type:String,
             required:true
         },
@@ -34,7 +34,7 @@ const applicationSchema=new mongoose.Schema(
     {timestamps:true}
 )
 // Compound Unique Index
-applicationSchema.index({condidat:1, job:1}, {unique:true})
+applicationSchema.index({candidat:1, job:1}, {unique:true})
 
 
-export default mongoose.Model("Application",applicationSchema)
+export default mongoose.model("Application",applicationSchema)

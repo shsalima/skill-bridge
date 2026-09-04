@@ -77,7 +77,7 @@ export const deleteJob =async (req,res)=>{
             message:"L'offre a été supprimée avec succès."
         })
     }catch(error){
-        return res.status(400).json({
+        return res.status(500).json({
             success:true,
             message:error.message
         })
