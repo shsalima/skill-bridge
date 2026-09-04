@@ -33,7 +33,7 @@ export const createCandidatureService = async (
 
 
 export const getMyApplicationsService=async(candidatId)=>{
-    return (await Application.find({candidat:candidatId}))
+    return await Application.find({candidat:candidatId})
         .populate({
             path:"job",
             populate:{path:"entreprise", select:"nom prenom nomEntreprise photo "}

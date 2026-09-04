@@ -1,4 +1,4 @@
-import { createCandidatureService } from "../services/application.service.js"
+import { createCandidatureService, getMyApplicationsService } from "../services/application.service.js"
 
 
 export const applyToJob= async (req,res)=>{
@@ -10,6 +10,23 @@ export const applyToJob= async (req,res)=>{
             data:application
         })
     }catch(error){        
+        return res.status(500).json({
+            success:false,
+            message:error.message
+        })
+    }
+}
+
+
+export const getMyApplications=async(req,res)=>{
+    try{
+        const applications= await getMyApplicationsService(req.user.id)
+        return res.status(200).json({
+            success:true,
+            count: applications.length,
+            data:applications,
+        })
+    }catch(error){
         return res.status(500).json({
             success:false,
             message:error.message
