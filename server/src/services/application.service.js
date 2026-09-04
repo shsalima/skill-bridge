@@ -1,4 +1,5 @@
 import Application from "../models/Application.js";
+import Job from "../models/Job.js";
 import User from "../models/User.js";
 
 export const createCandidatureService = async (
@@ -39,4 +40,21 @@ export const getMyApplicationsService=async(candidatId)=>{
             populate:{path:"entreprise", select:"nom prenom nomEntreprise photo "}
         })
         .sort({createdAt: -1})
+}
+
+
+
+export const getApplicationsByJobService= async (jobId,entrepriseId)=>{
+    const job =await Job.findById(jobId)
+    if(!job){
+        throw new Error("Offre d'emploi introuvable")
+    }
+
+    if(job.entreprise.toString() !==entrepriseId){
+        throw new Error("Vous n'êtes pas autorisé à consulter les candidatures pour ce poste")
+    }
+
+    return await Application.find({job:jobId})
+        .populate("candidat","nom prenom email telephone photo competences cvUrl")
+        .sort({scoreMatchingy: -1,createdAt:-1})
 }
