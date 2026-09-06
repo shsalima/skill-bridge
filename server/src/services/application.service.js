@@ -1,6 +1,7 @@
 import Application from "../models/Application.js";
 import Job from "../models/Job.js";
 import User from "../models/User.js";
+import { createNotificationService } from "./notification.service.js";
 
 export const createCandidatureService = async (
   candidatId,
@@ -74,6 +75,13 @@ export const updateApplicationStatusService=async(applicationId,entrepriseId,new
     // console.log(application.statut)
     
     await application.save()
+
+    await createNotificationService(
+        application.candidat,
+        "Mise à jour de votre candidature",
+        `Votre candidature pour le poste ${application.job.titre} a été passée au statut : ${newStatus} `,
+        "Candidature"
+    )
 
     return application
 }

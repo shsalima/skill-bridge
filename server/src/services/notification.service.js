@@ -1,4 +1,4 @@
-import Notification from "../../models/Notification"
+import Notification from "../models/Notification"
 
 
 export const createNotificationService= async(destinataireId,titre,message,type="Candidature")=>{
