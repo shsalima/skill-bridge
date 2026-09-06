@@ -1,4 +1,4 @@
-import Notification from "../models/Notification"
+import Notification from "../models/Notification.js"
 
 
 export const createNotificationService= async(destinataireId,titre,message,type="Candidature")=>{
@@ -8,4 +8,10 @@ export const createNotificationService= async(destinataireId,titre,message,type=
         message,
         type
     })
+}
+
+export const getUserNotificationService= async(userId)=>{
+    return await Notification.find({
+        destinataire:userId
+    }).sort({createdAt:-1})
 }
