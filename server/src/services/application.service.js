@@ -58,3 +58,22 @@ export const getApplicationsByJobService= async (jobId,entrepriseId)=>{
         .populate("candidat","nom prenom email telephone photo competences cvUrl")
         .sort({scoreMatchingy: -1,createdAt:-1})
 }
+
+
+export const updateApplicationStatusService=async(applicationId,entrepriseId,newStatus)=>{
+    const application=await Application.findById(applicationId).populate("job")
+    if(!application){
+        throw new Error("Application introuvable")
+    }
+
+    if(application.job.entreprise.toString() !== entrepriseId){
+        throw new Error("Vous n'êtes pas autorisé à modifier l'état de cette demande")
+
+    }
+    application.statut=newStatus
+    // console.log(application.statut)
+    
+    await application.save()
+
+    return application
+}
