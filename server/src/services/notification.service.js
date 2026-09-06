@@ -15,3 +15,19 @@ export const getUserNotificationService= async(userId)=>{
         destinataire:userId
     }).sort({createdAt:-1})
 }
+
+
+export const markNotificationAsReadService=async(notificationId,userId)=>{
+    const notification=await Notification.findById(notificationId)
+    if(!notification){
+        throw new Error("Notification non trouvée")
+    }
+
+    if(notification.destinataire.toString() !== userId){
+        throw new Error("Non autorisé à modifier cette notification")
+
+    }
+    notification.lu=true
+    await notification.save()
+    return notification
+}
