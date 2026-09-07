@@ -1,5 +1,6 @@
 import Application from "../models/Application.js"
 import Job from "../models/Job.js"
+import User from "../models/User.js"
 
     // Dashboard Stats for Enterprise Owner
 export const getEntrepriseDashboardService= async(entrepriseId)=>{
@@ -23,4 +24,22 @@ export const getEntrepriseDashboardService= async(entrepriseId)=>{
         totalApplications,
         statusBreakdown: applicationsStatus
     }
+}
+
+// pout admin
+export const getAdminDashboardService =async ()=>{
+    const totalUser=await User.countDocuments()
+    const totalCandidats=await User.countDocuments({role:"Candidat"})
+    const totalEntreprise=await User.countDocuments({role:"Entreprise"})
+    const totalJobs=await Job.countDocuments()
+    const totalApplications=await Application.countDocuments()
+
+    return {
+        totalUser,
+        totalCandidats,
+        totalEntreprise,
+        totalJobs,
+        totalApplications
+    }
+
 }
