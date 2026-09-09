@@ -16,3 +16,10 @@ export const createReclamationService= async (userId,jobId,motif,description)=>{
         description
     })
 }
+
+export const getAllReclamationService=async()=>{
+    return await Reclamation.find()
+    .populate("auteur","nom prenom email role")
+    .populate("job","titre entreprise")
+    .sort({createdAt:-1})
+}

@@ -1,4 +1,4 @@
-import { createReclamationService } from "../services/reclamation.service.js"
+import { createReclamationService, getAllReclamationService } from "../services/reclamation.service.js"
 
   
 
@@ -18,4 +18,22 @@ import { createReclamationService } from "../services/reclamation.service.js"
             message:error.message
         })
     }
+  }
+
+
+  export const getAllReclamation=async (req,res)=>{
+    try{
+        const reclamation=await getAllReclamationService()
+        return res.status(200).json({
+            success:true,
+            count:reclamation.length,
+            data:reclamation
+        })
+    }catch(error){
+        return res.status(500).json({
+            success:false,
+            message:error.message
+        })
+    }
+
   }
