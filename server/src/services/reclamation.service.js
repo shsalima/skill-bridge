@@ -23,3 +23,18 @@ export const getAllReclamationService=async()=>{
     .populate("job","titre entreprise")
     .sort({createdAt:-1})
 }
+
+
+
+export const updateReclamationStatusService= async(reclamationId,statut)=>{
+    const reclamation=await Reclamation.findById(reclamationId)
+
+    if(!reclamation){
+       throw new Error("Réclamation non trouvée")
+
+    }
+
+    reclamation.statut=statut
+    await reclamation.save()
+    return reclamation
+}

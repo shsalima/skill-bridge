@@ -37,3 +37,21 @@ import { createReclamationService, getAllReclamationService } from "../services/
     }
 
   }
+
+
+  export const updateReclamationStatus=async(req,res)=>{
+    try{
+        const {statut}=req.body
+        const reclamation=await updateReclamationStatusService(req.params.id,statut)
+        return res.status(200).json({
+            success:true,
+            message:"Statut de la réclamation mis à jour avec succès",
+            data:reclamation
+        })
+    }catch(error){
+        return res.status(500).json({
+            success:false,
+            message:error.message
+        })
+    }
+  }
