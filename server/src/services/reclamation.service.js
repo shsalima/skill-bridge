@@ -1,5 +1,5 @@
-import Job from "../models/Job"
-import Reclamation from "../models/Reclamation"
+import Job from "../models/Job.js"
+import Reclamation from "../models/Reclamation.js"
 
 
 export const createReclamationService= async (userId,jobId,motif,description)=>{
