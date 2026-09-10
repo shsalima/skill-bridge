@@ -1,4 +1,4 @@
-import { createFormationService, deleteFormationService, getMyFormationsService } from "../services/formation.service"
+import { createFormationService, deleteFormationService, getMyFormationsService } from "../services/formation.service.js"
 
 
 export const  addFormation= async(req,res)=> {

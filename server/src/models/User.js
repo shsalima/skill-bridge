@@ -31,9 +31,7 @@ const userSchema= new mongoose.Schema(
             enum:["Candidat","Entreprise","Administrateur"],
             default:"Candidat",
         },
-        dateNaissance:{
-            type:Date,
-        },
+    
     },
     {
     timestamps:true,

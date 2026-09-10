@@ -6,6 +6,7 @@ import applications from "./routes/application.routes.js"
 import notifications from "./routes/notification.routes.js"
 import dashboard from "./routes/dashboard.routes.js"
 import reclamation from "./routes/reclamation.routes.js"
+import formations from "./routes/formation.routes.js"
 
 dns.setDefaultResultOrder("ipv4first");
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
@@ -19,6 +20,7 @@ app.use("/api/applications", applications);
 app.use("/api/notification",notifications)
 app.use("/api/dashboard",dashboard)
 app.use("/api/reclamation",reclamation)
+app.use("/formations",formations)
 
 
 app.get("/", (req, res) => {

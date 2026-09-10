@@ -1,4 +1,4 @@
-import Formation from "../models/Formation";
+import Formation from "../models/Formation.js";
 
 
 export const createFormationService=async(candidatId,formationData)=>{

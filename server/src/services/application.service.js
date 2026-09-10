@@ -9,14 +9,15 @@ export const createCandidatureService = async (
   applicationData,
 ) => {
   const candidat = await User.findById(candidatId);
+  const job = await Job.findById(jobId);
 
   let scoreMatching = 0;
-  if (jobId.competencesRequises && candidat.competences) {
+  if (job.competencesRequises && candidat.competences) {
     const matchedSkills = job.competencesRequises.filter((skill) =>
       candidat.competences.some((c) => c.toLowerCase() === skill.toLowerCase()),
     );
     scoreMatching = Math.round(
-      (matchedSkills.length / jobId.competencesRequises.length) * 100,
+      (matchedSkills.length / job.competencesRequises.length) * 100,
     );
   }
   const cvToUse = applicationData.cv || candidat.cvUrl;
