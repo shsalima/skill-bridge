@@ -1,4 +1,5 @@
 import Application from "../models/Application.js";
+import Competence from "../models/Competence.js";
 import Job from "../models/Job.js";
 import User from "../models/User.js";
 import { createNotificationService } from "./notification.service.js";
@@ -8,29 +9,34 @@ export const createCandidatureService = async (
   jobId,
   applicationData,
 ) => {
-  const candidat = await User.findById(candidatId);
   const job = await Job.findById(jobId);
+  if (!job){
+
+    throw new Error("Offre non trouvée.");
+  } 
+
+  const candidatSkillsDoc = await Competence.findOne({ candidat: candidatId });
+  const candidatSkills = candidatSkillsDoc ? candidatSkillsDoc.competences : [];
 
   let scoreMatching = 0;
-  if (job.competencesRequises && candidat.competences) {
-    const matchedSkills = job.competencesRequises.filter((skill) =>
-      candidat.competences.some((c) => c.toLowerCase() === skill.toLowerCase()),
+  const requiredSkills = job.competencesRequises || [];
+
+  if (requiredSkills.length >0 && candidatSkills.length>0) {
+    const matched = requiredSkills.filter((skill) =>
+      candidatSkills.some((c) => c.toLowerCase().trim() === skill.toLowerCase().trim()),
     );
-    scoreMatching = Math.round(
-      (matchedSkills.length / job.competencesRequises.length) * 100,
-    );
+    scoreMatching = Math.round((matched.length / requiredSkills.length) * 100,);
   }
-  const cvToUse = applicationData.cv || candidat.cvUrl;
-  if (!cvToUse) {
-    throw new Error("Veuillez fournir votre CV");
+  if (!applicationData.cv) {
+    throw new Error("Veuillez fournir votre CV pour postuler.");
   }
 
   return await Application.create({
     candidat: candidatId,
     job: jobId,
-    cv: cvToUse,
+    cv: applicationData.cv,
     lettreMotivation: applicationData.lettreMotivation || "",
-    scoreMatching: scoreMatching
+    scoreMatching,
   });
 }
 
