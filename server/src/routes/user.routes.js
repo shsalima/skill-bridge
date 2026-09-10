@@ -1,5 +1,5 @@
 import express from "express"
-import { getProfile, login, register, updateProfile } from "../controllers/user.controller.js"
+import { getProfile, login, logout, register, updateProfile } from "../controllers/user.controller.js"
 import { loginValidator, registerValidator } from "../validators/authValidator.js"
 import { validate } from "../middleware/validate.js"
 import { authentificationCheck } from "../middleware/authentication.middleware.js"
@@ -12,5 +12,7 @@ router.post("/login",loginValidator,validate,login)
 
 router.get("/profile",authentificationCheck,getProfile)
 router.put("/profile",authentificationCheck,preventRoleUpdate,updateProfile)
+
+router.post("/logout", authentificationCheck, logout);
 
 export default router 
