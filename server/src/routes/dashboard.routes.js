@@ -6,7 +6,7 @@ import { getAdminStats, getEntrepriseStats } from "../controllers/dashboard.cont
 
 const router = express.Router()
 
-router.get("/entreprise",authentificationCheck,authorizationCheck("Entreprise"),getEntrepriseStats)
+router.get("/entreprise",authentificationCheck,authorizationCheck("AdministrateurEntreprise"),getEntrepriseStats)
 
 router.get("/admin",authentificationCheck,authorizationCheck("Administrateur"),getAdminStats)
 

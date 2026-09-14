@@ -14,14 +14,14 @@ router.get("/:id",getJobById)
 router.post(
   "/",
   authentificationCheck,
-  authorizationCheck("Entreprise"),
+  authorizationCheck("AdministrateurEntreprise"),
   createJobValidator,
   validate,
   createJob,
 );
 
-router.put("/:id",authentificationCheck,authorizationCheck("Entreprise"),checkJobOwnership,updateJob)
+router.put("/:id",authentificationCheck,authorizationCheck("AdministrateurEntreprise"),checkJobOwnership,updateJob)
 
-router.delete("/:id",authentificationCheck,authorizationCheck("Entreprise", "Administrateur"),checkJobOwnership,deleteJob)
+router.delete("/:id",authentificationCheck,authorizationCheck("AdministrateurEntreprise", "Administrateur"),checkJobOwnership,deleteJob)
 
 export default router;

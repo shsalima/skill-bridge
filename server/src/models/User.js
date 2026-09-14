@@ -4,11 +4,11 @@ const userSchema= new mongoose.Schema(
     {
         nom:{
             type:String,
-            required:true,
+            
         },
         prenom:{
             type:String,
-            required:true,
+           
         },
         email:{
             type:String,
@@ -28,9 +28,13 @@ const userSchema= new mongoose.Schema(
         },
         role:{
             type:String,
-            enum:["Candidat","Entreprise","Administrateur"],
+            enum:["Candidat","AdministrateurEntreprise","Administrateur"],
             default:"Candidat",
         },
+     
+
+
+      
     
     },
     {

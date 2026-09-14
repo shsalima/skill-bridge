@@ -30,7 +30,7 @@ export const getEntrepriseDashboardService= async(entrepriseId)=>{
 export const getAdminDashboardService =async ()=>{
     const totalUser=await User.countDocuments()
     const totalCandidats=await User.countDocuments({role:"Candidat"})
-    const totalEntreprise=await User.countDocuments({role:"Entreprise"})
+    const totalEntreprise=await User.countDocuments({role:"AdministrateurEntreprise"})
     const totalJobs=await Job.countDocuments()
     const totalApplications=await Application.countDocuments()
 

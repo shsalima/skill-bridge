@@ -11,8 +11,8 @@ router.post("/apply/:jobId",authentificationCheck,authorizationCheck("Candidat")
 
 router.get("/my-applications",authentificationCheck,authorizationCheck("Candidat"),getMyApplications)
 
-router.get("/job/:jobId",authentificationCheck,authorizationCheck("Entreprise"),getApplicationsByJob)
+router.get("/job/:jobId",authentificationCheck,authorizationCheck("AdministrateurEntreprise"),getApplicationsByJob)
 
-router.patch("/:id/status",authentificationCheck,authorizationCheck("Entreprise"),updateApplicationStatus)
+router.patch("/:id/status",authentificationCheck,authorizationCheck("AdministrateurEntreprise"),updateApplicationStatus)
 
 export default router

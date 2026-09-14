@@ -15,26 +15,28 @@ const entrepriseSchema = new mongoose.Schema(
     },
     description: { 
         type: String,
-        required: true, 
-        trim: true 
+        trim: true ,
+        default:""
     },
     adresse: { 
         type: String, 
-        required: true, 
-        trim: true 
+        trim: true ,
+        default:""
     },
     ville: {
-         type: String, 
-         required: true, 
-         trim: true 
+        type: String, 
+        trim: true ,
+        default:""
     },
     siteWeb: { 
         type: String, 
-        trim: true 
+        trim: true ,
+        default:""
     },
     logo: { 
         type: String, 
-        trim: true 
+        trim: true ,
+        default:""
     },
     estBloquee: { 
         type: Boolean,

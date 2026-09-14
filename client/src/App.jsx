@@ -1,12 +1,14 @@
+import { BrowserRouter } from 'react-router'
 import './App.css'
+import AppRoutes from './routes/AppRoutes'
 
 function App() {
 
   return (
-    <>
-
-<h1 className="text-red-500 font-bold text-blue-500">SALIMA</h1>      
-    </>
+    <BrowserRouter>
+      <AppRoutes/>
+    </BrowserRouter>
+  
   )
 }
 

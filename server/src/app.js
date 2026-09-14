@@ -7,11 +7,15 @@ import notifications from "./routes/notification.routes.js"
 import dashboard from "./routes/dashboard.routes.js"
 import reclamation from "./routes/reclamation.routes.js"
 import formations from "./routes/formation.routes.js"
+import cors from "cors"
+
 
 dns.setDefaultResultOrder("ipv4first");
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
 const app = express();
+
+app.use(cors())
 
 app.use(express.json());
 app.use("/api/users", userRouter);

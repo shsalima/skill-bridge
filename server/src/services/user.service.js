@@ -1,30 +1,40 @@
 import User from "../models/User.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
+import Entreprise from "../models/Entreprise.js";
 
 
-export const registerUser= async(userData)=>{
-    const {nom, prenom, email, motDePasse,telephone, photo, role, dateNaissance }=userData
-     const utilisateurExiste= await User.findOne({email})
+export const registerUser = async (userData) => {
+  const { prenom, nom, email, motDePasse, telephone, role, nomEntreprise } = userData;
 
-     if(utilisateurExiste){
-        throw new Error("cette adresse mail est déjà utilisé")
+  const utilisateurExiste = await User.findOne({ email });
+  if (utilisateurExiste) {
+    throw new Error("Cette adresse mail est déjà utilisée");
+  }
 
-     }
+  const motDePasseChifre = await bcrypt.hash(motDePasse, 10);
 
-     const motDePasseChifre= await bcrypt.hash(motDePasse,10)
-      const utilisateur= await User.create({
-        nom,
-        prenom,
-        email,
-        motDePasse:motDePasseChifre,
-        telephone,
-        photo,
-        role,
-        dateNaissance
-      })
-      return utilisateur
-}
+  const utilisateur = await User.create({
+    nom: role === "Candidat" ? nom : undefined,
+    prenom: role === "Candidat" ? prenom : undefined,
+    email,
+    telephone,
+    motDePasse: motDePasseChifre,
+    role: role || "Candidat",
+  });
+
+  if (role === "AdministrateurEntreprise") {
+    await Entreprise.create({
+      user: utilisateur._id,
+      nomEntreprise: nomEntreprise || "Nouvelle Entreprise",
+    });
+  }
+
+  return utilisateur;
+};
+
+
+
 
 export const loginUser= async(email, motDePasse)=>{
 
