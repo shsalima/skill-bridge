@@ -15,8 +15,8 @@ export const registerUser = async (userData) => {
   const motDePasseChifre = await bcrypt.hash(motDePasse, 10);
 
   const utilisateur = await User.create({
-    nom: role === "Candidat" ? nom : undefined,
-    prenom: role === "Candidat" ? prenom : undefined,
+    nom: nom ,
+    prenom: prenom ,
     email,
     telephone,
     motDePasse: motDePasseChifre,
@@ -29,8 +29,16 @@ export const registerUser = async (userData) => {
       nomEntreprise: nomEntreprise || "Nouvelle Entreprise",
     });
   }
+   const token =jwt.sign(
+    {id:utilisateur._id,role:utilisateur.role},
+    process.env.JWT_SECRET,
+    {expiresIn:"1d"}
+  )
 
-  return utilisateur;
+   return {
+    utilisateur,
+    token
+  }
 };
 
 
@@ -38,7 +46,7 @@ export const registerUser = async (userData) => {
 
 export const loginUser= async(email, motDePasse)=>{
 
-  const utilisateur=await User.findOne({email})
+  const utilisateur=await User.findOne({email}).select("-motDePasse")
 
   if(!utilisateur){
     throw new Error("email incorrect ")

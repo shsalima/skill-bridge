@@ -1,18 +1,41 @@
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, Link } from 'react-router';
-import { loginUser, clearError } from '../features/auth/authSlice';
-import { Mail, Lock, Loader2, User, Building2, ShieldCheck } from 'lucide-react';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, Link } from "react-router"; // تأكدي من react-router-dom
+import { loginUser, clearError, getProfile } from "../features/auth/authSlice";
+import { Mail, Lock, Loader2, ArrowRight } from "lucide-react";
+import { useEffect } from "react";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    motDePasse: '',
+    email: "",
+    motDePasse: "",
   });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading, error, user, token } = useSelector((state) => state.auth);
+
+  console.log(token);
+
+  useEffect(() => {
+    if (token) {
+      if (user) {
+        const role = user?.role;
+
+        if (role === "AdministrateurEntreprise") {
+          navigate("/dashboard/entreprise");
+        } else if (role === "Candidat") {
+          navigate("/dashboard/candidat");
+        } else if ( role === "Administrateur") {
+          navigate("/dashboard/admin");
+        } else {
+          console.error("Role not recognized:", role);
+        }
+      } else {
+        dispatch(getProfile());
+      }
+    }
+  }, [dispatch, token, user]);
 
   const handleChange = (e) => {
     if (error) dispatch(clearError());
@@ -21,37 +44,27 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await dispatch(loginUser(formData));
-
-    if (loginUser.fulfilled.match(result)) {
-      navigate('/dashboard');
-    }
-  };
-
-  const handleQuickLogin = (email, password) => {
-    if (error) dispatch(clearError());
-    setFormData({ email, motDePasse: password });
-    dispatch(loginUser({ email, motDePasse: password })).then((result) => {
-      if (loginUser.fulfilled.match(result)) {
-        navigate('/dashboard');
-      }
-    });
+    dispatch(loginUser(formData));
   };
 
   return (
     <div className="min-h-screen bg-[#080C14] text-[#CAD5E2] flex flex-col justify-center items-center p-4">
       <div className="text-center mb-8">
         <div className="flex items-center justify-center gap-2 mb-3">
-          <div className="p-2 bg-[#00D5BE]/10 rounded-xl border border-[#00D5BE]/30 shadow-[0_0_15px_rgba(0,213,190,0.2)]">
+          <div className="p-2 bg-[#00D5BE]/10 rounded-lg border border-[#00D5BE]/30">
             <div className="w-6 h-6 border-2 border-[#00D5BE] rounded-sm rotate-45 flex items-center justify-center">
               <div className="w-2 h-2 bg-[#00D5BE] rounded-full" />
             </div>
           </div>
-          <span className="text-2xl font-bold tracking-tight text-white">SkillBridge</span>
+          <span className="text-2xl font-bold tracking-tight text-white">
+            SkillBridge
+          </span>
         </div>
-        <h1 className="text-2xl font-bold text-white mb-1">Connexion à votre espace</h1>
+        <h1 className="text-2xl font-bold text-white mb-1">
+          Connexion à SkillBridge
+        </h1>
         <p className="text-[#90A1B9] text-sm">
-          Accédez à vos opportunités Smart Matching et gérez vos candidatures.
+          Accédez à votre espace et retrouvez vos opportunités.
         </p>
       </div>
 
@@ -64,13 +77,15 @@ const Login = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-white mb-1.5">Adresse email</label>
+            <label className="block text-xs font-medium text-white mb-1.5">
+              Adresse email
+            </label>
             <div className="relative">
               <Mail className="w-4 h-4 text-[#90A1B9] absolute left-3.5 top-3" />
               <input
                 type="email"
                 name="email"
-                placeholder="nom@exemple.fr"
+                placeholder="salima.benali@exemple.fr"
                 value={formData.email}
                 onChange={handleChange}
                 className="w-full bg-[#080C14] border border-[#222F46] rounded-lg pl-10 pr-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#00D5BE] placeholder:text-[#62748E] transition-all"
@@ -80,13 +95,23 @@ const Login = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-white mb-1.5">Mot de passe</label>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="block text-xs font-medium text-white">
+                Mot de passe
+              </label>
+              <Link
+                to="/forgot-password"
+                className="text-xs text-[#00D5BE] hover:underline font-medium"
+              >
+                Mot de passe oublié ?
+              </Link>
+            </div>
             <div className="relative">
               <Lock className="w-4 h-4 text-[#90A1B9] absolute left-3.5 top-3" />
               <input
                 type="password"
                 name="motDePasse"
-                placeholder="••••••••"
+                placeholder="Votre mot de passe..."
                 value={formData.motDePasse}
                 onChange={handleChange}
                 className="w-full bg-[#080C14] border border-[#222F46] rounded-lg pl-10 pr-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-[#00D5BE] placeholder:text-[#62748E] transition-all"
@@ -95,20 +120,18 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between pt-1">
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="remember"
-                className="rounded bg-[#080C14] border-[#222F46] accent-[#00D5BE]"
-              />
-              <label htmlFor="remember" className="text-xs text-[#90A1B9] select-none cursor-pointer">
-                Se souvenir de moi
-              </label>
-            </div>
-            <Link to="/forgot-password" className="text-xs text-[#00D5BE] hover:underline font-medium">
-              Mot de passe oublié ?
-            </Link>
+          <div className="flex items-center gap-2 pt-1">
+            <input
+              type="checkbox"
+              id="remember"
+              className="rounded bg-[#080C14] border-[#222F46] accent-[#0075FF]"
+            />
+            <label
+              htmlFor="remember"
+              className="text-xs text-[#90A1B9] select-none cursor-pointer"
+            >
+              Se souvenir de moi
+            </label>
           </div>
 
           <button
@@ -119,60 +142,26 @@ const Login = () => {
             {loading ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                <span>Connexion...</span>
+                <span>Connexion en cours...</span>
               </>
             ) : (
-              <span>Se connecter</span>
+              <>
+                <span>Se connecter</span>
+                <ArrowRight className="w-4 h-4" />
+              </>
             )}
           </button>
-        </form>
 
-        {/* Separator */}
-        <div className="my-6 border-t border-[#222F46]/60" />
-
-        <div>
-          <p className="text-[10px] tracking-wider font-bold text-center text-[#90A1B9] uppercase mb-3">
-            ACCÈS DÉMO INSTANTANÉ (1 CLIC) :
+          <p className="text-center text-xs text-[#90A1B9] mt-6">
+            Vous n'avez pas encore de compte ?{" "}
+            <Link
+              to="/register"
+              className="text-[#00D5BE] hover:underline font-medium"
+            >
+              Créer un compte
+            </Link>
           </p>
-          <div className="grid grid-cols-3 gap-2">
-            <button
-              type="button"
-              onClick={() => handleQuickLogin('candidat@skillbridge.ma', '12345678')}
-              className="p-3 bg-[#080C14] border border-[#222F46] hover:border-[#00D5BE]/50 rounded-xl transition-all flex flex-col items-center justify-center group"
-            >
-              <User className="w-4 h-4 text-[#00D5BE] mb-1 group-hover:scale-110 transition-transform" />
-              <span className="text-xs font-semibold text-white">Candidat</span>
-              <span className="text-[10px] text-[#90A1B9]">Salima</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleQuickLogin('entreprise@skillbridge.ma', '12345678')}
-              className="p-3 bg-[#080C14] border border-[#222F46] hover:border-[#00D5BE]/50 rounded-xl transition-all flex flex-col items-center justify-center group"
-            >
-              <Building2 className="w-4 h-4 text-[#00D5BE] mb-1 group-hover:scale-110 transition-transform" />
-              <span className="text-xs font-semibold text-white">Entreprise</span>
-              <span className="text-[10px] text-[#90A1B9]">CloudScale</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleQuickLogin('admin@skillbridge.ma', '12345678')}
-              className="p-3 bg-[#080C14] border border-[#222F46] hover:border-[#00D5BE]/50 rounded-xl transition-all flex flex-col items-center justify-center group"
-            >
-              <ShieldCheck className="w-4 h-4 text-[#00D5BE] mb-1 group-hover:scale-110 transition-transform" />
-              <span className="text-xs font-semibold text-white">Admin</span>
-              <span className="text-[10px] text-[#90A1B9]">Marc D.</span>
-            </button>
-          </div>
-        </div>
-
-        <p className="text-center text-xs text-[#90A1B9] mt-6">
-          Pas encore de compte ?{' '}
-          <Link to="/register" className="text-[#00D5BE] hover:underline font-medium">
-            Créer un compte
-          </Link>
-        </p>
+        </form>
       </div>
     </div>
   );

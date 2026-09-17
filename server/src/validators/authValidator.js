@@ -2,11 +2,11 @@ import { body } from "express-validator";
 
 export const registerValidator = [
   body("nom")
-    .if((value, { req }) => req.body.role === "Candidat" || !req.body.role)
+    
     .notEmpty()
     .withMessage("Le nom est obligatoire"),
   body("prenom")
-    .if((value, { req }) => req.body.role === "Candidat" || !req.body.role)
+
     .notEmpty()
     .withMessage("Le prénom est obligatoire"),
   body("nomEntreprise")
