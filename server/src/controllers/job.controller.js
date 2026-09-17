@@ -1,8 +1,11 @@
+import { log } from "node:console"
 import { createJobService, deleteJobService, getAllJobsService, getJobByIdServices, updateJobService } from "../services/job.services.js"
 
 
 export const createJob= async (req,res)=>{
     try{
+        // console.log(req.user.id);
+        
         const job= await createJobService(req.body,req.user.id)
         return res.status(201).json({
             success:true,
