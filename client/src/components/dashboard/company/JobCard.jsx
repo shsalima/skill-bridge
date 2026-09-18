@@ -6,7 +6,6 @@ export const JobCard = ({ job, onViewPublic, onToggleStatus, onDelete }) => {
 
   return (
     <div className="bg-[#0D1322] border border-[#222F46] hover:border-[#00D5BE]/40 rounded-2xl p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition-all">
-      {/* Dynamic Metadata Section */}
       <div className="space-y-2 flex-1">
         <div className="flex items-center gap-3">
           <h3 
@@ -50,7 +49,6 @@ export const JobCard = ({ job, onViewPublic, onToggleStatus, onDelete }) => {
         </div>
       </div>
 
-      {/* Action Buttons */}
       <div className="flex items-center gap-2 self-end md:self-auto shrink-0">
         <button
           onClick={() => onViewPublic(job)}
@@ -71,10 +69,11 @@ export const JobCard = ({ job, onViewPublic, onToggleStatus, onDelete }) => {
         </button>
 
         <button 
-          onClick={() => onDelete && onDelete(job._id || job.id)}
-          className="bg-[#080C14] hover:bg-red-500/10 border border-[#222F46] hover:border-red-500/30 text-[#90A1B9] hover:text-red-400 p-2 rounded-xl transition-all"
-        >
-          <Trash2 className="w-4 h-4" />
+            onClick={() => onDelete && onDelete(job._id || job.id)}
+            className="bg-[#080C14] hover:bg-red-500/10 border border-[#222F46] hover:border-red-500/30 text-[#90A1B9] hover:text-red-400 p-2 rounded-xl transition-all"
+            title="Supprimer l'offre"
+            >
+            <Trash2 className="w-4 h-4" />
         </button>
       </div>
     </div>

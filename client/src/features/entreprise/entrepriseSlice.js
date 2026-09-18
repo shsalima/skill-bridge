@@ -1,88 +1,105 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../services/axiosInstance";
 
-
-
 export const getCompanyJobs = createAsyncThunk(
   "entreprise/getCompanyJobs",
-  async (_, { rejectWithValue }) => {
+  async (params, { rejectWithValue }) => {
     try {
-      const response = await api.get("/jobs");
-      return response.data; // Kireje3 [job1, job2, ...]
+      const response = await api.get("/jobs", { params: params });
+      return response; 
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Erreur lors du chargement des offres"
+        error.response?.data?.message || "Erreur lors du chargement des offres",
       );
     }
-  }
+  },
 );
-
-
 
 export const createJob = createAsyncThunk(
   "entreprise/createJob",
   async (jobData, { rejectWithValue }) => {
     try {
       const response = await api.post("/jobs", jobData);
-      return response.data; // kireje3 { message, job }
+      return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Erreur lors de la création de l'offre"
+        error.response?.data?.message ||
+          "Erreur lors de la création de l'offre",
       );
     }
-  }
+  },
 );
 
+export const deleteJob = createAsyncThunk(
+  "entreprise/deleteJob",
+  async (jobId, { rejectWithValue }) => {
+    try {
+      await api.delete(`/jobs/${jobId}`);
 
+      return jobId;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || "Erreur lors de la suppression",
+      );
+    }
+  },
+);
 
-
-const entrepriseSlice=createSlice({
-    name:"entreprise",
-    initialState:{
-        companyInfo: null,
-        jobs: [],
-        applications: [],
-        selectedJob: null, // للـ View/Edit Details
-        stats: {
-        activeJobs: 0,
-        totalApplications: 0,
-        acceptedCandidates: 0,
-        averageMatchScore: 0,
-        },
-        loading: false,
-        actionLoading: false, // Loading خاص بالأفعال السريعة (حذف/تعديل حالة)
-        error: null,
-        successMessage: null,
-        
-
+const entrepriseSlice = createSlice({
+  name: "entreprise",
+  initialState: {
+    companyInfo: null,
+    jobs: [],
+    totalJobs: 0,
+    ouverteJobs: 0,
+    fermelJobs: 0,
+    applications: [],
+    selectedJob: null,
+    stats: {
+      activeJobs: 0,
+      totalApplications: 0,
+      acceptedCandidates: 0,
+      averageMatchScore: 0,
     },
-    reducers:{
-        clearEntrepriseError:(state)=>{
-            state.error=null
-        },
-        clearSuccessMessage: (state) => {
-           state.successMessage = null;
-        },
-        setSelectedJob:(state,action)=>{
-            state.selectedJob=action.payload
-        }
+    loading: false,
+    actionLoading: false, 
+    error: null,
+    successMessage: null,
+    statut: "",
+  },
+  reducers: {
+    setStatut: (state, action) => {
+      state.statut = action.payload;
     },
-    extraReducers: (builder) => {
+    clearEntrepriseError: (state) => {
+      state.error = null;
+    },
+    clearSuccessMessage: (state) => {
+      state.successMessage = null;
+    },
+    setSelectedJob: (state, action) => {
+      state.selectedJob = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
     builder
-      // getCompanyJobs
+      // 
       .addCase(getCompanyJobs.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(getCompanyJobs.fulfilled, (state, action) => {
         state.loading = false;
-        state.jobs = action.payload;
+        state.jobs = action.payload.data;
+        state.totalJobs = action.payload.count;
+        state.ouverteJobs = action.payload.ouverteJobs;
+        state.fermelJobs = action.payload.fermelJobs;
       })
       .addCase(getCompanyJobs.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-    //   createJob
+      //   createJob
       .addCase(createJob.pending, (state) => {
         state.actionLoading = true;
         state.error = null;
@@ -98,7 +115,26 @@ const entrepriseSlice=createSlice({
         state.actionLoading = false;
         state.error = action.payload;
       })
-    }
-})
-export const { clearEntrepriseError, clearSuccessMessage, setSelectedJob } = entrepriseSlice.actions;
+      //   delete
+      .addCase(deleteJob.pending, (state) => {
+        state.actionLoading = true;
+        state.error = null;
+      })
+      .addCase(deleteJob.fulfilled, (state, action) => {
+        state.actionLoading = false;
+        state.jobs = state.jobs.filter((job) => job._id !== action.payload);
+        state.successMessage = "Offre supprimée avec succès";
+      })
+      .addCase(deleteJob.rejected, (state, action) => {
+        state.actionLoading = false;
+        state.error = action.payload;
+      });
+  },
+});
+export const {
+  setStatut,
+  clearEntrepriseError,
+  clearSuccessMessage,
+  setSelectedJob,
+} = entrepriseSlice.actions;
 export default entrepriseSlice.reducer;

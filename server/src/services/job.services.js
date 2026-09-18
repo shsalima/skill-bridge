@@ -1,70 +1,75 @@
-import Job from "../models/Job.js"
+import Job from "../models/Job.js";
 
-export const createJobService= async (jobData,entrepriseId)=>{
-    const newJob= await Job.create({
-        ...jobData,
-        entreprise:entrepriseId
-    })
-    return newJob
+export const createJobService = async (jobData, entrepriseId) => {
+  const newJob = await Job.create({
+    ...jobData,
+    entreprise: entrepriseId,
+  });
+  return newJob;
+};
 
-}
+export const getAllJobsService = async (filters) => {
+  console.log(filters);
 
+  // const query = { statut: "Ouverte" };
+  const query = {};
 
-export const getAllJobsService =async (filters)=>{
-    const query={statut:"Ouverte"}
+  if (filters.statut) {
+    query.statut = filters.statut;
+  }
 
-    if(filters.keyword){
-        query.$or=[
-            {tittre:{ $regex:filters.keyword,$options:"i"}},
-            {description:{$regex: filters.keyword, $options:"i"}}
-        ]
-    }
-    if(filters.ville){
-        query.ville={$regex:filters.ville, $options:"i"}
-    }
-    if(filters.domaine){
-        query.domaine={$regex:filters.domaine,$options:"i"}
-    }
-    if(filters.typeContrat){
-        query.typeContrat=filters.typeContrat
-    }
+  if (filters.keyword) {
+    query.$or = [
+      { tittre: { $regex: filters.keyword, $options: "i" } },
+      { description: { $regex: filters.keyword, $options: "i" } },
+    ];
+  }
+  if (filters.ville) {
+    query.ville = { $regex: filters.ville, $options: "i" };
+  }
+  if (filters.domaine) {
+    query.domaine = { $regex: filters.domaine, $options: "i" };
+  }
+  if (filters.typeContrat) {
+    query.typeContrat = filters.typeContrat;
+  }
 
-    const jobs=await Job.find(query)
-        .populate("entreprise", "nom prenom email photo telephone")
-        .sort({createdAt: -1})
-    return jobs
+  const totalJobs = await Job.countDocuments();
+  const ouverteJobs = await Job.countDocuments({ statut: "Ouverte" });
+  const fermelJobs = await Job.countDocuments({ statut: "Fermée" });
 
-}
+  const jobs = await Job.find(query)
+    .populate("entreprise", "nom prenom email photo telephone")
+    .sort({ createdAt: -1 });
+  return { jobs, totalJobs, ouverteJobs, fermelJobs };
+};
 
+export const getJobByIdServices = async (jobId) => {
+  const job = await Job.findById(jobId).populate(
+    "entreprise",
+    "nom prenom email photo telephone",
+  );
 
-export const getJobByIdServices =async (jobId)=>{
-    const job=await Job.findById(jobId).populate(
-        "entreprise",
-        "nom prenom email photo telephone"
-    )
-    
-    if(!job){
-        throw new Error("Aucune offre d'emploi disponible")
-    }
-    return job
-}
+  if (!job) {
+    throw new Error("Aucune offre d'emploi disponible");
+  }
+  return job;
+};
 
-export const updateJobService= async (jobId,updateData)=>{
-    const updateJob=await Job.findByIdAndUpdate(
-        jobId,
-        {$set:updateData},
-        {new:true, runValidators:true}
-    )
-    return updateJob
+export const updateJobService = async (jobId, updateData) => {
+  const updateJob = await Job.findByIdAndUpdate(
+    jobId,
+    { $set: updateData },
+    { new: true, runValidators: true },
+  );
+  return updateJob;
+};
 
-}
-
-
-export const deleteJobService =async(jobId)=>{
-    const job=await Job.findById(jobId)
-    if(!job){
-        throw new Error("Aucune offre d'emploi disponible")
-    }
-    await Job.findByIdAndDelete(jobId)
-    return true
-}
+export const deleteJobService = async (jobId) => {
+  const job = await Job.findById(jobId);
+  if (!job) {
+    throw new Error("Aucune offre d'emploi disponible");
+  }
+  await Job.findByIdAndDelete(jobId);
+  return true;
+};
