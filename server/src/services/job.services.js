@@ -78,3 +78,24 @@ export const deleteJobService = async (jobId) => {
   await Job.findByIdAndDelete(jobId);
   return true;
 };
+
+
+export const toggleJobStatusService = async (jobId, requestedStatut) => {
+  const job = await Job.findById(jobId);
+  if (!job) {
+    throw new Error("Aucune offre d'emploi disponible");
+  }
+
+  let nextStatut = requestedStatut;
+  if (!nextStatut) {
+    nextStatut = job.statut === "Ouverte" ? "Fermée" : "Ouverte";
+  }
+
+  if (!["Ouverte", "Fermée"].includes(nextStatut)) {
+    throw new Error("Statut invalide. Valeurs autorisées : Ouverte, Fermée.");
+  }
+
+  job.statut = nextStatut;
+  await job.save();
+  return job;
+};

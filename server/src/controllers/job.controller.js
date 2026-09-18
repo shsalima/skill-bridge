@@ -4,6 +4,7 @@ import {
   deleteJobService,
   getAllJobsService,
   getJobByIdServices,
+  toggleJobStatusService,
   updateJobService,
 } from "../services/job.services.js";
 
@@ -86,6 +87,26 @@ export const deleteJob = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       success: true,
+      message: error.message,
+    });
+  }
+};
+
+export const toggleJobStatus = async (req, res) => {
+  try {
+    const { statut } = req.body; // optionnel : "Ouverte" | "Fermée"
+    const job = await toggleJobStatusService(req.params.id, statut);
+    return res.status(200).json({
+      success: true,
+      message:
+        job.statut === "Fermée"
+          ? "L'offre a été clôturée avec succès."
+          : "L'offre a été réactivée avec succès.",
+      data: job,
+    });
+  } catch (error) {
+    return res.status(400).json({
+         success: false,
       message: error.message,
     });
   }

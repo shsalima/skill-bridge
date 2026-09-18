@@ -58,6 +58,21 @@ export const deleteJob = createAsyncThunk(
   },
 );
 
+export const toggleJobStatus = createAsyncThunk(
+  "entreprise/toggleJobStatus",
+  async ({ jobId, statut }, { rejectWithValue }) => {
+    try {
+      const response = await api.patch(`/jobs/${jobId}/status`, { statut });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message ||
+          "Erreur lors du changement de statut de l'offre",
+      );
+    }
+  },
+);
+
 const entrepriseSlice = createSlice({
   name: "entreprise",
   initialState: {
@@ -120,8 +135,18 @@ const entrepriseSlice = createSlice({
       })
       .addCase(createJob.fulfilled, (state, action) => {
         state.actionLoading = false;
-        if (action.payload.job) {
-          state.jobs.unshift(action.payload.job);
+        const createdJob = action.payload;
+        if (createdJob && createdJob._id) {
+          // n'ajouter dans la liste que si l'onglet actif accepte ce statut
+          if (!state.statut || state.statut === createdJob.statut) {
+            state.jobs.unshift(createdJob);
+          }
+          state.totalJobs += 1;
+          if (createdJob.statut === "Fermée") {
+            state.fermelJobs += 1;
+          } else {
+            state.ouverteJobs += 1;
+          }
         }
         state.successMessage = "Offre d'emploi créée avec succès!";
       })
@@ -157,7 +182,47 @@ const entrepriseSlice = createSlice({
       .addCase(deleteJob.rejected, (state, action) => {
         state.actionLoading = false;
         state.error = action.payload;
-      });
+      })
+      // update status offre
+      .addCase(toggleJobStatus.pending, (state) => {
+        state.actionLoading = true;
+        state.error = null;
+      })
+      .addCase(toggleJobStatus.fulfilled, (state, action) => {
+        state.actionLoading = false;
+        const updatedJob = action.payload;
+       state.jobs = state.jobs.map((job) =>
+          job._id === updatedJob._id ? { ...job, ...updatedJob } : job,
+        );
+
+        // 2. si un onglet de filtre est actif, retirer l'offre qui ne
+        // correspond plus au statut filtré (ex: onglet "Offres actives")
+        if (state.statut && state.statut !== updatedJob.statut) {
+          state.jobs = state.jobs.filter((job) => job._id !== updatedJob._id);
+        }
+         if (state.selectedJob && state.selectedJob._id === updatedJob._id) {
+          state.selectedJob = { ...state.selectedJob, ...updatedJob };
+        }
+
+        // 4. mise à jour des compteurs des onglets
+        if (updatedJob.statut === "Fermée") {
+          state.ouverteJobs = Math.max(0, state.ouverteJobs - 1);
+          state.fermelJobs += 1;
+        } else {
+          state.fermelJobs = Math.max(0, state.fermelJobs - 1);
+          state.ouverteJobs += 1;
+        }
+        state.successMessage =
+          updatedJob.statut === "Fermée"
+            ? "Offre clôturée avec succès"
+            : "Offre réactivée avec succès";
+      })
+      .addCase(toggleJobStatus.rejected, (state, action) => {
+      state.actionLoading = false;
+      state.error = action.payload;
+    });
+
+
   },
 });
 export const {

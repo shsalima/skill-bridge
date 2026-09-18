@@ -26,3 +26,10 @@ export const createJobValidator=[
     
     
 ]
+
+export const toggleJobStatusValidator=[
+    body("statut")
+        .optional()
+        .isIn(["Ouverte", "Fermée"])
+        .withMessage("Statut invalide. Valeurs autorisées : Ouverte, Fermée.")
+]

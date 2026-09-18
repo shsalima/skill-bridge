@@ -14,6 +14,9 @@ export const createCandidatureService = async (
 
     throw new Error("Offre non trouvée.");
   } 
+   if (job.statut === "Fermée") {
+    throw new Error("Cette offre est fermée et n'accepte plus de candidatures.");
+  }
 
   const candidatSkillsDoc = await Competence.findOne({ candidat: candidatId });
   const candidatSkills = candidatSkillsDoc ? candidatSkillsDoc.competences : [];
