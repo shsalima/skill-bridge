@@ -4,7 +4,15 @@ import { Navigate, Route, Routes } from "react-router";
 
 import Register from "../pages/Register";
 import Login from "../pages/Login";
-import CompanyDashboard from "../pages/CompanyDashboard"; 
+
+// Enterprise Layout & Pages
+import { CompanyLayout } from "../layouts/CompanyLayout";
+import { CompanyDashboardHome } from "../pages/entreprise/CompanyDashboardHome";
+import { CompanyJobsPage } from "../pages/entreprise/CompanyJobsPage";
+
+// Other Pages
+import { JobsListingPage } from "../pages/JobsListingPage";
+import { JobDetailsPage } from "../pages/JobDetailsPage";
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { token, user } = useSelector((state) => state.auth);
@@ -23,40 +31,42 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 const AppRoutes = () => {
   return (
     <Routes>
+      {/* Auth Routes */}
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
-
       <Route path="/" element={<Navigate to="/login" replace />} />
 
-      <Route
-        path="/dashboard/candidat"
-        element={
-          <ProtectedRoute allowedRoles={['Candidat']}>
-            <div className="min-h-screen bg-[#080C14] text-white p-8">
-              <h1 className="text-2xl font-bold text-[#00D5BE]">Espace Candidat</h1>
-            </div>
-          </ProtectedRoute>
-        }
-      />
-
+      {/* 🏢 Entreprise Dashboard Routes */}
       <Route
         path="/dashboard/entreprise"
         element={
           <ProtectedRoute allowedRoles={['AdministrateurEntreprise']}>
-            <CompanyDashboard />
+            <CompanyLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<CompanyDashboardHome />} />
+        <Route path="jobs" element={<CompanyJobsPage />} />
+      </Route>
+
+      {/* 👤 Candidate Route */}
+      <Route
+        path="/jobs"
+        element={
+          <ProtectedRoute allowedRoles={['Candidat']}>
+            <JobsListingPage />
           </ProtectedRoute>
         }
       />
 
-      <Route
-        path="/dashboard/admin"
+      {/* 📄 Job Details Page */}
+      <Route 
+        path="/jobs/:id" 
         element={
-          <ProtectedRoute allowedRoles={['Admin', 'Administrateur']}>
-            <div className="min-h-screen bg-[#080C14] text-white p-8">
-              <h1 className="text-2xl font-bold text-red-500">Panneau d'Administration</h1>
-            </div>
+          <ProtectedRoute allowedRoles={['Candidat', 'AdministrateurEntreprise']}>
+            <JobDetailsPage />
           </ProtectedRoute>
-        }
+        } 
       />
 
       <Route path="*" element={<Navigate to="/login" replace />} />

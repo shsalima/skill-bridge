@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { X, Briefcase, MapPin, Plus, AlertCircle, Calendar, Layers } from 'lucide-react';
-import { clearEntrepriseError, createJob } from '../../../features/entreprise/entrepriseSlice';
+import { clearEntrepriseError, createJob, getCompanyJobs } from '../../../features/entreprise/entrepriseSlice';
+import { useNavigate } from 'react-router';
 
 const initialFormState = {
   titre: '',
@@ -18,6 +19,7 @@ const initialFormState = {
 
 export const CreateJobModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   
   const entrepriseState = useSelector((state) => state.entreprise) || {};
   const { actionLoading: loading, error } = entrepriseState;
@@ -66,8 +68,10 @@ export const CreateJobModal = ({ isOpen, onClose }) => {
       const result = await dispatch(createJob(formData));
       
       if (createJob.fulfilled.match(result)) {
+        await dispatch(getCompanyJobs());
         resetForm(); 
-        onClose();   
+        onClose();  
+        navigate('/dashboard/entreprise/jobs'); 
       }
     }
   };
