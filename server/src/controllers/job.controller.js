@@ -46,10 +46,11 @@ export const getAllJobs = async (req, res) => {
 
 export const getJobById = async (req, res) => {
   try {
-    const job = await getJobByIdServices(req.params.id);
+    const { job, entreprise } = await getJobByIdServices(req.params.id);
     return res.status(200).json({
       success: true,
       data: job,
+      entreprise,
     });
   } catch (error) {
     return res.status(404).json({

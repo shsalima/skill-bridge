@@ -1,15 +1,17 @@
 import React from 'react';
 import { ExternalLink, Power, Trash2, Users, Eye } from 'lucide-react';
+import { useNavigate } from 'react-router';
 
 export const JobCard = ({ job, onViewPublic, onToggleStatus, onDelete }) => {
-  const isClosed = job.statut === 'Clôturée';
+  const isClosed = job.statut === 'Fermée';
+  const navigate = useNavigate();
 
   return (
     <div className="bg-[#0D1322] border border-[#222F46] hover:border-[#00D5BE]/40 rounded-2xl p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition-all">
       <div className="space-y-2 flex-1">
         <div className="flex items-center gap-3">
           <h3 
-            onClick={() => onViewPublic(job)}
+            onClick={() => navigate(`/jobs/${job._id}`)}
             className="text-base font-bold text-white hover:text-[#00D5BE] transition-colors cursor-pointer"
           >
             {job.titre}

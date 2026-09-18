@@ -1,4 +1,5 @@
 import Job from "../models/Job.js";
+import Entreprise from "../models/Entreprise.js";
 
 export const createJobService = async (jobData, entrepriseId) => {
   const newJob = await Job.create({
@@ -50,10 +51,14 @@ export const getJobByIdServices = async (jobId) => {
     "nom prenom email photo telephone",
   );
 
+  const entreprise = await Entreprise.findOne({
+    user: job.entreprise._id,
+  });
+
   if (!job) {
     throw new Error("Aucune offre d'emploi disponible");
   }
-  return job;
+  return { job, entreprise };
 };
 
 export const updateJobService = async (jobId, updateData) => {

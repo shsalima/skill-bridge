@@ -6,7 +6,7 @@ export const getCompanyJobs = createAsyncThunk(
   async (params, { rejectWithValue }) => {
     try {
       const response = await api.get("/jobs", { params: params });
-      return response; 
+      return response;
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || "Erreur lors du chargement des offres",
@@ -25,6 +25,19 @@ export const createJob = createAsyncThunk(
       return rejectWithValue(
         error.response?.data?.message ||
           "Erreur lors de la création de l'offre",
+      );
+    }
+  },
+);
+export const getJobById = createAsyncThunk(
+  "entreprise/getJobById",
+  async (jobId, { rejectWithValue }) => {
+    try {
+      const response = await api.get(`/jobs/${jobId}`);
+      return response;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || "Erreur de chargement de l'offre",
       );
     }
   },
@@ -55,6 +68,7 @@ const entrepriseSlice = createSlice({
     fermelJobs: 0,
     applications: [],
     selectedJob: null,
+    selectedJobEntreprise: null,
     stats: {
       activeJobs: 0,
       totalApplications: 0,
@@ -62,7 +76,7 @@ const entrepriseSlice = createSlice({
       averageMatchScore: 0,
     },
     loading: false,
-    actionLoading: false, 
+    actionLoading: false,
     error: null,
     successMessage: null,
     statut: "",
@@ -83,7 +97,7 @@ const entrepriseSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // 
+      //
       .addCase(getCompanyJobs.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -113,6 +127,21 @@ const entrepriseSlice = createSlice({
       })
       .addCase(createJob.rejected, (state, action) => {
         state.actionLoading = false;
+        state.error = action.payload;
+      })
+      // afficher_id
+      .addCase(getJobById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getJobById.fulfilled, (state, action) => {
+        state.loading = false;
+
+        state.selectedJob = action.payload.data;
+        state.selectedJobEntreprise = action.payload.entreprise;
+      })
+      .addCase(getJobById.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.payload;
       })
       //   delete

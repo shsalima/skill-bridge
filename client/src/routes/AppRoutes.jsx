@@ -11,8 +11,7 @@ import { CompanyDashboardHome } from "../pages/entreprise/CompanyDashboardHome";
 import { CompanyJobsPage } from "../pages/entreprise/CompanyJobsPage";
 
 // Other Pages
-import { JobsListingPage } from "../pages/JobsListingPage";
-import { JobDetailsPage } from "../pages/JobDetailsPage";
+import { JobDetailsPage } from "../pages/entreprise/JobDetailsPage";
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { token, user } = useSelector((state) => state.auth);
@@ -54,7 +53,7 @@ const AppRoutes = () => {
         path="/jobs"
         element={
           <ProtectedRoute allowedRoles={['Candidat']}>
-            <JobsListingPage />
+        
           </ProtectedRoute>
         }
       />
