@@ -1,4 +1,13 @@
-import { getUserProfileService, loginUser, registerUser, updateUserProfileService } from "../services/user.service.js"
+import {
+  getUserProfileService,
+  loginUser,
+  registerUser,
+  updateUserProfileService,
+  getAllUsersService,
+  deleteUserService,
+  getAllCompaniesService,
+  toggleBlockCompanyService,
+} from "../services/user.service.js"
 
 
 export const register = async(req,res)=>{
@@ -89,5 +98,58 @@ export const logout = async (req, res) => {
          success: false, 
          message: error.message
      });
+  }
+};
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await getAllUsersService();
+    return res.status(200).json({
+      success: true,
+      count: users.length,
+      data: users,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  try {
+    await deleteUserService(req.params.id);
+    return res.status(200).json({
+      success: true,
+      message: "Utilisateur supprimé avec succès",
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const getAllCompanies = async (req, res) => {
+  try {
+    const companies = await getAllCompaniesService();
+    return res.status(200).json({
+      success: true,
+      count: companies.length,
+      data: companies,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const toggleBlockCompany = async (req, res) => {
+  try {
+    const company = await toggleBlockCompanyService(req.params.id);
+    return res.status(200).json({
+      success: true,
+      message: company.estBloquee
+        ? "Entreprise bloquée avec succès"
+        : "Entreprise débloquée avec succès",
+      data: company,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
   }
 };

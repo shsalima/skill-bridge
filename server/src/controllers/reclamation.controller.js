@@ -1,4 +1,8 @@
-import { createReclamationService, getAllReclamationService } from "../services/reclamation.service.js"
+import {
+  createReclamationService,
+  getAllReclamationService,
+  updateReclamationStatusService,
+} from "../services/reclamation.service.js"
 
   
 

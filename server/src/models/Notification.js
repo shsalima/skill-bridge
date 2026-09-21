@@ -23,8 +23,12 @@ const notificationSchema=new mongoose.Schema(
         },
         type:{
             type:String,
-            enum:["Candidature", "Offre", "Systeme"],
+            enum:["Candidature", "Offre", "Systeme", "Reclamation"],
             default:"Candidature",
+        },
+        lien: {
+            type: String,
+            default: ""
         }
     },
     {timestamps:true}

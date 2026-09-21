@@ -1,12 +1,13 @@
 import Notification from "../models/Notification.js"
 
 
-export const createNotificationService= async(destinataireId,titre,message,type="Candidature")=>{
+export const createNotificationService= async(destinataireId,titre,message,type="Candidature", lien="")=>{
     return await Notification.create({
         destinataire:destinataireId,
         titre,
         message,
-        type
+        type,
+        lien
     })
 }
 

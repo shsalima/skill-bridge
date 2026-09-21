@@ -21,7 +21,7 @@ export const getAllJobsService = async (filters) => {
 
   if (filters.keyword) {
     query.$or = [
-      { tittre: { $regex: filters.keyword, $options: "i" } },
+      { titre: { $regex: filters.keyword, $options: "i" } },
       { description: { $regex: filters.keyword, $options: "i" } },
     ];
   }
@@ -51,13 +51,14 @@ export const getJobByIdServices = async (jobId) => {
     "nom prenom email photo telephone",
   );
 
+  if (!job) {
+    throw new Error("Aucune offre d'emploi disponible");
+  }
+
   const entreprise = await Entreprise.findOne({
     user: job.entreprise._id,
   });
 
-  if (!job) {
-    throw new Error("Aucune offre d'emploi disponible");
-  }
   return { job, entreprise };
 };
 

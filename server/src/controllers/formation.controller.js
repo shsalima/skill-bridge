@@ -3,7 +3,8 @@ import { createFormationService, deleteFormationService, getMyFormationsService 
 
 export const  addFormation= async(req,res)=> {
     try {
-        const formation =await createFormationService(req.user._id,req.body)
+        const userId = req.user.id || req.user._id;
+        const formation =await createFormationService(userId,req.body)
         res.status(201).json({
             success:true,
             message:"Formation ajoutée avec succès",
@@ -21,7 +22,8 @@ export const  addFormation= async(req,res)=> {
 
 export const getMyFormations= async(req,res)=> {
     try {
-        const formations =await getMyFormationsService(req.user._id)
+        const userId = req.user.id || req.user._id;
+        const formations =await getMyFormationsService(userId)
         res.status(200).json({
             success:true,
             count:formations.length,
@@ -38,7 +40,8 @@ export const getMyFormations= async(req,res)=> {
 
 export const deleteFormation= async(req,res)=> {
     try {
-        const formation =await deleteFormationService(req.params.id,req.user._id)
+        const userId = req.user.id || req.user._id;
+        const formation =await deleteFormationService(req.params.id,userId)
         res.status(200).json({
             success:true,
             message:"Formation supprimée avec succès",

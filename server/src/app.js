@@ -7,6 +7,7 @@ import notifications from "./routes/notification.routes.js"
 import dashboard from "./routes/dashboard.routes.js"
 import reclamation from "./routes/reclamation.routes.js"
 import formations from "./routes/formation.routes.js"
+import savedJobs from "./routes/savedJob.routes.js"
 import cors from "cors"
 
 
@@ -24,7 +25,8 @@ app.use("/api/applications", applications);
 app.use("/api/notification",notifications)
 app.use("/api/dashboard",dashboard)
 app.use("/api/reclamation",reclamation)
-app.use("/formations",formations)
+app.use("/api/formations",formations)
+app.use("/api/saved-jobs",savedJobs)
 
 
 app.get("/", (req, res) => {

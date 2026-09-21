@@ -24,11 +24,23 @@ export const createCandidatureService = async (
   let scoreMatching = 0;
   const requiredSkills = job.competencesRequises || [];
 
-  if (requiredSkills.length >0 && candidatSkills.length>0) {
-    const matched = requiredSkills.filter((skill) =>
-      candidatSkills.some((c) => c.toLowerCase().trim() === skill.toLowerCase().trim()),
-    );
-    scoreMatching = Math.round((matched.length / requiredSkills.length) * 100,);
+  const normalize = (s) =>
+    String(s || "")
+      .toLowerCase()
+      .replace(/\.(js|ts)$/i, "")
+      .replace(/[^a-z0-9]/g, "");
+
+  const normalizedCandidat = candidatSkills.map(normalize).filter(Boolean);
+
+  if (requiredSkills.length > 0 && normalizedCandidat.length > 0) {
+    const matched = requiredSkills.filter((req) => {
+      const normReq = normalize(req);
+      if (!normReq) return false;
+      return normalizedCandidat.some(
+        (cand) => cand === normReq || cand.includes(normReq) || normReq.includes(cand)
+      );
+    });
+    scoreMatching = Math.round((matched.length / requiredSkills.length) * 100);
   }
   if (!applicationData.cv) {
     throw new Error("Veuillez fournir votre CV pour postuler.");
@@ -67,7 +79,7 @@ export const getApplicationsByJobService= async (jobId,entrepriseId)=>{
 
     return await Application.find({job:jobId})
         .populate("candidat","nom prenom email telephone photo competences cvUrl")
-        .sort({scoreMatchingy: -1,createdAt:-1})
+        .sort({scoreMatching: -1,createdAt:-1})
 }
 
 

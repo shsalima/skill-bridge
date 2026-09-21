@@ -29,7 +29,7 @@ export const registerValidator = [
     .withMessage("Le numéro de téléphone est invalide"),
   body("role")
     .optional()
-    .isIn(["Candidat", "AdministrateurEntreprise", "Administrateur"])
+    .isIn(["Candidat", "AdministrateurEntreprise", "Administrateur", "Entreprise"])
     .withMessage("Le rôle est invalide"),
   body("dateNaissance")
     .optional()

@@ -26,6 +26,9 @@ const userSchema= new mongoose.Schema(
         photo: {
           type: String,
         },
+        cvUrl: {
+          type: String,
+        },
         role:{
             type:String,
             enum:["Candidat","AdministrateurEntreprise","Administrateur"],

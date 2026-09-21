@@ -8,7 +8,7 @@ const formationSchema = new mongoose.Schema(
             ref:"User",
             required:true,
         },
-        diplome:{
+        titre:{
             type:String,
             required:true,
             trim:true
@@ -18,18 +18,17 @@ const formationSchema = new mongoose.Schema(
             required:true,
             trim:true
         },
-        specialite:{
+        anneeDebut:{
             type:String,
-            required:true,
             trim:true
         },
-        dateDebut:{
-            type:Date,
-            required:true,
+        anneeFin:{
+            type:String,
+            trim:true
         },
-        dateFin:{
-            type:Date,
-            required:true,      
+        description:{
+            type:String,
+            trim:true
         }
     },
     {timestamps:true}

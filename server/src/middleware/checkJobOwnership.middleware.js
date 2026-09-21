@@ -15,7 +15,7 @@ export const checkJobOwnership = async (req, res, next) => {
       });
     }
 
-    if (job.entreprise.toString() !== userId) {
+    if (userRole !== "Administrateur" && job.entreprise.toString() !== userId) {
       return res.status(403).json({
         success: false,
         message:
