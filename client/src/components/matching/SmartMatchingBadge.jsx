@@ -1,7 +1,7 @@
 import React from "react";
 import { Sparkles } from "lucide-react";
 
-export const SmartMatchingBadge = ({ score = 0, size = "md", showIcon = true }) => {
+export const SmartMatchingBadge = ({ score = 0, size = "md" }) => {
   const getColors = (val) => {
     if (val >= 75) {
       return {
@@ -37,7 +37,7 @@ export const SmartMatchingBadge = ({ score = 0, size = "md", showIcon = true }) 
       <span
         className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold border ${colors.bg} ${colors.border} ${colors.text} ${colors.glow}`}
       >
-        {showIcon && <Sparkles className="w-3 h-3" />}
+        {/* {showIcon && <Sparkles className="w-3 h-3" />} */}
         {score}% Match
       </span>
     );
@@ -57,7 +57,7 @@ export const SmartMatchingBadge = ({ score = 0, size = "md", showIcon = true }) 
     <span
       className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold border ${colors.bg} ${colors.border} ${colors.text} ${colors.glow}`}
     >
-      {showIcon && <Sparkles className="w-3.5 h-3.5" />}
+      {/* {showIcon} */}
       <span>{score}% Compatibilité</span>
     </span>
   );

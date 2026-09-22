@@ -6,6 +6,7 @@ import { User, Mail, Phone, Lock, ArrowRight, Sparkles } from "lucide-react";
 import Button from "../../components/common/Button";
 
 export const RegisterCandidat = () => {
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error, token, user } = useSelector((state) => state.auth);
@@ -19,10 +20,10 @@ export const RegisterCandidat = () => {
   });
 
   useEffect(() => {
-    if (token && user) {
+    if (token) {
       navigate("/candidat/dashboard");
     }
-  }, [token, user, navigate]);
+  }, [token, navigate]);
 
   const handleChange = (e) => {
     if (error) dispatch(clearError());

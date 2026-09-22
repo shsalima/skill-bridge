@@ -20,10 +20,10 @@ export const RegisterEntreprise = () => {
   });
 
   useEffect(() => {
-    if (token && user) {
+    if (token ) {
       navigate("/entreprise/dashboard");
     }
-  }, [token, user, navigate]);
+  }, [token, navigate]);
 
   const handleChange = (e) => {
     if (error) dispatch(clearError());

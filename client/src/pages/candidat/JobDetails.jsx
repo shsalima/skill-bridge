@@ -40,11 +40,7 @@ export const JobDetails = () => {
   const { selectedJob, selectedJobEntreprise, loading: jobLoading } = useSelector(
     (state) => state.offres
   );
-  const {
-    myApplications,
-    actionLoading: applying,
-    successMessage: applySuccess,
-    error: applyError,
+  const {myApplications,actionLoading: applying,successMessage: applySuccess, error: applyError,
   } = useSelector((state) => state.candidatures);
 
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
@@ -76,11 +72,7 @@ export const JobDetails = () => {
   }, [dispatch, id]);
 
   const candidateSkills = user?.competences || user?.skills || [];
-  const requiredSkills =
-    selectedJob?.competencesRequises ||
-    selectedJob?.skillsRequired ||
-    selectedJob?.competences ||
-    [];
+  const requiredSkills =selectedJob?.competencesRequises ||selectedJob?.skillsRequired ||selectedJob?.competences ||[];
   const matchScore = calculateMatchScore(candidateSkills, requiredSkills);
 
   const existingApplication = myApplications.find(
@@ -143,7 +135,6 @@ export const JobDetails = () => {
 
   return (
     <div className="space-y-6">
-      {/* Navigation */}
       <button
         onClick={() => navigate(-1)}
         className="flex items-center gap-2 text-xs font-semibold text-[#90A1B9] hover:text-white transition-colors cursor-pointer"
@@ -151,7 +142,7 @@ export const JobDetails = () => {
         <ArrowLeft className="w-4 h-4" /> Retour aux opportunités
       </button>
 
-      {/* Success banner */}
+     
       {applySuccess && (
         <div className="bg-[#00E6A5]/10 border border-[#00E6A5]/30 text-[#00E6A5] p-4 rounded-2xl text-xs font-semibold flex items-center gap-2.5">
           <CheckCircle2 className="w-5 h-5 shrink-0" />
@@ -177,9 +168,11 @@ export const JobDetails = () => {
                   {selectedJob.titre}
                 </h1>
                 <p className="text-sm font-semibold text-[#00E6A5]">
-                  {selectedJobEntreprise?.nomEntreprise ||
-                    selectedJob.entreprise?.nomEntreprise ||
-                    "Entreprise partenaire"}
+                  {selectedJobEntreprise?.nomEntreprise 
+                  
+                    // selectedJob.entreprise?.nomEntreprise ||
+                    // "Entreprise partenaire"
+                    }
                 </p>
               </div>
 
