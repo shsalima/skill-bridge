@@ -42,9 +42,9 @@ const jobSechema= mongoose.Schema(
             required:true,
         },
       statut: {
-      type: String,
-      enum: ["Ouverte", "Fermée"], 
-      default: "Ouverte",
+            type: String,
+            enum: ["Ouverte", "Fermée"], 
+            default: "Ouverte",
     },
     },
     {timestamps:true}

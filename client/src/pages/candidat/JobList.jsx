@@ -15,9 +15,7 @@ import {
 } from "lucide-react";
 import { fetchJobs } from "../../features/offres/offreSlice";
 import { toggleSavedJob, fetchMySavedJobs } from "../../features/candidatures/candidatureSlice";
-import Card from "../../components/common/Card";
-import SmartMatchingBadge from "../../components/matching/SmartMatchingBadge";
-import { calculateMatchScore } from "../../utils/matchingCalculator";
+
 import { formatDate, formatSalary } from "../../utils/formatters";
 
 export const JobList = () => {
@@ -71,17 +69,8 @@ export const JobList = () => {
     dispatch(toggleSavedJob(jobId));
   };
 
-  // Attach calculated score to jobs
-  const jobsWithScore = jobs.map((job) => ({
-    ...job,
-    matchScore: calculateMatchScore(
-      candidateSkills,
-      job.competencesRequises || job.skillsRequired || job.competences || []
-    ),
-  }));
-
-  // Filter by minMatch
-  const filteredJobs = jobsWithScore.filter((job) => job.matchScore >= minMatch);
+  // Filter
+  const filteredJobs = jobs;
 
   return (
     <div className="space-y-6">
@@ -144,28 +133,7 @@ export const JobList = () => {
 
         {/* Secondary row: Smart Matching filter and actions */}
         <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#374151]">
-          <div className="flex items-center gap-3">
-            <span className="text-xs font-semibold text-white flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-[#00E6A5]" />
-              <span>Score min. :</span>
-            </span>
-            <div className="flex items-center gap-1.5">
-              {[0, 50, 75].map((val) => (
-                <button
-                  key={val}
-                  type="button"
-                  onClick={() => setMinMatch(val)}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
-                    minMatch === val
-                      ? "bg-[#00E6A5] text-[#0B0E14]"
-                      : "bg-[#0B0E14] text-[#90A1B9] hover:text-white border border-[#374151]"
-                  }`}
-                >
-                  {val === 0 ? "Tous" : `≥ ${val}%`}
-                </button>
-              ))}
-            </div>
-          </div>
+
 
           <div className="flex items-center gap-2">
             {(keyword || ville || typeContrat || minMatch > 0) && (
@@ -207,22 +175,21 @@ export const JobList = () => {
           Chargement des opportunités...
         </div>
       ) : filteredJobs.length === 0 ? (
-        <Card className="text-center py-12 space-y-3">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 text-center py-12 space-y-3">
           <Briefcase className="w-8 h-8 text-[#90A1B9] mx-auto opacity-50" />
           <h3 className="text-sm font-bold text-white">Aucune offre trouvée</h3>
           <p className="text-xs text-[#90A1B9]">
-            Essayez de modifier vos critères de recherche ou de réduire le score de correspondance minimum.
+            Essayez de modifier vos critères de recherche.
           </p>
-        </Card>
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {filteredJobs.map((job) => {
             const saved = isSaved(job._id);
             return (
-              <Card
+              <div
                 key={job._id}
-                hover
-                className="flex flex-col justify-between space-y-4 relative group"
+                className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 hover:border-[#00E6A5]/50 hover:shadow-lg transition-all flex flex-col justify-between space-y-4 relative group"
               >
                 {/* Top Section */}
                 <div className="space-y-3">
@@ -237,7 +204,6 @@ export const JobList = () => {
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <SmartMatchingBadge score={job.matchScore} size="sm" />
                       <button
                         type="button"
                         onClick={(e) => handleToggleSave(job._id, e)}
@@ -317,7 +283,7 @@ export const JobList = () => {
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
-              </Card>
+              </div>
             );
           })}
         </div>

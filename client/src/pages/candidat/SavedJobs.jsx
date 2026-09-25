@@ -8,15 +8,11 @@ import {
   Briefcase,
   ArrowRight,
   Trash2,
-  Sparkles,
 } from "lucide-react";
 import {
   fetchMySavedJobs,
   toggleSavedJob,
 } from "../../features/candidatures/candidatureSlice";
-import Card from "../../components/common/Card";
-import SmartMatchingBadge from "../../components/matching/SmartMatchingBadge";
-import { calculateMatchScore } from "../../utils/matchingCalculator";
 import { formatDate, formatSalary } from "../../utils/formatters";
 
 export const SavedJobs = () => {
@@ -69,7 +65,7 @@ export const SavedJobs = () => {
           Chargement de vos offres enregistrées...
         </div>
       ) : savedJobs.length === 0 ? (
-        <Card className="text-center py-16 space-y-4">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 text-center py-16 space-y-4">
           <div className="w-14 h-14 rounded-2xl bg-[#00E6A5]/10 border border-[#00E6A5]/20 flex items-center justify-center mx-auto">
             <Bookmark className="w-7 h-7 text-[#00E6A5] opacity-60" />
           </div>
@@ -87,21 +83,16 @@ export const SavedJobs = () => {
             <span>Découvrir les offres</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
-        </Card>
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {savedJobs.map((item) => {
             const jobData = item.job || item;
             if (!jobData?._id) return null;
-            const matchScore = calculateMatchScore(
-              candidateSkills,
-              jobData.competencesRequises || jobData.skillsRequired || []
-            );
             return (
-              <Card
+              <div
                 key={jobData._id}
-                hover
-                className="flex flex-col justify-between space-y-4 relative group"
+                className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 hover:border-[#00E6A5]/50 hover:shadow-lg transition-all flex flex-col justify-between space-y-4 relative group"
               >
                 {/* Top Section */}
                 <div className="space-y-3">
@@ -116,7 +107,6 @@ export const SavedJobs = () => {
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <SmartMatchingBadge score={matchScore} size="sm" />
                       <button
                         type="button"
                         onClick={(e) => handleUnsave(jobData._id, e)}
@@ -195,7 +185,7 @@ export const SavedJobs = () => {
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
-              </Card>
+              </div>
             );
           })}
         </div>

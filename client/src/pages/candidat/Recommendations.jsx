@@ -7,12 +7,8 @@ import {
   MapPin,
   Calendar,
   ArrowRight,
-  TrendingUp,
 } from "lucide-react";
 import { fetchJobs } from "../../features/offres/offreSlice";
-import Card from "../../components/common/Card";
-import SmartMatchingBadge from "../../components/matching/SmartMatchingBadge";
-import { calculateMatchScore } from "../../utils/matchingCalculator";
 import { formatDate, formatSalary } from "../../utils/formatters";
 
 export const Recommendations = () => {
@@ -26,17 +22,17 @@ export const Recommendations = () => {
     dispatch(fetchJobs({ statut: "Ouverte" }));
   }, [dispatch]);
 
-  // Compute and sort by match score
+  // Compute by simple skill overlap count (no smart matching percentage)
   const recommendedJobs = jobs
-    .map((job) => ({
-      ...job,
-      matchScore: calculateMatchScore(
-        candidateSkills,
-        job.competencesRequises || job.skillsRequired || job.competences || []
-      ),
-    }))
-    .filter((job) => job.matchScore >= 50)
-    .sort((a, b) => b.matchScore - a.matchScore);
+    .map((job) => {
+      const jobSkills = job.competencesRequises || job.skillsRequired || job.competences || [];
+      const overlapCount = jobSkills.filter((s) =>
+        candidateSkills.some((cs) => cs.toLowerCase().trim() === s.toLowerCase().trim())
+      ).length;
+      return { ...job, overlapCount };
+    })
+    .filter((job) => job.overlapCount > 0)
+    .sort((a, b) => b.overlapCount - a.overlapCount);
 
   return (
     <div className="space-y-6">
@@ -46,12 +42,12 @@ export const Recommendations = () => {
           <span>Recommandations Personnalisées</span>
         </h1>
         <p className="text-xs text-[#90A1B9] mt-1">
-          Sélection exclusive des postes affichant une compatibilité supérieure à 50% avec votre profil.
+          Sélection exclusive des postes partageant des compétences avec votre profil.
         </p>
       </div>
 
       {candidateSkills.length === 0 ? (
-        <Card className="text-center py-12 space-y-3">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 text-center py-12 space-y-3">
           <Sparkles className="w-8 h-8 text-[#00E6A5] mx-auto opacity-70" />
           <h3 className="text-sm font-bold text-white">
             Vos compétences n'ont pas encore été renseignées
@@ -65,16 +61,16 @@ export const Recommendations = () => {
           >
             Configurer mes compétences
           </Link>
-        </Card>
+        </div>
       ) : loading ? (
         <div className="text-center py-16 text-xs text-[#90A1B9]">
           Analyse des offres en cours...
         </div>
       ) : recommendedJobs.length === 0 ? (
-        <Card className="text-center py-12 space-y-3">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 text-center py-12 space-y-3">
           <Briefcase className="w-8 h-8 text-[#90A1B9] mx-auto opacity-50" />
           <h3 className="text-sm font-bold text-white">
-            Aucune recommandation avec score ≥ 50% pour le moment
+            Aucune recommandation disponible pour le moment
           </h3>
           <p className="text-xs text-[#90A1B9]">
             Enrichissez votre profil avec de nouvelles compétences ou parcourez la liste complète des offres.
@@ -85,21 +81,19 @@ export const Recommendations = () => {
           >
             Voir toutes les offres disponibles
           </Link>
-        </Card>
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {recommendedJobs.map((job) => (
-            <Card
+            <div
               key={job._id}
-              hover
-              className="flex flex-col justify-between space-y-4"
+              className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 hover:border-[#00E6A5]/50 hover:shadow-lg transition-all flex flex-col justify-between space-y-4"
             >
               <div className="space-y-3">
                 <div className="flex items-start justify-between gap-2">
                   <span className="text-[10px] font-bold uppercase tracking-wider text-[#90A1B9] bg-[#0B0E14] px-2 py-0.5 rounded border border-[#374151]">
                     {job.typeContrat}
                   </span>
-                  <SmartMatchingBadge score={job.matchScore} size="sm" />
                 </div>
 
                 <div>
@@ -151,7 +145,7 @@ export const Recommendations = () => {
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
-            </Card>
+            </div>
           ))}
         </div>
       )}

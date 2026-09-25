@@ -31,22 +31,6 @@ const getMySavedJobs = async () => {
   return response;
 };
 
-// Formations
-const addFormation = async (formationData) => {
-  const response = await api.post("/formations", formationData);
-  return response;
-};
-
-const getMyFormations = async () => {
-  const response = await api.get("/formations/my-formations");
-  return response;
-};
-
-const deleteFormation = async (formationId) => {
-  const response = await api.delete(`/formations/${formationId}`);
-  return response;
-};
-
 const candidatureService = {
   applyToJob,
   getMyApplications,
@@ -54,9 +38,6 @@ const candidatureService = {
   updateApplicationStatus,
   toggleSavedJob,
   getMySavedJobs,
-  addFormation,
-  getMyFormations,
-  deleteFormation,
 };
 
 export default candidatureService;

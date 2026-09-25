@@ -10,9 +10,6 @@ export const createJobService = async (jobData, entrepriseId) => {
 };
 
 export const getAllJobsService = async (filters) => {
-  console.log(filters);
-
-  // const query = { statut: "Ouverte" };
   const query = {};
 
   if (filters.statut) {

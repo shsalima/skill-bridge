@@ -11,8 +11,6 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { fetchJobs, fetchEntrepriseStats } from "../../features/offres/offreSlice";
-import Card from "../../components/common/Card";
-import Button from "../../components/common/Button";
 
 export const EntrepriseDashboard = () => {
   const dispatch = useDispatch();
@@ -42,20 +40,24 @@ export const EntrepriseDashboard = () => {
             Tableau de bord — {user?.nomEntreprise || user?.entreprise?.nomEntreprise || "Mon Entreprise"}
           </h1>
           <p className="text-xs text-[#90A1B9]">
-            Pilotez vos offres d'emploi, évaluez les candidats et qualifiez-les automatiquement via le Smart Matching.
+            Pilotez vos offres d'emploi et évaluez les candidats en toute simplicité.
           </p>
         </div>
 
         <Link to="/entreprise/jobs/create">
-          <Button icon={Plus} size="md" className="shrink-0">
-            Publier une offre
-          </Button>
+          <button
+            type="button"
+            className="inline-flex items-center justify-center font-bold rounded-xl transition-all px-4 py-2.5 text-xs gap-2 bg-[#00E6A5] text-[#0B0E14] hover:bg-[#00C293] shadow-lg shrink-0 cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Publier une offre</span>
+          </button>
         </Link>
       </div>
 
       {/* KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="space-y-2">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-2">
           <div className="flex items-center justify-between text-[#90A1B9]">
             <span className="text-xs font-medium">Offres créées</span>
             <Briefcase className="w-4 h-4 text-[#00E6A5]" />
@@ -64,18 +66,18 @@ export const EntrepriseDashboard = () => {
             {entrepriseStats.totalJobs || companyJobs.length}
           </p>
           <span className="text-[11px] text-[#62748E]">Total annonces</span>
-        </Card>
+        </div>
 
-        <Card className="space-y-2">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-2">
           <div className="flex items-center justify-between text-[#90A1B9]">
             <span className="text-xs font-medium">Offres Actives</span>
             <TrendingUp className="w-4 h-4 text-[#00E6A5]" />
           </div>
           <p className="text-2xl font-bold text-[#00E6A5]">{activeJobsCount}</p>
           <span className="text-[11px] text-[#62748E]">Ouvertes aux candidatures</span>
-        </Card>
+        </div>
 
-        <Card className="space-y-2">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-2">
           <div className="flex items-center justify-between text-[#90A1B9]">
             <span className="text-xs font-medium">Candidatures</span>
             <Users className="w-4 h-4 text-sky-400" />
@@ -84,9 +86,9 @@ export const EntrepriseDashboard = () => {
             {entrepriseStats.totalApplications || 0}
           </p>
           <span className="text-[11px] text-[#62748E]">Reçues au total</span>
-        </Card>
+        </div>
 
-        <Card className="space-y-2">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-2">
           <div className="flex items-center justify-between text-[#90A1B9]">
             <span className="text-xs font-medium">Statut Candidatures</span>
             <Clock className="w-4 h-4 text-amber-400" />
@@ -102,7 +104,7 @@ export const EntrepriseDashboard = () => {
             )) || <span className="text-xs text-[#90A1B9]">En attente</span>}
           </div>
           <span className="text-[11px] text-[#62748E]">Répartition</span>
-        </Card>
+        </div>
       </div>
 
       {/* Quick Actions & Recent Jobs */}
@@ -123,7 +125,10 @@ export const EntrepriseDashboard = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {companyJobs.slice(0, 3).map((job) => (
-            <Card key={job._id} hover className="flex flex-col justify-between space-y-3">
+            <div
+              key={job._id}
+              className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 hover:border-[#00E6A5]/50 hover:shadow-lg transition-all flex flex-col justify-between space-y-3"
+            >
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span
@@ -148,15 +153,19 @@ export const EntrepriseDashboard = () => {
                 <Users className="w-3.5 h-3.5 text-[#00E6A5]" />
                 <span>Voir les candidatures</span>
               </Link>
-            </Card>
+            </div>
           ))}
           {companyJobs.length === 0 && (
             <div className="col-span-3 bg-[#161B22] border border-[#374151] rounded-2xl p-8 text-center text-xs text-[#90A1B9] space-y-3">
               <p>Vous n'avez pas encore publié d'offres d'emploi.</p>
               <Link to="/entreprise/jobs/create">
-                <Button icon={Plus} size="sm">
-                  Créer ma première offre
-                </Button>
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center font-bold rounded-xl transition-all px-3 py-1.5 text-xs gap-1.5 bg-[#00E6A5] text-[#0B0E14] hover:bg-[#00C293] shadow-lg cursor-pointer"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Créer ma première offre</span>
+                </button>
               </Link>
             </div>
           )}

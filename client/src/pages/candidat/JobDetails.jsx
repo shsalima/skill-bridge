@@ -12,7 +12,8 @@ import {
   AlertTriangle,
   CheckCircle2,
   Send,
-  Sparkles,
+  X,
+  Loader2,
 } from "lucide-react";
 import { fetchJobById } from "../../features/offres/offreSlice";
 import {
@@ -22,13 +23,6 @@ import {
   clearCandidatureError,
 } from "../../features/candidatures/candidatureSlice";
 import { createReclamation } from "../../features/reclamations/reclamationSlice";
-import Card from "../../components/common/Card";
-import Button from "../../components/common/Button";
-import Modal from "../../components/common/Modal";
-import Input from "../../components/common/Input";
-import SmartMatchingBadge from "../../components/matching/SmartMatchingBadge";
-import SmartMatchingDetails from "../../components/matching/SmartMatchingDetails";
-import { calculateMatchScore } from "../../utils/matchingCalculator";
 import { formatDate, formatSalary } from "../../utils/formatters";
 
 export const JobDetails = () => {
@@ -71,9 +65,6 @@ export const JobDetails = () => {
     }
   }, [dispatch, id]);
 
-  const candidateSkills = user?.competences || user?.skills || [];
-  const requiredSkills =selectedJob?.competencesRequises ||selectedJob?.skillsRequired ||selectedJob?.competences ||[];
-  const matchScore = calculateMatchScore(candidateSkills, requiredSkills);
 
   const existingApplication = myApplications.find(
     (a) => (a.job?._id || a.job) === id
@@ -155,7 +146,7 @@ export const JobDetails = () => {
         {/* Left Column (Job & Company details) */}
         <div className="lg:col-span-2 space-y-6">
           {/* Header Card */}
-          <Card className="space-y-5">
+          <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
@@ -168,19 +159,8 @@ export const JobDetails = () => {
                   {selectedJob.titre}
                 </h1>
                 <p className="text-sm font-semibold text-[#00E6A5]">
-                  {selectedJobEntreprise?.nomEntreprise 
-                  
-                    // selectedJob.entreprise?.nomEntreprise ||
-                    // "Entreprise partenaire"
-                    }
+                  {selectedJobEntreprise?.nomEntreprise}
                 </p>
-              </div>
-
-              <div className="flex flex-col items-end gap-2">
-                <SmartMatchingBadge score={matchScore} size="md" />
-                <span className="text-[11px] text-[#90A1B9]">
-                  {matchScore >= 70 ? "Forte compatibilité" : "Compatibilité modérée"}
-                </span>
               </div>
             </div>
 
@@ -214,13 +194,14 @@ export const JobDetails = () => {
                   Cette offre est désormais clôturée
                 </div>
               ) : (
-                <Button
+                <button
+                  type="button"
                   onClick={() => setIsApplyModalOpen(true)}
-                  icon={Send}
-                  className="px-6"
+                  className="inline-flex items-center justify-center font-bold rounded-xl transition-all px-6 py-2.5 text-xs gap-2 bg-[#00E6A5] text-[#0B0E14] hover:bg-[#00C293] shadow-lg cursor-pointer"
                 >
-                  Postuler maintenant
-                </Button>
+                  <Send className="w-4 h-4" />
+                  <span>Postuler maintenant</span>
+                </button>
               )}
 
               <button
@@ -231,10 +212,10 @@ export const JobDetails = () => {
                 <span>Signaler cette offre</span>
               </button>
             </div>
-          </Card>
+          </div>
 
           {/* Description Card */}
-          <Card className="space-y-4">
+          <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-4">
             <h2 className="text-sm font-bold text-white flex items-center gap-2">
               <FileText className="w-4 h-4 text-[#00E6A5]" />
               <span>Description du poste</span>
@@ -242,11 +223,11 @@ export const JobDetails = () => {
             <div className="text-xs text-[#CAD5E2] leading-relaxed whitespace-pre-line">
               {selectedJob.description}
             </div>
-          </Card>
+          </div>
 
           {/* Company Card */}
           {selectedJobEntreprise && (
-            <Card className="space-y-3">
+            <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-3">
               <h2 className="text-sm font-bold text-white flex items-center gap-2">
                 <Building2 className="w-4 h-4 text-[#00E6A5]" />
                 <span>À propos de l'entreprise</span>
@@ -271,145 +252,178 @@ export const JobDetails = () => {
                   </a>
                 )}
               </div>
-            </Card>
+            </div>
           )}
         </div>
 
-        {/* Right Column (Smart Matching AI Breakdown) */}
-        <div className="space-y-6">
-          <SmartMatchingDetails
-            candidateSkills={candidateSkills}
-            requiredSkills={requiredSkills}
-          />
-        </div>
+
       </div>
 
       {/* Apply Modal */}
-      <Modal
-        isOpen={isApplyModalOpen}
-        onClose={() => setIsApplyModalOpen(false)}
-        title="Postuler à l'offre"
-        subtitle={selectedJob.titre}
-      >
-        <form onSubmit={handleApplySubmit} className="space-y-4">
-          {applyError && (
-            <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-xs">
-              {applyError}
-            </div>
-          )}
-
-          <div className="p-3 bg-[#0B0E14] border border-[#00E6A5]/30 rounded-xl flex items-center justify-between text-xs">
-            <span className="text-[#90A1B9]">Votre score de compatibilité calculé :</span>
-            <SmartMatchingBadge score={matchScore} size="sm" />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-white mb-1.5">
-              Lien vers votre CV (PDF, Google Drive, portfolio...) *
-            </label>
-            <input
-              type="url"
-              placeholder="https://drive.google.com/mon-cv.pdf"
-              value={applyForm.cv}
-              onChange={(e) => setApplyForm({ ...applyForm, cv: e.target.value })}
-              className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#00E6A5] focus:ring-1 focus:ring-[#00E6A5] placeholder:text-[#62748E]"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-white mb-1.5">
-              Lettre de motivation / Message d'introduction
-            </label>
-            <textarea
-              rows={4}
-              placeholder="Présentez brièvement votre motivation et vos atouts pour ce poste..."
-              value={applyForm.lettreMotivation}
-              onChange={(e) =>
-                setApplyForm({ ...applyForm, lettreMotivation: e.target.value })
-              }
-              className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#00E6A5] focus:ring-1 focus:ring-[#00E6A5] placeholder:text-[#62748E] resize-none"
-            />
-          </div>
-
-          <div className="flex justify-end gap-3 pt-4 border-t border-[#374151]">
-            <Button
-              variant="secondary"
-              onClick={() => setIsApplyModalOpen(false)}
-            >
-              Annuler
-            </Button>
-            <Button type="submit" loading={applying} icon={Send}>
-              Soumettre ma candidature
-            </Button>
-          </div>
-        </form>
-      </Modal>
-
-      {/* Complaint Modal */}
-      <Modal
-        isOpen={isComplaintModalOpen}
-        onClose={() => setIsComplaintModalOpen(false)}
-        title="Signaler cette offre d'emploi"
-        subtitle="Nos administrateurs examineront ce signalement"
-      >
-        <form onSubmit={handleComplaintSubmit} className="space-y-4">
-          {complaintSuccess ? (
-            <div className="p-4 bg-[#00E6A5]/10 border border-[#00E6A5]/30 rounded-xl text-[#00E6A5] text-xs font-semibold text-center">
-              Votre signalement a été transmis à l'équipe d'administration. Merci pour votre vigilance !
-            </div>
-          ) : (
-            <>
+      {isApplyModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4">
+          <div className="bg-[#161B22] border border-[#374151] w-full max-w-2xl rounded-2xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in duration-150">
+            <div className="flex justify-between items-start pb-4 mb-5 border-b border-[#374151]">
               <div>
-                <label className="block text-xs font-semibold text-white mb-1.5">
-                  Motif du signalement *
-                </label>
-                <select
-                  value={complaintForm.motif}
-                  onChange={(e) =>
-                    setComplaintForm({ ...complaintForm, motif: e.target.value })
-                  }
-                  className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#00E6A5]"
-                  required
-                >
-                  <option value="Offre frauduleuse ou fausse">Offre frauduleuse ou fausse</option>
-                  <option value="Contenu inapproprié ou discriminatoire">Contenu inapproprié ou discriminatoire</option>
-                  <option value="Entreprise suspecte / arnaque">Entreprise suspecte / arnaque</option>
-                  <option value="Autre">Autre motif</option>
-                </select>
+                <h2 className="text-lg font-bold text-white">Postuler à l'offre</h2>
+                <p className="text-xs text-[#90A1B9] mt-0.5">{selectedJob.titre}</p>
               </div>
+              <button
+                type="button"
+                onClick={() => setIsApplyModalOpen(false)}
+                className="p-1.5 bg-[#0B0E14] border border-[#374151] rounded-lg text-[#90A1B9] hover:text-white transition-all cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <form onSubmit={handleApplySubmit} className="space-y-4">
+              {applyError && (
+                <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-xs">
+                  {applyError}
+                </div>
+              )}
 
               <div>
                 <label className="block text-xs font-semibold text-white mb-1.5">
-                  Description détaillée du problème *
+                  Lien vers votre CV (PDF, Google Drive, portfolio...) *
                 </label>
-                <textarea
-                  rows={4}
-                  placeholder="Décrivez précisément ce qui justifie votre signalement..."
-                  value={complaintForm.description}
-                  onChange={(e) =>
-                    setComplaintForm({ ...complaintForm, description: e.target.value })
-                  }
-                  className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#00E6A5] placeholder:text-[#62748E] resize-none"
+                <input
+                  type="url"
+                  placeholder="https://drive.google.com/mon-cv.pdf"
+                  value={applyForm.cv}
+                  onChange={(e) => setApplyForm({ ...applyForm, cv: e.target.value })}
+                  className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#00E6A5] focus:ring-1 focus:ring-[#00E6A5] placeholder:text-[#62748E]"
                   required
                 />
               </div>
 
+              <div>
+                <label className="block text-xs font-semibold text-white mb-1.5">
+                  Lettre de motivation / Message d'introduction
+                </label>
+                <textarea
+                  rows={4}
+                  placeholder="Présentez brièvement votre motivation et vos atouts pour ce poste..."
+                  value={applyForm.lettreMotivation}
+                  onChange={(e) =>
+                    setApplyForm({ ...applyForm, lettreMotivation: e.target.value })
+                  }
+                  className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#00E6A5] focus:ring-1 focus:ring-[#00E6A5] placeholder:text-[#62748E] resize-none"
+                />
+              </div>
+
               <div className="flex justify-end gap-3 pt-4 border-t border-[#374151]">
-                <Button
-                  variant="secondary"
-                  onClick={() => setIsComplaintModalOpen(false)}
+                <button
+                  type="button"
+                  onClick={() => setIsApplyModalOpen(false)}
+                  className="inline-flex items-center justify-center font-bold rounded-xl transition-all px-4 py-2.5 text-xs gap-2 bg-[#161B22] text-white hover:bg-[#1F2937] border border-[#374151] cursor-pointer"
                 >
                   Annuler
-                </Button>
-                <Button type="submit" variant="danger" icon={AlertTriangle}>
-                  Envoyer le signalement
-                </Button>
+                </button>
+                <button
+                  type="submit"
+                  disabled={applying}
+                  className="inline-flex items-center justify-center font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2.5 text-xs gap-2 bg-[#00E6A5] text-[#0B0E14] hover:bg-[#00C293] shadow-lg cursor-pointer"
+                >
+                  {applying ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Chargement...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>Soumettre ma candidature</span>
+                    </>
+                  )}
+                </button>
               </div>
-            </>
-          )}
-        </form>
-      </Modal>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Complaint Modal */}
+      {isComplaintModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4">
+          <div className="bg-[#161B22] border border-[#374151] w-full max-w-2xl rounded-2xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in duration-150">
+            <div className="flex justify-between items-start pb-4 mb-5 border-b border-[#374151]">
+              <div>
+                <h2 className="text-lg font-bold text-white">Signaler cette offre d'emploi</h2>
+                <p className="text-xs text-[#90A1B9] mt-0.5">Nos administrateurs examineront ce signalement</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsComplaintModalOpen(false)}
+                className="p-1.5 bg-[#0B0E14] border border-[#374151] rounded-lg text-[#90A1B9] hover:text-white transition-all cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <form onSubmit={handleComplaintSubmit} className="space-y-4">
+              {complaintSuccess ? (
+                <div className="p-4 bg-[#00E6A5]/10 border border-[#00E6A5]/30 rounded-xl text-[#00E6A5] text-xs font-semibold text-center">
+                  Votre signalement a été transmis à l'équipe d'administration. Merci pour votre vigilance !
+                </div>
+              ) : (
+                <>
+                  <div>
+                    <label className="block text-xs font-semibold text-white mb-1.5">
+                      Motif du signalement *
+                    </label>
+                    <select
+                      value={complaintForm.motif}
+                      onChange={(e) =>
+                        setComplaintForm({ ...complaintForm, motif: e.target.value })
+                      }
+                      className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#00E6A5]"
+                      required
+                    >
+                      <option value="Offre frauduleuse ou fausse">Offre frauduleuse ou fausse</option>
+                      <option value="Contenu inapproprié ou discriminatoire">Contenu inapproprié ou discriminatoire</option>
+                      <option value="Entreprise suspecte / arnaque">Entreprise suspecte / arnaque</option>
+                      <option value="Autre">Autre motif</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-white mb-1.5">
+                      Description détaillée du problème *
+                    </label>
+                    <textarea
+                      rows={4}
+                      placeholder="Décrivez précisément ce qui justifie votre signalement..."
+                      value={complaintForm.description}
+                      onChange={(e) =>
+                        setComplaintForm({ ...complaintForm, description: e.target.value })
+                      }
+                      className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#00E6A5] placeholder:text-[#62748E] resize-none"
+                      required
+                    />
+                  </div>
+
+                  <div className="flex justify-end gap-3 pt-4 border-t border-[#374151]">
+                    <button
+                      type="button"
+                      onClick={() => setIsComplaintModalOpen(false)}
+                      className="inline-flex items-center justify-center font-bold rounded-xl transition-all px-4 py-2.5 text-xs gap-2 bg-[#161B22] text-white hover:bg-[#1F2937] border border-[#374151] cursor-pointer"
+                    >
+                      Annuler
+                    </button>
+                    <button
+                      type="submit"
+                      className="inline-flex items-center justify-center font-bold rounded-xl transition-all px-4 py-2.5 text-xs gap-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/30 cursor-pointer"
+                    >
+                      <AlertTriangle className="w-4 h-4" />
+                      <span>Envoyer le signalement</span>
+                    </button>
+                  </div>
+                </>
+              )}
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

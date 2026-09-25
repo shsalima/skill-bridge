@@ -69,7 +69,7 @@ describe("Jobs & Applications Module Tests", () => {
     jobId = res.body.data._id;
   });
 
-  it("2. Postulation à l'emploi et calcul du scoreMatching", async () => {
+  it("2. Postulation à l'emploi", async () => {
     const res = await request(app)
       .post(`/api/applications/apply/${jobId}`)
       .set("Authorization", `Bearer ${candidatToken}`)

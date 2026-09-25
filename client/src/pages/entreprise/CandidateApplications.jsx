@@ -19,11 +19,7 @@ import {
   updateApplicationStatus,
   clearCandidatureSuccess,
 } from "../../features/candidatures/candidatureSlice";
-import Card from "../../components/common/Card";
-import Badge from "../../components/common/Badge";
-import Button from "../../components/common/Button";
-import SmartMatchingBadge from "../../components/matching/SmartMatchingBadge";
-import { formatDate } from "../../utils/formatters";
+import { formatDate, getStatusBadge } from "../../utils/formatters";
 
 export const CandidateApplications = () => {
   const dispatch = useDispatch();
@@ -99,10 +95,10 @@ export const CandidateApplications = () => {
       <div>
         <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2.5">
           <Users className="w-6 h-6 text-[#00E6A5]" />
-          <span>Candidatures Reçues & Classement IA</span>
+          <span>Candidatures Reçues</span>
         </h1>
         <p className="text-xs text-[#90A1B9] mt-1">
-          Les candidats sont automatiquement classés par ordre décroissant de compatibilité (Smart Matching).
+          Gérez les candidatures reçues pour vos offres d'emploi.
         </p>
       </div>
 
@@ -114,7 +110,7 @@ export const CandidateApplications = () => {
       )}
 
       {/* Job Selector Bar */}
-      <Card className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex-1">
           <label className="block text-xs font-semibold text-white mb-1.5 flex items-center gap-1.5">
             <Briefcase className="w-4 h-4 text-[#00E6A5]" />
@@ -154,7 +150,7 @@ export const CandidateApplications = () => {
             </div>
           </div>
         )}
-      </Card>
+      </div>
 
       {/* Filter Tabs */}
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -192,10 +188,7 @@ export const CandidateApplications = () => {
           ))}
         </div>
 
-        <span className="text-xs text-[#90A1B9] flex items-center gap-1">
-          <ArrowUpDown className="w-3.5 h-3.5 text-[#00E6A5]" />
-          <span>Trié par Score Smart Matching décroissant</span>
-        </span>
+
       </div>
 
       {/* Candidates List */}
@@ -204,7 +197,7 @@ export const CandidateApplications = () => {
           Chargement et qualification des candidatures...
         </div>
       ) : filteredApplications.length === 0 ? (
-        <Card className="text-center py-12 space-y-3">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 text-center py-12 space-y-3">
           <Users className="w-8 h-8 text-[#90A1B9] mx-auto opacity-50" />
           <h3 className="text-sm font-bold text-white">
             Aucune candidature pour ce filtre
@@ -212,14 +205,13 @@ export const CandidateApplications = () => {
           <p className="text-xs text-[#90A1B9]">
             Les candidatures soumises par les candidats apparaîtront ici.
           </p>
-        </Card>
+        </div>
       ) : (
         <div className="space-y-4">
           {filteredApplications.map((app, index) => (
-            <Card
+            <div
               key={app._id}
-              hover
-              className="flex flex-col lg:flex-row lg:items-center justify-between gap-5"
+              className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 hover:border-[#00E6A5]/50 hover:shadow-lg transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-5"
             >
               {/* Candidate Info */}
               <div className="space-y-3">
@@ -240,9 +232,6 @@ export const CandidateApplications = () => {
                       <h3 className="text-sm font-bold text-white">
                         {app.candidat?.prenom} {app.candidat?.nom}
                       </h3>
-                      <span className="text-[10px] text-[#90A1B9] bg-[#0B0E14] px-2 py-0.5 rounded border border-[#374151]">
-                        Rang #{index + 1}
-                      </span>
                     </div>
                     <div className="flex flex-wrap items-center gap-3 text-xs text-[#90A1B9] mt-0.5">
                       <span className="flex items-center gap-1">
@@ -280,8 +269,7 @@ export const CandidateApplications = () => {
               {/* Matching Score, Status & Actions */}
               <div className="flex flex-wrap lg:flex-col items-start lg:items-end justify-between gap-3 pt-3 lg:pt-0 border-t lg:border-t-0 border-[#374151]">
                 <div className="flex items-center gap-2">
-                  <SmartMatchingBadge score={app.scoreMatching || 0} size="md" />
-                  <Badge status={app.statut} />
+                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${getStatusBadge(app.statut)}`}>{app.statut}</span>
                 </div>
 
                 {/* CV Link */}
@@ -332,7 +320,7 @@ export const CandidateApplications = () => {
                   </button>
                 </div>
               </div>
-            </Card>
+            </div>
           ))}
         </div>
       )}

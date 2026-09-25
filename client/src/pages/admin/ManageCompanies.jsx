@@ -12,7 +12,6 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { fetchAllCompanies, toggleBlockCompany } from "../../features/auth/authSlice";
-import Card from "../../components/common/Card";
 
 export const ManageCompanies = () => {
   const dispatch = useDispatch();
@@ -59,7 +58,7 @@ export const ManageCompanies = () => {
       </div>
 
       {/* Search */}
-      <Card className="flex items-center justify-between gap-4">
+      <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 flex items-center justify-between gap-4">
         <div className="relative flex-1 max-w-md">
           <Search className="w-4 h-4 text-[#90A1B9] absolute left-3.5 top-3" />
           <input
@@ -70,10 +69,10 @@ export const ManageCompanies = () => {
             className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#00E6A5]"
           />
         </div>
-      </Card>
+      </div>
 
       {/* Companies List */}
-      <Card className="p-0 overflow-hidden">
+      <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-0 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
@@ -177,7 +176,7 @@ export const ManageCompanies = () => {
             </tbody>
           </table>
         </div>
-      </Card>
+      </div>
     </div>
   );
 };

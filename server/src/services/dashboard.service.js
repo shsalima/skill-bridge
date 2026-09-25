@@ -13,7 +13,7 @@ export const getEntrepriseDashboardService= async(entrepriseId)=>{
     // total de toute les applications de offre d'entreprise
     const totalApplications= await Application.countDocuments({job: {$in:jobIds}})
 
-    // kanwaz3o les rreq 3la 7ssab etat
+    // Group applications by status to get a per-status count breakdown
     const applicationsStatus=await Application.aggregate([
         {$match:{job:{$in:jobIds}}},
         {$group :{_id:"$statut" ,count: {$sum :1}}}

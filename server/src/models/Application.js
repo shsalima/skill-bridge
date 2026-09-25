@@ -21,10 +21,6 @@ const applicationSchema=new mongoose.Schema(
             type:String,
             default:""
         },
-        scoreMatching:{
-            type:Number,
-            default:0
-        },
         statut:{
             type:String,
             enum:["En attente", "Acceptée", "Refusée"],

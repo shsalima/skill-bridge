@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router";
 import { loginUser, clearError, getProfile } from "../../features/auth/authSlice";
-import { Mail, Lock, ArrowRight, UserPlus, Building2 } from "lucide-react";
-import Button from "../../components/common/Button";
+import { Mail, Lock, Loader2, UserPlus, Building2 } from "lucide-react";
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -106,14 +105,17 @@ export const Login = () => {
             </div>
           </div>
 
-          <Button
+          <button
             type="submit"
-            loading={loading}
-            className="w-full mt-2"
-            icon={ArrowRight}
+            disabled={loading}
+            className="w-full inline-flex items-center justify-center gap-2 font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2.5 text-xs bg-[#00E6A5] text-[#0B0E14] hover:bg-[#00C293] shadow-lg mt-2"
           >
-            Se connecter
-          </Button>
+            {loading ? (
+              <><Loader2 className="w-4 h-4 animate-spin" /> Chargement...</>
+            ) : (
+              <>Se connecter</>
+            )}
+          </button>
         </form>
 
         <div className="mt-8 pt-6 border-t border-[#374151] text-center space-y-3">
