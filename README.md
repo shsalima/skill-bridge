@@ -4,22 +4,6 @@ SkillBridge est une application web Full Stack basée sur l'architecture **MERN*
 
 ---
 
-## 📋 Sommaire
-
-1. [Aperçu & Présentation](#-aperçu--présentation)
-2. [Fonctionnalités Clés par Rôle](#-fonctionnalités-clés-par-rôle)
-3. [Stack Technique](#-stack-technique)
-4. [Arborescence du Projet](#-arborescence-du-projet)
-5. [Prérequis Système](#-5-prérequis-système)
-6. [Guide d'Installation Étape par Étape](#-6-guide-dinstallation-étape-par-étape)
-7. [Configuration des Variables d'Environnement (.env)](#-7-configuration-des-variables-denvironnement-env)
-8. [Lancement de l'Application](#-8-lancement-de-lapplication)
-9. [Utilisation & Guide Pas à Pas](#-9-utilisation--guide-pas-à-pas)
-10. [Conteneurisation avec Docker](#-10-conteneurisation-avec-docker)
-11. [EndPoints API Principaux](#-11-endpoints-api-principaux)
-12. [Documentation UML](#-12-documentation-uml)
-13. [Auteur & Mentions](#-13-auteur--mentions)
-
 ---
 
 
@@ -234,4 +218,4 @@ Voici un aperçu de l'architecture RESTful de l'API (disponible sur `/api`) :
 * **Encadrement pédagogique :** Sine Oussama
 * **Cadre de réalisation :** Projet de fin d'étude - École Numérique Ahmed El Hansali (Promotion 2025-2026)
 
-Merci d'avoir consulté et utilisé ce projet ! N'hésitez pas à ouvrir une *Issue* si vous rencontrez le moindre bug, ou une *Pull Request* pour suggérer des améliorations. 💡
+Merci d'avoir consulté et utilisé ce projet ! N'hésitez pas à ouvrir une *Issue* si vous rencontrez le moindre bug, ou une *Pull Request* pour suggérer des améliorations.

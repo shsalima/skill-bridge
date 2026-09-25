@@ -2,6 +2,8 @@ import Job from "../models/Job.js";
 import Entreprise from "../models/Entreprise.js";
 
 export const createJobService = async (jobData, entrepriseId) => {
+
+  
   const newJob = await Job.create({
     ...jobData,
     entreprise: entrepriseId,
@@ -37,7 +39,7 @@ export const getAllJobsService = async (filters) => {
   const fermelJobs = await Job.countDocuments({ statut: "Fermée" });
 
   const jobs = await Job.find(query)
-    .populate("entreprise", "nom prenom email photo telephone")
+    .populate("entreprise", "nom prenom email photo telephone nomEntreprise")
     .sort({ createdAt: -1 });
   return { jobs, totalJobs, ouverteJobs, fermelJobs };
 };
@@ -45,7 +47,7 @@ export const getAllJobsService = async (filters) => {
 export const getJobByIdServices = async (jobId) => {
   const job = await Job.findById(jobId).populate(
     "entreprise",
-    "nom prenom email photo telephone",
+    "nom prenom email photo telephone nomEntreprise",
   );
 
   if (!job) {
@@ -76,7 +78,6 @@ export const deleteJobService = async (jobId) => {
   await Job.findByIdAndDelete(jobId);
   return true;
 };
-
 
 export const toggleJobStatusService = async (jobId, requestedStatut) => {
   const job = await Job.findById(jobId);

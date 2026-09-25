@@ -24,7 +24,7 @@ export const JobList = () => {
   const { jobs, loading } = useSelector((state) => state.offres);
   const { savedJobs } = useSelector((state) => state.candidatures);
 
-  const candidateSkills = user?.competences || user?.skills || [];
+  const candidateSkills = user?.competences;
 
   const [keyword, setKeyword] = useState("");
   const [domaine, setDomaine] = useState("");
@@ -50,17 +50,17 @@ export const JobList = () => {
     );
   };
 
-  const handleClearFilters = () => {
-    setKeyword("");
-    setDomaine("");
-    setVille("");
-    setTypeContrat("");
-    setMinMatch(0);
-    dispatch(fetchJobs({ statut: "Ouverte" }));
-  };
+  // const handleClearFilters = () => {
+  //   setKeyword("");
+  //   setDomaine("");
+  //   setVille("");
+  //   setTypeContrat("");
+  //   setMinMatch(0);
+  //   dispatch(fetchJobs({ statut: "Ouverte" }));
+  // };
 
   const isSaved = (jobId) => {
-    return savedJobs.some((item) => (item.job?._id || item.job) === jobId);
+    return savedJobs.some((item) => (item.job?._id ) === jobId);
   };
 
   const handleToggleSave = (jobId, e) => {
@@ -69,58 +69,52 @@ export const JobList = () => {
     dispatch(toggleSavedJob(jobId));
   };
 
-  // Filter
+  
   const filteredJobs = jobs;
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+     
       <div>
         <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2.5">
           <Briefcase className="w-6 h-6 text-[#00E6A5]" />
           <span>Offres d'Emploi & Smart Matching</span>
         </h1>
-        <p className="text-xs text-[#90A1B9] mt-1">
-          Explorez toutes les offres et découvrez votre degré de compatibilité grâce à notre moteur IA.
-        </p>
+        
       </div>
 
-      {/* Search & Filter Bar */}
       <form
         onSubmit={handleSearch}
         className="bg-[#161B22] border border-[#374151] rounded-2xl p-4 space-y-4 shadow-xl"
       >
         <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-          {/* Keyword Search */}
           <div className="md:col-span-2 relative">
             <Search className="w-4 h-4 text-[#90A1B9] absolute left-3.5 top-3" />
             <input
               type="text"
-              placeholder="Titre du poste, mots-clés..."
+              placeholder="Titre du poste"
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
-              className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#00E6A5] focus:ring-1 focus:ring-[#00E6A5] placeholder:text-[#62748E]"
+              className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-white  placeholder:text-[#62748E]"
             />
           </div>
 
-          {/* Ville */}
           <div className="relative">
             <MapPin className="w-4 h-4 text-[#90A1B9] absolute left-3.5 top-3" />
             <input
               type="text"
-              placeholder="Ville (Casablanca, Rabat...)"
+              placeholder="Ville (fquih ben salah...)"
               value={ville}
               onChange={(e) => setVille(e.target.value)}
-              className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#00E6A5] focus:ring-1 focus:ring-[#00E6A5] placeholder:text-[#62748E]"
+              className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-white placeholder:text-[#62748E]"
             />
           </div>
 
-          {/* Type Contrat */}
           <div>
             <select
               value={typeContrat}
               onChange={(e) => setTypeContrat(e.target.value)}
-              className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#00E6A5]"
+              className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl px-3.5 py-2.5 text-xs text-white "
             >
               <option value="">Tous types de contrat</option>
               <option value="CDI">CDI</option>
@@ -131,12 +125,11 @@ export const JobList = () => {
           </div>
         </div>
 
-        {/* Secondary row: Smart Matching filter and actions */}
         <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#374151]">
 
 
           <div className="flex items-center gap-2">
-            {(keyword || ville || typeContrat || minMatch > 0) && (
+            {/* {(keyword || ville || typeContrat || minMatch > 0) && (
               <button
                 type="button"
                 onClick={handleClearFilters}
@@ -145,7 +138,7 @@ export const JobList = () => {
                 <X className="w-3.5 h-3.5" />
                 <span>Réinitialiser</span>
               </button>
-            )}
+            )} */}
             <button
               type="submit"
               className="px-5 py-2 rounded-xl bg-[#00E6A5] hover:bg-[#00C293] text-[#0B0E14] text-xs font-bold transition-all shadow-[0_0_15px_rgba(0,230,165,0.2)]"
@@ -156,20 +149,18 @@ export const JobList = () => {
         </div>
       </form>
 
-      {/* Results Header */}
       <div className="flex items-center justify-between text-xs text-[#90A1B9]">
         <span>
-          <strong className="text-white">{filteredJobs.length}</strong> offre
-          {filteredJobs.length > 1 ? "s" : ""} disponible{filteredJobs.length > 1 ? "s" : ""}
+          <strong className="text-white">{filteredJobs.length}</strong> 
+          offre disponibles
         </span>
-        {candidateSkills.length === 0 && (
+        {/* {candidateSkills.length === 0 && (
           <Link to="/candidat/profile" className="text-[#00E6A5] hover:underline">
             + Complétez vos compétences pour calculer votre Smart Matching
           </Link>
-        )}
+        )} */}
       </div>
 
-      {/* Jobs Grid */}
       {loading ? (
         <div className="text-center py-16 text-xs text-[#90A1B9]">
           Chargement des opportunités...
@@ -191,7 +182,6 @@ export const JobList = () => {
                 key={job._id}
                 className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 hover:border-[#00E6A5]/50 hover:shadow-lg transition-all flex flex-col justify-between space-y-4 relative group"
               >
-                {/* Top Section */}
                 <div className="space-y-3">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-2">
@@ -212,7 +202,7 @@ export const JobList = () => {
                             ? "bg-[#00E6A5]/10 border-[#00E6A5]/30 text-[#00E6A5]"
                             : "bg-[#0B0E14] border-[#374151] text-[#90A1B9] hover:text-white"
                         }`}
-                        title={saved ? "Retirer des favoris" : "Sauvegarder"}
+                        
                       >
                         <Bookmark
                           className={`w-4 h-4 ${saved ? "fill-[#00E6A5]" : ""}`}
@@ -221,7 +211,6 @@ export const JobList = () => {
                     </div>
                   </div>
 
-                  {/* Title & Company */}
                   <div>
                     <h3 className="text-base font-bold text-white group-hover:text-[#00E6A5] transition-colors line-clamp-1">
                       {job.titre}

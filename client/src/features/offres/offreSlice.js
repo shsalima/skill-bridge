@@ -174,10 +174,10 @@ const offreSlice = createSlice({
       })
       .addCase(fetchJobs.fulfilled, (state, action) => {
         state.loading = false;
-        state.jobs = action.payload.data || [];
-        state.totalJobs = action.payload.count || action.payload.data?.length || 0;
-        state.ouverteJobs = action.payload.ouverteJobs || 0;
-        state.fermelJobs = action.payload.fermelJobs || 0;
+        state.jobs = action.payload.data ;
+        state.totalJobs = action.payload.count ;
+        state.ouverteJobs = action.payload.ouverteJobs ;
+        state.fermelJobs = action.payload.fermelJobs ;
       })
       .addCase(fetchJobs.rejected, (state, action) => {
         state.loading = false;

@@ -22,7 +22,9 @@ export const Header = () => {
   const dropdownRef = useRef(null);
 
   const { user } = useSelector((state) => state.auth);
-  const { notifications, unreadCount } = useSelector((state) => state.notifications);
+  const { notifications, unreadCount } = useSelector(
+    (state) => state.notifications,
+  );
 
   const [showNotifications, setShowNotifications] = useState(false);
 
@@ -30,7 +32,6 @@ export const Header = () => {
     dispatch(fetchMyNotifications());
   }, [dispatch]);
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -41,18 +42,18 @@ export const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  if (!user) return null;
   const handleNotificationClick = (notif) => {
     if (!notif.lu) {
       dispatch(markNotificationAsRead(notif._id));
     }
     setShowNotifications(false);
-    
+
     if (notif.lien) {
       navigate(notif.lien);
       return;
     }
 
-    // Default routing if lien is missing
     if (user?.role === "Candidat") {
       if (notif.type === "Offre") navigate("/candidat/jobs");
       else navigate("/candidat/applications");
@@ -63,18 +64,7 @@ export const Header = () => {
     }
   };
 
-  const getRoleBadge = (role) => {
-    switch (role) {
-      case "Administrateur":
-        return { label: "Super Admin", color: "bg-purple-500/10 text-purple-400 border-purple-500/30" };
-      case "AdministrateurEntreprise":
-        return { label: "Entreprise", color: "bg-[#00E6A5]/10 text-[#00E6A5] border-[#00E6A5]/30" };
-      default:
-        return { label: "Candidat", color: "bg-sky-500/10 text-sky-400 border-sky-500/30" };
-    }
-  };
 
-  const roleInfo = getRoleBadge(user?.role);
 
   const getProfilePath = (role) => {
     switch (role) {
@@ -91,19 +81,14 @@ export const Header = () => {
 
   return (
     <header className="h-16 bg-[#0D1117] border-b border-[#374151] px-6 flex items-center justify-between sticky top-0 z-40">
-      {/* Brand / Logo */}
       <Link to="/" className="flex items-center gap-2.5">
-        <div className="p-1.5 bg-[#00E6A5]/10 rounded-lg border border-[#00E6A5]/30">
-          <div className="w-5 h-5 border-2 border-[#00E6A5] rounded-sm rotate-45 flex items-center justify-center">
-            <div className="w-1.5 h-1.5 bg-[#00E6A5] rounded-full" />
-          </div>
-        </div>
-        <span className="text-lg font-bold text-white tracking-tight">SkillBridge</span>
+        <div>{/*  hna icons */}</div>
+        <span className="text-lg font-bold text-white tracking-tight">
+          SkillBridge
+        </span>
       </Link>
 
-      {/* Right side: Notifications & Profile */}
       <div className="flex items-center gap-4">
-        {/* Notification Bell Dropdown */}
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setShowNotifications(!showNotifications)}
@@ -122,10 +107,12 @@ export const Header = () => {
             <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-[#161B22] border border-[#374151] rounded-2xl shadow-2xl p-4 z-50 animate-in fade-in zoom-in-95 duration-150">
               <div className="flex items-center justify-between pb-3 border-b border-[#374151] mb-3">
                 <div className="flex items-center gap-2">
-                  <h4 className="text-xs font-bold text-white">Notifications</h4>
+                  <h4 className="text-xs font-bold text-white">
+                    Notifications
+                  </h4>
                   {unreadCount > 0 && (
                     <span className="bg-red-500/10 text-red-500 text-[10px] font-bold px-2 py-0.5 rounded-full border border-red-500/20">
-                      {unreadCount} non lue{unreadCount > 1 ? "s" : ""}
+                      {unreadCount} non lue
                     </span>
                   )}
                 </div>
@@ -149,7 +136,9 @@ export const Header = () => {
                     >
                       <div className="space-y-1 flex-1">
                         <div className="flex items-center gap-2">
-                          <span className="font-semibold text-white">{notif.titre}</span>
+                          <span className="font-semibold text-white">
+                            {notif.titre}
+                          </span>
                           {!notif.lu && (
                             <span className="w-2 h-2 rounded-full bg-red-500" />
                           )}
@@ -182,13 +171,12 @@ export const Header = () => {
           )}
         </div>
 
-        {/* User Profile Pill (Clickable -> Redirects to profile) */}
         <Link
           to={profilePath}
           title="Consulter mon profil"
-          className="flex items-center gap-3 pl-2 border-l border-[#374151] p-1.5 rounded-xl hover:bg-[#161B22] transition-colors group cursor-pointer"
+          className="flex items-center gap-3 pl-2 border-l border-[#374151] p-1.5  cursor-pointer"
         >
-          <div className="w-8 h-8 rounded-full bg-[#00E6A5]/10 border border-[#00E6A5]/30 group-hover:border-[#00E6A5] flex items-center justify-center text-[#00E6A5] font-bold text-xs transition-colors">
+          <div className="w-8 h-8 rounded-full border flex items-center justify-center  ">
             {user?.photo ? (
               <img
                 src={user.photo}
@@ -196,17 +184,15 @@ export const Header = () => {
                 className="w-full h-full rounded-full object-cover"
               />
             ) : (
-              (user?.prenom?.[0] || user?.nom?.[0] || "U").toUpperCase()
+              (user?.nom?.[0]).toUpperCase()
             )}
           </div>
           <div className="hidden md:block text-left">
-            <div className="text-xs font-semibold text-white group-hover:text-[#00E6A5] leading-tight transition-colors">
+            <div className="text-xs font-semibold text-white ">
               {user?.prenom} {user?.nom}
             </div>
-            <span
-              className={`inline-block text-[10px] font-bold px-1.5 py-0.2 rounded border mt-0.5 ${roleInfo.color}`}
-            >
-              {roleInfo.label}
+            <span className="inline-block text-[10px] font-bold px-1.5 py-0.2 rounded border mt-0.5 ">
+              {user?.role}
             </span>
           </div>
         </Link>

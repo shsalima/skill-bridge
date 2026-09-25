@@ -170,11 +170,11 @@ const candidatureSlice = createSlice({
       // toggleSavedJob
       .addCase(toggleSavedJob.fulfilled, (state, action) => {
         const { jobId, message } = action.payload;
-        if (message?.includes("retirée") || message?.includes("supprimée")) {
-          state.savedJobs = state.savedJobs.filter((item) => (item.job?._id || item.job) !== jobId);
+        if (message?.includes("retirée") ) {
+          state.savedJobs = state.savedJobs.filter((item) => (item.job?._id ) !== jobId);
         } else {
-          // Add if not present
-          const exists = state.savedJobs.some((item) => (item.job?._id || item.job) === jobId);
+          
+          const exists = state.savedJobs.some((item) => (item.job?._id) === jobId);
           if (!exists) {
             state.savedJobs.unshift({ job: { _id: jobId } });
           }
