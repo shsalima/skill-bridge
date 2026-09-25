@@ -33,7 +33,7 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
       - name: Vérifier que le projet build (Docker)
-        run: docker build
+        run: docker build .
 
   frontend:
     runs-on: ubuntu-latest
