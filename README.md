@@ -227,7 +227,8 @@ Ce diagramme présente les principaux acteurs de la plateforme (**Candidat, Admi
 
 Ce diagramme représente les principales entités de l'application, leurs attributs et les relations entre elles.
 
-![Diagramme de Classes](docs/class-diagram.png)
+![Diagramme de Classes]("./client/public/daigrammes/Diagramme classe.drawio.png")
+<img src="./client/public/daigrammes/Diagramme classe.drawio.png" alt="Alt text" width="300" height="200" />
 
 ---
 
