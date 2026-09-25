@@ -13,7 +13,7 @@ export const checkJobIsAvailable= async(req,res,next)=>{
             })
         }
         if(job.statut === "Fermée"){
-            res.status(403).json({
+            return res.status(403).json({
                 success:false,
                 message:"Cette offre est fermée et n'accepte plus de candidatures"
             })

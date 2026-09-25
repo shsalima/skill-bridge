@@ -16,11 +16,7 @@ import {
   fetchMyApplications,
   fetchMySavedJobs,
 } from "../../features/candidatures/candidatureSlice";
-import Card from "../../components/common/Card";
-import Badge from "../../components/common/Badge";
-import SmartMatchingBadge from "../../components/matching/SmartMatchingBadge";
-import { calculateMatchScore } from "../../utils/matchingCalculator";
-import { formatDate, formatSalary } from "../../utils/formatters";
+import { formatDate, formatSalary, getStatusBadge } from "../../utils/formatters";
 
 export const CandidatDashboard = () => {
   const dispatch = useDispatch();
@@ -45,18 +41,7 @@ export const CandidatDashboard = () => {
     (a) => a.statut === "En attente"
   ).length;
 
-  // Calculate matching score for jobs and take top recommendations
-  const matchedJobs = jobs
-    .map((job) => ({
-      ...job,
-      score: calculateMatchScore(
-        candidateSkills,
-        job.competencesRequises || job.skillsRequired || job.competences || []
-      ),
-    }))
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 3);
-
+  const recentJobs = jobs.slice(0, 3);
   const recentApplications = myApplications.slice(0, 4);
 
   return (
@@ -64,17 +49,11 @@ export const CandidatDashboard = () => {
       {/* Welcome Banner */}
       <div className="bg-gradient-to-r from-[#161B22] to-[#1F2937] border border-[#374151] rounded-3xl p-6 sm:p-8 relative overflow-hidden">
         <div className="relative z-10 max-w-2xl space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00E6A5]/10 border border-[#00E6A5]/30 text-[#00E6A5] text-xs font-bold">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Smart Matching IA Activé</span>
-          </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             Bonjour, {user?.prenom} {user?.nom} 👋
           </h1>
           <p className="text-xs sm:text-sm text-[#90A1B9] leading-relaxed">
-            {candidateSkills.length > 0
-              ? `Votre profil contient ${candidateSkills.length} compétences. Découvrez les opportunités les plus compatibles avec votre profil.`
-              : "Ajoutez vos compétences dans votre profil pour débloquer le calcul de Smart Matching sur toutes les offres !"}
+            Découvrez de nouvelles opportunités d'emploi sur SkillBridge.
           </p>
           <div className="pt-2 flex flex-wrap gap-3">
             <Link
@@ -94,43 +73,42 @@ export const CandidatDashboard = () => {
         </div>
       </div>
 
-      {/* KPI Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="space-y-2">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-2">
           <div className="flex items-center justify-between text-[#90A1B9]">
             <span className="text-xs font-medium">Candidatures</span>
             <FileCheck2 className="w-4 h-4 text-[#00E6A5]" />
           </div>
           <p className="text-2xl font-bold text-white">{myApplications.length}</p>
           <span className="text-[11px] text-[#62748E]">Total envoyées</span>
-        </Card>
+        </div>
 
-        <Card className="space-y-2">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-2">
           <div className="flex items-center justify-between text-[#90A1B9]">
             <span className="text-xs font-medium">Acceptées</span>
             <CheckCircle2 className="w-4 h-4 text-[#00E6A5]" />
           </div>
           <p className="text-2xl font-bold text-[#00E6A5]">{acceptedCount}</p>
           <span className="text-[11px] text-[#62748E]">Réponses positives</span>
-        </Card>
+        </div>
 
-        <Card className="space-y-2">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-2">
           <div className="flex items-center justify-between text-[#90A1B9]">
             <span className="text-xs font-medium">En attente</span>
             <Clock className="w-4 h-4 text-amber-400" />
           </div>
           <p className="text-2xl font-bold text-amber-400">{pendingCount}</p>
           <span className="text-[11px] text-[#62748E]">En cours d'étude</span>
-        </Card>
+        </div>
 
-        <Card className="space-y-2">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-2">
           <div className="flex items-center justify-between text-[#90A1B9]">
             <span className="text-xs font-medium">Offres sauvegardées</span>
             <Bookmark className="w-4 h-4 text-purple-400" />
           </div>
           <p className="text-2xl font-bold text-white">{savedJobs.length}</p>
           <span className="text-[11px] text-[#62748E]">En favoris</span>
-        </Card>
+        </div>
       </div>
 
       {/* Top Smart Matched Jobs */}
@@ -138,11 +116,11 @@ export const CandidatDashboard = () => {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-[#00E6A5]" />
-              <span>Top Recommandations Smart Matching</span>
+              <Briefcase className="w-5 h-5 text-[#00E6A5]" />
+              <span>Dernières Offres d'emploi</span>
             </h2>
             <p className="text-xs text-[#90A1B9]">
-              Offres sélectionnées selon votre profil et compétences
+              Offres récemment ajoutées sur la plateforme
             </p>
           </div>
           <Link
@@ -159,19 +137,18 @@ export const CandidatDashboard = () => {
             <div className="col-span-3 text-center py-8 text-xs text-[#90A1B9]">
               Calcul des correspondances en cours...
             </div>
-          ) : matchedJobs.length === 0 ? (
+          ) : recentJobs.length === 0 ? (
             <div className="col-span-3 bg-[#161B22] border border-[#374151] rounded-2xl p-8 text-center text-xs text-[#90A1B9]">
               Aucune offre d'emploi active disponible pour le moment.
             </div>
           ) : (
-            matchedJobs.map((job) => (
-              <Card key={job._id} hover className="flex flex-col justify-between space-y-4">
+            recentJobs.map((job) => (
+              <div key={job._id} className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 hover:border-[#00E6A5]/50 hover:shadow-lg transition-all flex flex-col justify-between space-y-4">
                 <div className="space-y-3">
                   <div className="flex items-start justify-between gap-2">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-[#90A1B9] bg-[#0B0E14] px-2 py-1 rounded border border-[#374151]">
                       {job.typeContrat}
                     </span>
-                    <SmartMatchingBadge score={job.score} size="sm" />
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-white hover:text-[#00E6A5] transition-colors line-clamp-1">
@@ -198,7 +175,7 @@ export const CandidatDashboard = () => {
                   <span>Consulter l'offre</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
-              </Card>
+              </div>
             ))
           )}
         </div>
@@ -222,7 +199,7 @@ export const CandidatDashboard = () => {
           </Link>
         </div>
 
-        <Card className="p-0 overflow-hidden">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl overflow-hidden">
           {appsLoading ? (
             <div className="p-8 text-center text-xs text-[#90A1B9]">
               Chargement des candidatures...
@@ -254,14 +231,13 @@ export const CandidatDashboard = () => {
                     </p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <SmartMatchingBadge score={app.scoreMatching || 0} size="sm" />
-                    <Badge status={app.statut} />
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${getStatusBadge(app.statut)}`}>{app.statut}</span>
                   </div>
                 </div>
               ))}
             </div>
           )}
-        </Card>
+        </div>
       </div>
     </div>
   );

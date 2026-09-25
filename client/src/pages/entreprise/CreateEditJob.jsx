@@ -12,6 +12,7 @@ import {
   ArrowLeft,
   Save,
   CheckCircle2,
+  Loader2,
 } from "lucide-react";
 import {
   createJob,
@@ -20,8 +21,6 @@ import {
   clearOffreError,
   clearOffreSuccess,
 } from "../../features/offres/offreSlice";
-import Card from "../../components/common/Card";
-import Button from "../../components/common/Button";
 
 export const CreateEditJob = () => {
   const { id } = useParams();
@@ -142,7 +141,7 @@ export const CreateEditJob = () => {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <Card className="space-y-4">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-4">
           <div>
             <label className="block text-xs font-semibold text-white mb-1.5">
               Titre du poste *
@@ -252,7 +251,7 @@ export const CreateEditJob = () => {
           {/* Skills Requirements Tag Manager */}
           <div className="space-y-2 pt-2">
             <label className="block text-xs font-semibold text-white">
-              Compétences requises * (Au moins 2 compétences pour le Smart Matching)
+              Compétences requises *
             </label>
             <div className="flex gap-2">
               <input
@@ -268,9 +267,14 @@ export const CreateEditJob = () => {
                 }}
                 className="flex-1 bg-[#0B0E14] border border-[#374151] rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-[#00E6A5]"
               />
-              <Button onClick={handleAddSkill} size="sm" icon={Plus}>
-                Ajouter
-              </Button>
+              <button
+                type="button"
+                onClick={handleAddSkill}
+                className="inline-flex items-center justify-center font-bold rounded-xl transition-all px-3 py-1.5 text-xs gap-1.5 bg-[#00E6A5] text-[#0B0E14] hover:bg-[#00C293] shadow-lg"
+              >
+                <Plus className="w-4 h-4" />
+                <span>Ajouter</span>
+              </button>
             </div>
 
             {skillError && <p className="text-[11px] text-red-400">{skillError}</p>}
@@ -315,18 +319,33 @@ export const CreateEditJob = () => {
               required
             />
           </div>
-        </Card>
+        </div>
 
         <div className="flex items-center justify-end gap-3">
-          <Button
-            variant="secondary"
+          <button
+            type="button"
             onClick={() => navigate("/entreprise/jobs")}
+            className="inline-flex items-center justify-center font-bold rounded-xl transition-all px-4 py-2.5 text-xs gap-2 bg-[#161B22] text-white hover:bg-[#1F2937] border border-[#374151]"
           >
             Annuler
-          </Button>
-          <Button type="submit" loading={actionLoading} icon={Save}>
-            {isEditing ? "Enregistrer les modifications" : "Publier l'offre"}
-          </Button>
+          </button>
+          <button
+            type="submit"
+            disabled={actionLoading}
+            className="inline-flex items-center justify-center font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2.5 text-xs gap-2 bg-[#00E6A5] text-[#0B0E14] hover:bg-[#00C293] shadow-lg"
+          >
+            {actionLoading ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Chargement...</span>
+              </>
+            ) : (
+              <>
+                <Save className="w-4 h-4" />
+                <span>{isEditing ? "Enregistrer les modifications" : "Publier l'offre"}</span>
+              </>
+            )}
+          </button>
         </div>
       </form>
     </div>

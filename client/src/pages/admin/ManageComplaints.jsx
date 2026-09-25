@@ -16,9 +16,7 @@ import {
   clearReclamationSuccess,
 } from "../../features/reclamations/reclamationSlice";
 import { deleteJob } from "../../features/offres/offreSlice";
-import Card from "../../components/common/Card";
-import Badge from "../../components/common/Badge";
-import { formatDate } from "../../utils/formatters";
+import { formatDate, getStatusBadge } from "../../utils/formatters";
 
 export const ManageComplaints = () => {
   const dispatch = useDispatch();
@@ -131,7 +129,7 @@ export const ManageComplaints = () => {
           Chargement des signalements...
         </div>
       ) : filtered.length === 0 ? (
-        <Card className="text-center py-12 space-y-3">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 text-center py-12 space-y-3">
           <ShieldAlert className="w-8 h-8 text-[#90A1B9] mx-auto opacity-50" />
           <h3 className="text-sm font-bold text-white">
             Aucun signalement dans cette section
@@ -139,21 +137,22 @@ export const ManageComplaints = () => {
           <p className="text-xs text-[#90A1B9]">
             Tous les signalements sont traités ou aucun n'a encore été déposé.
           </p>
-        </Card>
+        </div>
       ) : (
         <div className="space-y-4">
           {filtered.map((r) => (
-            <Card
+            <div
               key={r._id}
-              hover
-              className="flex flex-col lg:flex-row lg:items-start justify-between gap-5"
+              className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 hover:border-[#00E6A5]/50 hover:shadow-lg transition-all flex flex-col lg:flex-row lg:items-start justify-between gap-5"
             >
               <div className="space-y-3 flex-1">
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/30">
                     {r.motif}
                   </span>
-                  <Badge status={r.statut} />
+                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${getStatusBadge(r.statut)}`}>
+                    {r.statut}
+                  </span>
                 </div>
 
                 <div>
@@ -220,7 +219,7 @@ export const ManageComplaints = () => {
                   </button>
                 )}
               </div>
-            </Card>
+            </div>
           ))}
         </div>
       )}

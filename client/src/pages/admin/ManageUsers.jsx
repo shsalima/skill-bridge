@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Users, Search, Trash2, Shield, User, Building2 } from "lucide-react";
 import { fetchAllUsers, deleteUser } from "../../features/auth/authSlice";
-import Card from "../../components/common/Card";
 import { formatDate } from "../../utils/formatters";
 
 export const ManageUsers = () => {
@@ -73,7 +72,7 @@ export const ManageUsers = () => {
       </div>
 
       {/* Filter Bar */}
-      <Card className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="relative flex-1 max-w-md">
           <Search className="w-4 h-4 text-[#90A1B9] absolute left-3.5 top-3" />
           <input
@@ -105,10 +104,10 @@ export const ManageUsers = () => {
             </button>
           ))}
         </div>
-      </Card>
+      </div>
 
       {/* Users Table */}
-      <Card className="p-0 overflow-hidden">
+      <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-0 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
@@ -180,7 +179,7 @@ export const ManageUsers = () => {
             </tbody>
           </table>
         </div>
-      </Card>
+      </div>
     </div>
   );
 };

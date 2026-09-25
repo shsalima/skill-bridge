@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AlertTriangle, Send, CheckCircle2, ShieldAlert } from "lucide-react";
+import { AlertTriangle, Send, CheckCircle2, ShieldAlert, Loader2 } from "lucide-react";
 import { createReclamation, clearReclamationSuccess, clearReclamationError } from "../../features/reclamations/reclamationSlice";
 import { fetchJobs } from "../../features/offres/offreSlice";
-import Card from "../../components/common/Card";
-import Button from "../../components/common/Button";
 
 export const Complaints = () => {
   const dispatch = useDispatch();
@@ -68,7 +66,7 @@ export const Complaints = () => {
         </div>
       )}
 
-      <Card className="space-y-5">
+      <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-5">
         <div className="flex items-center gap-3 p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-amber-400 text-xs">
           <ShieldAlert className="w-5 h-5 shrink-0" />
           <span>
@@ -134,17 +132,25 @@ export const Complaints = () => {
             />
           </div>
 
-          <Button
+          <button
             type="submit"
-            loading={actionLoading}
-            icon={Send}
-            variant="danger"
-            className="w-full sm:w-auto px-6"
+            disabled={actionLoading}
+            className="w-full sm:w-auto px-6 inline-flex items-center justify-center font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed py-2.5 text-xs gap-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/30 shadow-lg cursor-pointer"
           >
-            Soumettre le signalement
-          </Button>
+            {actionLoading ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Chargement...</span>
+              </>
+            ) : (
+              <>
+                <Send className="w-4 h-4" />
+                <span>Soumettre le signalement</span>
+              </>
+            )}
+          </button>
         </form>
-      </Card>
+      </div>
     </div>
   );
 };

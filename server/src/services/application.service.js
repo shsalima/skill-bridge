@@ -1,7 +1,5 @@
 import Application from "../models/Application.js";
-import Competence from "../models/Competence.js";
 import Job from "../models/Job.js";
-import User from "../models/User.js";
 import { createNotificationService } from "./notification.service.js";
 
 export const createCandidatureService = async (
@@ -18,30 +16,6 @@ export const createCandidatureService = async (
     throw new Error("Cette offre est fermée et n'accepte plus de candidatures.");
   }
 
-  const candidatSkillsDoc = await Competence.findOne({ candidat: candidatId });
-  const candidatSkills = candidatSkillsDoc ? candidatSkillsDoc.competences : [];
-
-  let scoreMatching = 0;
-  const requiredSkills = job.competencesRequises || [];
-
-  const normalize = (s) =>
-    String(s || "")
-      .toLowerCase()
-      .replace(/\.(js|ts)$/i, "")
-      .replace(/[^a-z0-9]/g, "");
-
-  const normalizedCandidat = candidatSkills.map(normalize).filter(Boolean);
-
-  if (requiredSkills.length > 0 && normalizedCandidat.length > 0) {
-    const matched = requiredSkills.filter((req) => {
-      const normReq = normalize(req);
-      if (!normReq) return false;
-      return normalizedCandidat.some(
-        (cand) => cand === normReq || cand.includes(normReq) || normReq.includes(cand)
-      );
-    });
-    scoreMatching = Math.round((matched.length / requiredSkills.length) * 100);
-  }
   if (!applicationData.cv) {
     throw new Error("Veuillez fournir votre CV pour postuler.");
   }
@@ -51,7 +25,6 @@ export const createCandidatureService = async (
     job: jobId,
     cv: applicationData.cv,
     lettreMotivation: applicationData.lettreMotivation || "",
-    scoreMatching,
   });
 }
 
@@ -79,7 +52,7 @@ export const getApplicationsByJobService= async (jobId,entrepriseId)=>{
 
     return await Application.find({job:jobId})
         .populate("candidat","nom prenom email telephone photo competences cvUrl")
-        .sort({scoreMatching: -1,createdAt:-1})
+        .sort({createdAt:-1})
 }
 
 
@@ -94,7 +67,6 @@ export const updateApplicationStatusService=async(applicationId,entrepriseId,new
 
     }
     application.statut=newStatus
-    // console.log(application.statut)
     
     await application.save()
 

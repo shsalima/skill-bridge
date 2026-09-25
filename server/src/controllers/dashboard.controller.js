@@ -9,7 +9,7 @@ export const getEntrepriseStats= async(req,res)=>{
             data:stats
         })
     }catch(error){
-        return res.stats(500).json({
+        return res.status(500).json({
             success:false,
             message:error.message
         })

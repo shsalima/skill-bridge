@@ -12,10 +12,7 @@ import {
   XCircle,
 } from "lucide-react";
 import { fetchMyApplications } from "../../features/candidatures/candidatureSlice";
-import Card from "../../components/common/Card";
-import Badge from "../../components/common/Badge";
-import SmartMatchingBadge from "../../components/matching/SmartMatchingBadge";
-import { formatDate } from "../../utils/formatters";
+import { formatDate, getStatusBadge } from "../../utils/formatters";
 
 export const MyApplications = () => {
   const dispatch = useDispatch();
@@ -87,7 +84,7 @@ export const MyApplications = () => {
           Chargement de vos candidatures...
         </div>
       ) : filtered.length === 0 ? (
-        <Card className="text-center py-12 space-y-3">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 text-center py-12 space-y-3">
           <FileCheck2 className="w-8 h-8 text-[#90A1B9] mx-auto opacity-50" />
           <h3 className="text-sm font-bold text-white">
             Aucune candidature dans cette catégorie
@@ -101,14 +98,13 @@ export const MyApplications = () => {
           >
             Découvrir les offres disponibles
           </Link>
-        </Card>
+        </div>
       ) : (
         <div className="space-y-3">
           {filtered.map((app) => (
-            <Card
+            <div
               key={app._id}
-              hover
-              className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+              className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 hover:border-[#00E6A5]/50 hover:shadow-lg transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4"
             >
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
@@ -142,8 +138,9 @@ export const MyApplications = () => {
 
               <div className="flex flex-wrap sm:flex-col items-start sm:items-end justify-between sm:justify-center gap-3 pt-3 sm:pt-0 border-t sm:border-t-0 border-[#374151]">
                 <div className="flex items-center gap-2">
-                  <SmartMatchingBadge score={app.scoreMatching || 0} size="sm" />
-                  <Badge status={app.statut} />
+                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${getStatusBadge(app.statut)}`}>
+                    {app.statut}
+                  </span>
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -166,7 +163,7 @@ export const MyApplications = () => {
                   </Link>
                 </div>
               </div>
-            </Card>
+            </div>
           ))}
         </div>
       )}

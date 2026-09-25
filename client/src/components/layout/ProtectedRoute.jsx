@@ -20,8 +20,11 @@ export const ProtectedRoute = ({ children, allowedRoles }) => {
   }
 
   if (allowedRoles && user && !allowedRoles.includes(user.role)) {
+
+
     // Redirect to proper role dashboard
     if (user.role === "AdministrateurEntreprise") {
+
       return <Navigate to="/entreprise/dashboard" replace />;
     }
     if (user.role === "Administrateur") {

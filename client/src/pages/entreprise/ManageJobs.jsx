@@ -21,8 +21,6 @@ import {
   clearOffreSuccess,
   clearOffreError,
 } from "../../features/offres/offreSlice";
-import Card from "../../components/common/Card";
-import Button from "../../components/common/Button";
 import { formatDate, formatSalary } from "../../utils/formatters";
 
 export const ManageJobs = () => {
@@ -83,9 +81,13 @@ export const ManageJobs = () => {
         </div>
 
         <Link to="/entreprise/jobs/create">
-          <Button icon={Plus} size="md">
-            Publier une offre
-          </Button>
+          <button
+            type="button"
+            className="inline-flex items-center justify-center font-bold rounded-xl transition-all px-4 py-2.5 text-xs gap-2 bg-[#00E6A5] text-[#0B0E14] hover:bg-[#00C293] shadow-lg cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Publier une offre</span>
+          </button>
         </Link>
       </div>
 
@@ -146,20 +148,19 @@ export const ManageJobs = () => {
           Chargement de vos annonces...
         </div>
       ) : filteredJobs.length === 0 ? (
-        <Card className="text-center py-12 space-y-3">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 text-center py-12 space-y-3">
           <Briefcase className="w-8 h-8 text-[#90A1B9] mx-auto opacity-50" />
           <h3 className="text-sm font-bold text-white">Aucune offre trouvée</h3>
           <p className="text-xs text-[#90A1B9]">
             Vous n'avez pas d'offres correspondant à ce filtre.
           </p>
-        </Card>
+        </div>
       ) : (
         <div className="space-y-3">
           {filteredJobs.map((job) => (
-            <Card
+            <div
               key={job._id}
-              hover
-              className="flex flex-col lg:flex-row lg:items-center justify-between gap-4"
+              className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 hover:border-[#00E6A5]/50 hover:shadow-lg transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-4"
             >
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
@@ -253,7 +254,7 @@ export const ManageJobs = () => {
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
-            </Card>
+            </div>
           ))}
         </div>
       )}

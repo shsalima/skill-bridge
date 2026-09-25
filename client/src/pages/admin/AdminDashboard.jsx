@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import { fetchAdminStats } from "../../features/offres/offreSlice";
 import { fetchAllReclamations } from "../../features/reclamations/reclamationSlice";
-import Card from "../../components/common/Card";
 
 export const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -46,7 +45,7 @@ export const AdminDashboard = () => {
 
       {/* KPI Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="space-y-2">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-2">
           <div className="flex items-center justify-between text-[#90A1B9]">
             <span className="text-xs font-medium">Total Utilisateurs</span>
             <Users className="w-4 h-4 text-[#00E6A5]" />
@@ -55,9 +54,9 @@ export const AdminDashboard = () => {
             {adminStats.totalUser || 0}
           </p>
           <span className="text-[11px] text-[#62748E]">Comptes créés</span>
-        </Card>
+        </div>
 
-        <Card className="space-y-2">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-2">
           <div className="flex items-center justify-between text-[#90A1B9]">
             <span className="text-xs font-medium">Candidats inscrits</span>
             <TrendingUp className="w-4 h-4 text-sky-400" />
@@ -66,9 +65,9 @@ export const AdminDashboard = () => {
             {adminStats.totalCandidats || 0}
           </p>
           <span className="text-[11px] text-[#62748E]">Chercheurs d'emploi</span>
-        </Card>
+        </div>
 
-        <Card className="space-y-2">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-2">
           <div className="flex items-center justify-between text-[#90A1B9]">
             <span className="text-xs font-medium">Entreprises</span>
             <Building2 className="w-4 h-4 text-purple-400" />
@@ -77,11 +76,11 @@ export const AdminDashboard = () => {
             {adminStats.totalEntreprise || 0}
           </p>
           <span className="text-[11px] text-[#62748E]">Recruteurs partenaires</span>
-        </Card>
+        </div>
 
-        <Card className="space-y-2">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-2">
           <div className="flex items-center justify-between text-[#90A1B9]">
-            <span className="text-xs font-medium">Offres & Candidatures</span>
+            <span className="text-xs font-medium">Offres &amp; Candidatures</span>
             <Briefcase className="w-4 h-4 text-[#00E6A5]" />
           </div>
           <p className="text-2xl font-bold text-white">
@@ -91,7 +90,7 @@ export const AdminDashboard = () => {
             </span>
           </p>
           <span className="text-[11px] text-[#62748E]">Activité globale</span>
-        </Card>
+        </div>
       </div>
 
       {/* Alert Card if pending reclamations */}
@@ -147,10 +146,9 @@ export const AdminDashboard = () => {
         ].map((sec, idx) => {
           const Icon = sec.icon;
           return (
-            <Card
+            <div
               key={idx}
-              hover
-              className="flex flex-col justify-between space-y-4"
+              className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 flex flex-col justify-between space-y-4 hover:border-[#00E6A5]/50 hover:shadow-lg transition-all"
             >
               <div className="space-y-2">
                 <div className={`p-2.5 bg-[#0B0E14] border border-[#374151] rounded-xl w-fit ${sec.color}`}>
@@ -169,7 +167,7 @@ export const AdminDashboard = () => {
                 <span>Accéder</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
-            </Card>
+            </div>
           );
         })}
       </div>

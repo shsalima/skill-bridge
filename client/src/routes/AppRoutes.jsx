@@ -35,6 +35,7 @@ import ManageCompanies from "../pages/admin/ManageCompanies";
 import ManageAllJobs from "../pages/admin/ManageAllJobs";
 import ManageComplaints from "../pages/admin/ManageComplaints";
 import AdminProfile from "../pages/admin/AdminProfile";
+import NotFound from "../pages/NotFound";
 
 // Root redirect based on role
 const RootRedirect = () => {
@@ -57,16 +58,15 @@ export const AppRoutes = () => {
       {/* Root redirect */}
       <Route path="/" element={<RootRedirect />} />
 
-      {/* Public Auth Routes */}
       <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<RegisterCandidat />} />
+      {/* <Route path="/register" element={<RegisterCandidat />} /> */}
       <Route path="/register/candidat" element={<RegisterCandidat />} />
       <Route path="/register/entreprise" element={<RegisterEntreprise />} />
+    
 
-      {/* Candidat Routes (Protected & encapsulated in LayoutShell) */}
-      <Route
-        path="/candidat"
-        element={
+      <Route 
+          path="/candidat"
+          element={
           <ProtectedRoute allowedRoles={["Candidat"]}>
             <LayoutShell />
           </ProtectedRoute>
@@ -159,7 +159,7 @@ export const AppRoutes = () => {
       />
 
       {/* Fallback */}
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

@@ -15,7 +15,7 @@ const savedJobSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-// makaykhalihch y save ktar mn mara
+// Unique index: prevents a candidate from saving the same job more than once
 savedJobSchema.index({ candidat: 1, job: 1 }, { unique: true });
 
 export default mongoose.model("SavedJob", savedJobSchema);

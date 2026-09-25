@@ -85,53 +85,12 @@ export const fetchMySavedJobs = createAsyncThunk(
   }
 );
 
-export const addFormation = createAsyncThunk(
-  "candidatures/addFormation",
-  async (formationData, { rejectWithValue }) => {
-    try {
-      const response = await candidatureService.addFormation(formationData);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.message || "Erreur lors de l'ajout de la formation"
-      );
-    }
-  }
-);
 
-export const fetchMyFormations = createAsyncThunk(
-  "candidatures/fetchMyFormations",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await candidatureService.getMyFormations();
-      return response.data || [];
-    } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.message || "Erreur lors du chargement des formations"
-      );
-    }
-  }
-);
-
-export const deleteFormation = createAsyncThunk(
-  "candidatures/deleteFormation",
-  async (formationId, { rejectWithValue }) => {
-    try {
-      await candidatureService.deleteFormation(formationId);
-      return formationId;
-    } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.message || "Erreur lors de la suppression de la formation"
-      );
-    }
-  }
-);
 
 const initialState = {
   myApplications: [],
   jobApplications: [],
   savedJobs: [],
-  formations: [],
   loading: false,
   actionLoading: false,
   error: null,
@@ -185,10 +144,7 @@ const candidatureSlice = createSlice({
       })
       .addCase(fetchApplicationsByJob.fulfilled, (state, action) => {
         state.loading = false;
-        // Sort candidates descending by smart matching score
-        state.jobApplications = [...action.payload].sort(
-          (a, b) => (b.scoreMatching || 0) - (a.scoreMatching || 0)
-        );
+        state.jobApplications = action.payload;
       })
       .addCase(fetchApplicationsByJob.rejected, (state, action) => {
         state.loading = false;
@@ -227,45 +183,6 @@ const candidatureSlice = createSlice({
       // fetchMySavedJobs
       .addCase(fetchMySavedJobs.fulfilled, (state, action) => {
         state.savedJobs = action.payload;
-      })
-      // formations
-      .addCase(fetchMyFormations.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchMyFormations.fulfilled, (state, action) => {
-        state.loading = false;
-        state.formations = action.payload;
-      })
-      .addCase(fetchMyFormations.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      .addCase(addFormation.pending, (state) => {
-        state.actionLoading = true;
-        state.error = null;
-      })
-      .addCase(addFormation.fulfilled, (state, action) => {
-        state.actionLoading = false;
-        if (action.payload) {
-          state.formations.unshift(action.payload);
-        }
-        state.successMessage = "Formation ajoutée avec succès";
-      })
-      .addCase(addFormation.rejected, (state, action) => {
-        state.actionLoading = false;
-        state.error = action.payload;
-      })
-      .addCase(deleteFormation.pending, (state) => {
-        state.actionLoading = true;
-      })
-      .addCase(deleteFormation.fulfilled, (state, action) => {
-        state.actionLoading = false;
-        state.formations = state.formations.filter((f) => f._id !== action.payload);
-        state.successMessage = "Formation supprimée avec succès";
-      })
-      .addCase(deleteFormation.rejected, (state, action) => {
-        state.actionLoading = false;
-        state.error = action.payload;
       });
   },
 });

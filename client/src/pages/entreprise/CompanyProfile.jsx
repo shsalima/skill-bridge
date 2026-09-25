@@ -4,7 +4,6 @@ import {
   Building2,
   MapPin,
   Globe,
-  Image,
   Save,
   CheckCircle2,
   ShieldCheck,
@@ -12,10 +11,9 @@ import {
   Phone,
   Mail,
   Calendar,
+  Loader2,
 } from "lucide-react";
 import { updateProfile, getProfile, clearSuccessMessage } from "../../features/auth/authSlice";
-import Card from "../../components/common/Card";
-import Button from "../../components/common/Button";
 import { formatDate } from "../../utils/formatters";
 
 export const CompanyProfile = () => {
@@ -33,7 +31,6 @@ export const CompanyProfile = () => {
     adresse: "",
     ville: "",
     siteWeb: "",
-    logo: "",
   });
 
   useEffect(() => {
@@ -52,7 +49,6 @@ export const CompanyProfile = () => {
         adresse: ent.adresse || "",
         ville: ent.ville || "",
         siteWeb: ent.siteWeb || "",
-        logo: ent.logo || user.photo || "",
       });
     }
   }, [user]);
@@ -94,21 +90,13 @@ export const CompanyProfile = () => {
         <div className="relative flex items-center gap-5">
           {/* Avatar / Logo */}
           <div className="flex-shrink-0">
-            {(user?.entreprise?.logo || user?.photo) ? (
-              <img
-                src={user?.entreprise?.logo || user?.photo}
-                alt="Logo"
-                className="w-16 h-16 rounded-xl object-cover border-2 border-sky-500/30"
-              />
-            ) : (
-              <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-sky-500/20 to-indigo-500/20 border-2 border-sky-500/30 flex items-center justify-center">
-                <span className="text-2xl font-bold text-sky-400">
-                  {(user?.entreprise?.nomEntreprise || user?.nomEntreprise || user?.prenom || "E")
-                    .charAt(0)
-                    .toUpperCase()}
-                </span>
-              </div>
-            )}
+            <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-sky-500/20 to-indigo-500/20 border-2 border-sky-500/30 flex items-center justify-center">
+              <span className="text-2xl font-bold text-sky-400">
+                {(user?.entreprise?.nomEntreprise || user?.nomEntreprise || user?.prenom || "E")
+                  .charAt(0)
+                  .toUpperCase()}
+              </span>
+            </div>
           </div>
 
           {/* Info */}
@@ -163,7 +151,7 @@ export const CompanyProfile = () => {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Company Info */}
-        <Card className="space-y-4">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-4">
           <h2 className="text-sm font-bold text-white flex items-center gap-2">
             <Building2 className="w-4 h-4 text-[#00E6A5]" />
             <span>Fiche Entreprise</span>
@@ -235,23 +223,6 @@ export const CompanyProfile = () => {
 
           <div>
             <label className="block text-xs font-semibold text-white mb-1.5">
-              URL du Logo
-            </label>
-            <div className="relative">
-              <Image className="w-4 h-4 text-[#90A1B9] absolute left-3.5 top-3" />
-              <input
-                type="url"
-                name="logo"
-                placeholder="https://..."
-                value={formData.logo}
-                onChange={handleChange}
-                className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#00E6A5]"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-white mb-1.5">
               Présentation & Culture d'entreprise
             </label>
             <textarea
@@ -263,10 +234,10 @@ export const CompanyProfile = () => {
               className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#00E6A5] placeholder:text-[#62748E] resize-none"
             />
           </div>
-        </Card>
+        </div>
 
         {/* Manager Contact */}
-        <Card className="space-y-4">
+        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-4">
           <h2 className="text-sm font-bold text-white flex items-center gap-2">
             <User className="w-4 h-4 text-[#00E6A5]" />
             <span>Responsable RH / Contact</span>
@@ -315,12 +286,26 @@ export const CompanyProfile = () => {
               />
             </div>
           </div>
-        </Card>
+        </div>
 
         <div className="flex justify-end">
-          <Button type="submit" loading={loading} icon={Save} className="px-6">
-            Enregistrer les informations
-          </Button>
+          <button
+            type="submit"
+            disabled={loading}
+            className="inline-flex items-center justify-center font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed px-6 py-2.5 text-xs gap-2 bg-[#00E6A5] text-[#0B0E14] hover:bg-[#00C293] shadow-lg"
+          >
+            {loading ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Chargement...</span>
+              </>
+            ) : (
+              <>
+                <Save className="w-4 h-4" />
+                <span>Enregistrer les informations</span>
+              </>
+            )}
+          </button>
         </div>
       </form>
     </div>

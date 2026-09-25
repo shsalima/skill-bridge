@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router";
 import { registerUser, clearError } from "../../features/auth/authSlice";
-import { Building2, User, Mail, Phone, Lock, ArrowRight } from "lucide-react";
-import Button from "../../components/common/Button";
+import { Building2, User, Mail, Phone, Lock, Loader2 } from "lucide-react";
 
 export const RegisterEntreprise = () => {
   const dispatch = useDispatch();
@@ -20,10 +19,10 @@ export const RegisterEntreprise = () => {
   });
 
   useEffect(() => {
-    if (token && user) {
+    if (token ) {
       navigate("/entreprise/dashboard");
     }
-  }, [token, user, navigate]);
+  }, [token, navigate]);
 
   const handleChange = (e) => {
     if (error) dispatch(clearError());
@@ -179,14 +178,17 @@ export const RegisterEntreprise = () => {
             </div>
           </div>
 
-          <Button
+          <button
             type="submit"
-            loading={loading}
-            className="w-full mt-2"
-            icon={ArrowRight}
+            disabled={loading}
+            className="w-full inline-flex items-center justify-center gap-2 font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2.5 text-xs bg-[#00E6A5] text-[#0B0E14] hover:bg-[#00C293] shadow-lg mt-2"
           >
-            Créer mon compte Entreprise
-          </Button>
+            {loading ? (
+              <><Loader2 className="w-4 h-4 animate-spin" /> Chargement...</>
+            ) : (
+              <>Créer mon compte Entreprise</>
+            )}
+          </button>
         </form>
 
         <div className="mt-6 pt-5 border-t border-[#374151] flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-[#90A1B9]">

@@ -31,10 +31,6 @@ export const registerValidator = [
     .optional()
     .isIn(["Candidat", "AdministrateurEntreprise", "Administrateur", "Entreprise"])
     .withMessage("Le rôle est invalide"),
-  body("dateNaissance")
-    .optional()
-    .isISO8601()
-    .withMessage("La date de naissance est invalide"),
 ];
 
 export const loginValidator = [

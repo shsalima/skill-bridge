@@ -11,9 +11,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { fetchJobs, deleteJob } from "../../features/offres/offreSlice";
-import Card from "../../components/common/Card";
-import Badge from "../../components/common/Badge";
-import { formatDate, formatSalary } from "../../utils/formatters";
+import { formatDate, formatSalary, getStatusBadge } from "../../utils/formatters";
 
 export const ManageAllJobs = () => {
   const dispatch = useDispatch();
@@ -61,7 +59,7 @@ export const ManageAllJobs = () => {
       </div>
 
       {/* Search */}
-      <Card className="flex items-center justify-between gap-4">
+      <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 flex items-center justify-between gap-4">
         <div className="relative flex-1 max-w-md">
           <Search className="w-4 h-4 text-[#90A1B9] absolute left-3.5 top-3" />
           <input
@@ -72,10 +70,10 @@ export const ManageAllJobs = () => {
             className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#00E6A5]"
           />
         </div>
-      </Card>
+      </div>
 
       {/* Jobs Table */}
-      <Card className="p-0 overflow-hidden">
+      <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-0 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
@@ -128,7 +126,9 @@ export const ManageAllJobs = () => {
                       </div>
                     </td>
                     <td className="p-4">
-                      <Badge status={job.statut} />
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${getStatusBadge(job.statut)}`}>
+                        {job.statut}
+                      </span>
                     </td>
                     <td className="p-4 text-[#90A1B9]">
                       {formatDate(job.createdAt)}
@@ -148,7 +148,7 @@ export const ManageAllJobs = () => {
             </tbody>
           </table>
         </div>
-      </Card>
+      </div>
     </div>
   );
 };

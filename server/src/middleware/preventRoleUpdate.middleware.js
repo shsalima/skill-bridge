@@ -7,8 +7,8 @@ export const preventRoleUpdate=(req,res,next)=>{
     if(req.body.email){
         delete req.body.email
     }
-    if(req.body.motDePase){
-        delete req.body.motDePase
+    if(req.body.motDePasse){
+        delete req.body.motDePasse
     }
     next()
    
