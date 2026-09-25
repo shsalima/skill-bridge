@@ -219,7 +219,7 @@ Voici un aperçu de l'architecture RESTful de l'API (disponible sur `/api`) :
 
 Ce diagramme présente les principaux acteurs de la plateforme (**Candidat, Administrateur Entreprise et Administrateur Plateforme**) ainsi que leurs principales interactions avec le système.
 
-![Diagramme de Cas d'Utilisation](/client/public/daigrammes/Diagramme classe.drawio.png)
+![Diagramme de Cas d'Utilisation](./client/public/daigrammes/Diagramme classe.drawio.png)
 
 ---
 
