@@ -50,14 +50,7 @@ export const JobList = () => {
     );
   };
 
-  // const handleClearFilters = () => {
-  //   setKeyword("");
-  //   setDomaine("");
-  //   setVille("");
-  //   setTypeContrat("");
-  //   setMinMatch(0);
-  //   dispatch(fetchJobs({ statut: "Ouverte" }));
-  // };
+
 
   const isSaved = (jobId) => {
     return savedJobs.some((item) => (item.job?._id ) === jobId);
@@ -129,16 +122,7 @@ export const JobList = () => {
 
 
           <div className="flex items-center gap-2">
-            {/* {(keyword || ville || typeContrat || minMatch > 0) && (
-              <button
-                type="button"
-                onClick={handleClearFilters}
-                className="px-3 py-2 rounded-xl text-xs font-semibold text-[#90A1B9] hover:text-white flex items-center gap-1"
-              >
-                <X className="w-3.5 h-3.5" />
-                <span>Réinitialiser</span>
-              </button>
-            )} */}
+         
             <button
               type="submit"
               className="px-5 py-2 rounded-xl bg-[#00E6A5] hover:bg-[#00C293] text-[#0B0E14] text-xs font-bold transition-all shadow-[0_0_15px_rgba(0,230,165,0.2)]"
@@ -154,11 +138,7 @@ export const JobList = () => {
           <strong className="text-white">{filteredJobs.length}</strong> 
           offre disponibles
         </span>
-        {/* {candidateSkills.length === 0 && (
-          <Link to="/candidat/profile" className="text-[#00E6A5] hover:underline">
-            + Complétez vos compétences pour calculer votre Smart Matching
-          </Link>
-        )} */}
+      
       </div>
 
       {loading ? (
