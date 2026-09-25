@@ -215,28 +215,16 @@ Voici un aperçu de l'architecture RESTful de l'API (disponible sur `/api`) :
 
 ##  12. Documentation UML
 
-### 🔹 Diagramme de Cas d’Utilisation
+##  Architecture & Diagrammes UML
 
-Ce diagramme présente les principaux acteurs de la plateforme (**Candidat, Administrateur Entreprise et Administrateur Plateforme**) ainsi que leurs principales interactions avec le système.
+### 1. Diagramme de Cas d'Utilisation (Use Case Diagram)
+![Use Case Diagram](./client/public/daigrammes/Diagramme%20use-cas.drawio.png)
 
-![Diagramme de Cas d'Utilisation]("./public/daigrammes/Diagramme classe.drawio.png")
+### 2. Diagramme de Classes (Class Diagram)
+![Class Diagram](./client/public/daigrammes/Diagramme%20classe.drawio.png)
 
----
-
-### 🔹 Diagramme de Classes
-
-Ce diagramme représente les principales entités de l'application, leurs attributs et les relations entre elles.
-
-![Diagramme de Classes](./client/public/daigrammes/Diagramme%20use-cas.drawio.png)
-<!-- <img src="./client/public/daigrammes/Diagramme classe.drawio.png" alt="Alt text" width="800" height="500" /> -->
-
----
-
-### 🔹 Diagramme de Séquence
-
-Ce diagramme présente le déroulement chronologique des principales fonctionnalités et les échanges entre les différents composants du système.
-
-![Diagramme de Séquence](docs/sequence-diagram.png)
+### 3. Diagramme de Séquence (Sequence Diagram - Inscription / Register)
+![Sequence Diagram](./client/public/daigrammes/Diagramme%20sequence3.drawio.png)
 
 ---
 
