@@ -39,7 +39,7 @@ export const getAllJobsService = async (filters) => {
   const fermelJobs = await Job.countDocuments({ statut: "Fermée" });
 
   const jobs = await Job.find(query)
-    .populate("entreprise", "nom prenom email photo telephone nomEntreprise")
+    .populate("entreprise", "nom prenom email photo telephone ")
     .sort({ createdAt: -1 });
   return { jobs, totalJobs, ouverteJobs, fermelJobs };
 };
@@ -47,7 +47,7 @@ export const getAllJobsService = async (filters) => {
 export const getJobByIdServices = async (jobId) => {
   const job = await Job.findById(jobId).populate(
     "entreprise",
-    "nom prenom email photo telephone nomEntreprise",
+    "nom prenom email photo telephone ",
   );
 
   if (!job) {

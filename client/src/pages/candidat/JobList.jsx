@@ -30,7 +30,6 @@ export const JobList = () => {
   const [domaine, setDomaine] = useState("");
   const [ville, setVille] = useState("");
   const [typeContrat, setTypeContrat] = useState("");
-  const [minMatch, setMinMatch] = useState(0);
 
   useEffect(() => {
     dispatch(fetchJobs({ statut: "Ouverte" }));
@@ -42,10 +41,10 @@ export const JobList = () => {
     dispatch(
       fetchJobs({
         statut: "Ouverte",
-        keyword: keyword || undefined,
-        domaine: domaine || undefined,
-        ville: ville || undefined,
-        typeContrat: typeContrat || undefined,
+        keyword: keyword ,
+        domaine: domaine,
+        ville: ville ,
+        typeContrat: typeContrat ,
       })
     );
   };
@@ -64,6 +63,7 @@ export const JobList = () => {
 
   
   const filteredJobs = jobs;
+  
 
   return (
     <div className="space-y-6">
@@ -195,27 +195,22 @@ export const JobList = () => {
                     <h3 className="text-base font-bold text-white group-hover:text-[#00E6A5] transition-colors line-clamp-1">
                       {job.titre}
                     </h3>
-                    <p className="text-xs text-[#90A1B9] mt-0.5">
-                      {job.entreprise?.nomEntreprise || "Entreprise confidentielle"}
-                    </p>
                   </div>
 
-                  {/* Metadata */}
                   <div className="flex flex-wrap items-center gap-3 text-xs text-[#90A1B9] pt-1">
                     <span className="flex items-center gap-1">
                       <MapPin className="w-3.5 h-3.5 text-[#00E6A5]" />
                       {job.ville}
                     </span>
-                    <span>•</span>
+                    <span>|</span>
                     <span>{formatSalary(job.salaire)}</span>
-                    <span>•</span>
+                    <span>|</span>
                     <span className="flex items-center gap-1">
                       <Calendar className="w-3.5 h-3.5" />
                       Limite : {formatDate(job.dateLimite)}
                     </span>
                   </div>
 
-                  {/* Skills tags preview */}
                   <div className="flex flex-wrap gap-1.5 pt-2">
                     {job.competencesRequises?.slice(0, 4).map((skill, idx) => {
                       const hasSkill = candidateSkills.some(
@@ -242,7 +237,6 @@ export const JobList = () => {
                   </div>
                 </div>
 
-                {/* Footer Button */}
                 <div className="pt-3 border-t border-[#374151]">
                   <Link
                     to={`/candidat/jobs/${job._id}`}

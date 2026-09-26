@@ -25,8 +25,7 @@ export const createJob = async (req, res) => {
 
 export const getAllJobs = async (req, res) => {
   try {
-    const { jobs, totalJobs, ouverteJobs, fermelJobs } =
-      await getAllJobsService(req.query);
+    const { jobs, totalJobs, ouverteJobs, fermelJobs } =await getAllJobsService(req.query);
     return res.status(200).json({
       success: true,
       count: totalJobs,
