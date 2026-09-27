@@ -1,16 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Shield,
-  User,
-  Mail,
-  Phone,
-  Calendar,
-  Save,
-  CheckCircle2,
-  Lock,
-  Sparkles,
-} from "lucide-react";
+import { Shield,  User, Mail, Phone, Calendar,  Save, CheckCircle2} from "lucide-react";
 import { updateProfile, getProfile, clearSuccessMessage } from "../../features/auth/authSlice";
 import { formatDate } from "../../utils/formatters";
 
@@ -40,7 +30,7 @@ export const AdminProfile = () => {
 
   useEffect(() => {
     if (successMessage) {
-      const timer = setTimeout(() => dispatch(clearSuccessMessage()), 3500);
+      const timer = setTimeout(() => dispatch(clearSuccessMessage()), 4000);
       return () => clearTimeout(timer);
     }
   }, [successMessage, dispatch]);
@@ -56,14 +46,13 @@ export const AdminProfile = () => {
 
   return (
     <div className="space-y-6 max-w-4xl">
-      {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2.5">
           <Shield className="w-6 h-6 text-purple-400" />
           <span>Profil Administrateur</span>
         </h1>
         <p className="text-xs text-[#90A1B9] mt-1">
-          Consultez et mettez à jour les informations du compte Super Administrateur de la plateforme SkillBridge.
+          Consultez et mettez à jour les informations du compte Super Administrateur de la plateforme SkillBridge
         </p>
       </div>
 
@@ -80,7 +69,6 @@ export const AdminProfile = () => {
         </div>
       )}
 
-      {/* Account Overview Banner */}
       <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 flex flex-col sm:flex-row items-center gap-6 bg-gradient-to-r from-[#161B22] to-[#1F2937]">
         <div className="w-20 h-20 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-2xl font-bold">
           {(user?.prenom?.[0] || user?.nom?.[0] || "A").toUpperCase()}
@@ -116,16 +104,12 @@ export const AdminProfile = () => {
         </div>
       </div>
 
-      {/* Profile Form */}
       <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-6">
         <div className="border-b border-[#374151] pb-4">
           <h3 className="text-sm font-bold text-white flex items-center gap-2">
             <User className="w-4 h-4 text-[#00E6A5]" />
             <span>Coordonnées Personnelles</span>
           </h3>
-          <p className="text-xs text-[#90A1B9] mt-0.5">
-            Modifier le nom et le contact associé au compte administrateur.
-          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
