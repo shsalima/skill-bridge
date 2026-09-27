@@ -24,13 +24,11 @@ export const AdminDashboard = () => {
     dispatch(fetchAllReclamations());
   }, [dispatch]);
 
-  const pendingReclamations = reclamations.filter(
-    (r) => r.statut === "En attente"
-  ).length;
+
+  const pendingReclamations = reclamations.filter((r) => r.statut === "En attente").length;
 
   return (
     <div className="space-y-8">
-      {/* Banner */}
       <div className="bg-gradient-to-r from-[#161B22] to-[#1F2937] border border-[#374151] rounded-3xl p-6 sm:p-8 space-y-2">
         <span className="text-[10px] font-bold uppercase tracking-wider text-purple-400 bg-purple-500/10 px-2.5 py-0.5 rounded border border-purple-500/30">
           Super Administration
@@ -38,12 +36,9 @@ export const AdminDashboard = () => {
         <h1 className="text-2xl font-extrabold text-white">
           Tableau de bord Plateforme SkillBridge
         </h1>
-        <p className="text-xs text-[#90A1B9] max-w-2xl">
-          Supervisez l'ensemble de l'écosystème : utilisateurs, entreprises partenaires, offres d'emploi publiées et gestion des signalements.
-        </p>
+     
       </div>
 
-      {/* KPI Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-2">
           <div className="flex items-center justify-between text-[#90A1B9]">
@@ -51,7 +46,7 @@ export const AdminDashboard = () => {
             <Users className="w-4 h-4 text-[#00E6A5]" />
           </div>
           <p className="text-2xl font-bold text-white">
-            {adminStats.totalUser || 0}
+            {adminStats.totalUser}
           </p>
           <span className="text-[11px] text-[#62748E]">Comptes créés</span>
         </div>
@@ -62,7 +57,7 @@ export const AdminDashboard = () => {
             <TrendingUp className="w-4 h-4 text-sky-400" />
           </div>
           <p className="text-2xl font-bold text-sky-400">
-            {adminStats.totalCandidats || 0}
+            {adminStats.totalCandidats }
           </p>
           <span className="text-[11px] text-[#62748E]">Chercheurs d'emploi</span>
         </div>
@@ -73,38 +68,36 @@ export const AdminDashboard = () => {
             <Building2 className="w-4 h-4 text-purple-400" />
           </div>
           <p className="text-2xl font-bold text-purple-400">
-            {adminStats.totalEntreprise || 0}
+            {adminStats.totalEntreprise }
           </p>
           <span className="text-[11px] text-[#62748E]">Recruteurs partenaires</span>
         </div>
 
         <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-2">
           <div className="flex items-center justify-between text-[#90A1B9]">
-            <span className="text-xs font-medium">Offres &amp; Candidatures</span>
+            <span className="text-xs font-medium">Offres & Candidatures</span>
             <Briefcase className="w-4 h-4 text-[#00E6A5]" />
           </div>
           <p className="text-2xl font-bold text-white">
             {adminStats.totalJobs || 0}{" "}
             <span className="text-xs font-normal text-[#90A1B9]">
-              ({adminStats.totalApplications || 0} candidatures)
+              ({adminStats.totalApplications } candidatures)
             </span>
           </p>
-          <span className="text-[11px] text-[#62748E]">Activité globale</span>
         </div>
       </div>
 
-      {/* Alert Card if pending reclamations */}
       {pendingReclamations > 0 && (
         <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 text-xs text-amber-400">
             <AlertTriangle className="w-5 h-5 shrink-0" />
             <span>
-              <strong>{pendingReclamations} signalement{pendingReclamations > 1 ? "s" : ""}</strong> en attente de modération.
+              <strong>{pendingReclamations} signalements</strong> en attente de modération.
             </span>
           </div>
           <Link
             to="/admin/complaints"
-            className="text-xs font-bold text-amber-400 hover:underline flex items-center gap-1 shrink-0"
+            className="text-xs font-bold text-amber-400 flex items-center gap-1 shrink-0"
           >
             <span>Traiter les signalements</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -112,7 +105,6 @@ export const AdminDashboard = () => {
         </div>
       )}
 
-      {/* Navigation Shortcuts */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
           {
@@ -162,7 +154,7 @@ export const AdminDashboard = () => {
 
               <Link
                 to={sec.link}
-                className="text-xs font-bold text-[#00E6A5] hover:underline flex items-center gap-1 pt-2 border-t border-[#374151]"
+                className="text-xs font-bold text-[#00E6A5] flex items-center gap-1 pt-2 border-t border-[#374151]"
               >
                 <span>Accéder</span>
                 <ArrowRight className="w-3.5 h-3.5" />
