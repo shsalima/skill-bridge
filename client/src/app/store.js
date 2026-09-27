@@ -1,12 +1,20 @@
+
 import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./rootReducer";
+
+import authReducer from "../features/auth/authSlice";
+import offreReducer from "../features/offres/offreSlice";
+import candidatureReducer from "../features/candidatures/candidatureSlice";
+import notificationReducer from "../features/notifications/notificationSlice";
+import reclamationReducer from "../features/reclamations/reclamationSlice";
 
 export const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
+  reducer: {
+    auth: authReducer,
+    offres: offreReducer,
+    candidatures: candidatureReducer,
+    notifications: notificationReducer,
+    reclamations: reclamationReducer,
+  },
 });
 
 export default store;
