@@ -1,28 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  ShieldAlert,
-  CheckCircle2,
-  XCircle,
-  AlertTriangle,
-  Building2,
-  Briefcase,
-  User,
-  Calendar,
-} from "lucide-react";
-import {
-  fetchAllReclamations,
-  updateReclamationStatus,
-  clearReclamationSuccess,
-} from "../../features/reclamations/reclamationSlice";
+import { ShieldAlert, CheckCircle2, XCircle, AlertTriangle, User, Calendar} from "lucide-react";
+import { fetchAllReclamations, updateReclamationStatus, clearReclamationSuccess} from "../../features/reclamations/reclamationSlice";
 import { deleteJob } from "../../features/offres/offreSlice";
 import { formatDate, getStatusBadge } from "../../utils/formatters";
 
 export const ManageComplaints = () => {
   const dispatch = useDispatch();
-  const { reclamations, loading, actionLoading, successMessage } = useSelector(
-    (state) => state.reclamations
-  );
+  const { reclamations, loading, actionLoading, successMessage } = useSelector((state) => state.reclamations)
 
   const [filterStatut, setFilterStatut] = useState("all");
 
@@ -38,8 +23,7 @@ export const ManageComplaints = () => {
   }, [successMessage, dispatch]);
 
   const handleUpdateStatus = (reclamationId, nextStatus) => {
-    dispatch(
-      updateReclamationStatus({
+    dispatch(updateReclamationStatus({
         reclamationId,
         statut: nextStatus,
       })
@@ -68,9 +52,6 @@ export const ManageComplaints = () => {
           <ShieldAlert className="w-6 h-6 text-amber-400" />
           <span>Gestion des Réclamations & Signalements</span>
         </h1>
-        <p className="text-xs text-[#90A1B9] mt-1">
-          Arbitrez les signalements déposés contre des offres suspectes ou frauduleuses.
-        </p>
       </div>
 
       {successMessage && (
@@ -80,7 +61,6 @@ export const ManageComplaints = () => {
         </div>
       )}
 
-      {/* Tabs */}
       <div className="flex gap-2">
         {[
           { id: "all", label: "Tous les signalements", count: reclamations.length },
@@ -123,7 +103,6 @@ export const ManageComplaints = () => {
         ))}
       </div>
 
-      {/* Complaints Cards */}
       {loading ? (
         <div className="text-center py-16 text-xs text-[#90A1B9]">
           Chargement des signalements...
@@ -164,7 +143,7 @@ export const ManageComplaints = () => {
                       <User className="w-3.5 h-3.5 text-[#00E6A5]" />
                       Déposé par : {r.auteur?.prenom} {r.auteur?.nom} ({r.auteur?.email})
                     </span>
-                    <span>•</span>
+                    <span>|</span>
                     <span className="flex items-center gap-1">
                       <Calendar className="w-3.5 h-3.5" />
                       Le {formatDate(r.createdAt)}
@@ -180,7 +159,6 @@ export const ManageComplaints = () => {
                 </div>
               </div>
 
-              {/* Status Actions */}
               <div className="flex flex-col gap-2 pt-3 lg:pt-0 border-t lg:border-t-0 border-[#374151] shrink-0 min-w-[200px]">
                 <span className="text-[10px] text-[#90A1B9] uppercase font-bold">
                   Actions de modération :
