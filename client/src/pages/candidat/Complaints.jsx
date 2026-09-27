@@ -7,15 +7,14 @@ import { fetchJobs } from "../../features/offres/offreSlice";
 export const Complaints = () => {
   const dispatch = useDispatch();
   const { jobs } = useSelector((state) => state.offres);
-  const { actionLoading, successMessage, error } = useSelector(
-    (state) => state.reclamations
-  );
+  const { actionLoading, successMessage, error } = useSelector((state) => state.reclamations);
 
   const [formData, setFormData] = useState({
     jobId: "",
     motif: "Offre frauduleuse ou fausse",
     description: "",
   });
+  
 
   useEffect(() => {
     dispatch(fetchJobs());
@@ -48,9 +47,6 @@ export const Complaints = () => {
           <AlertTriangle className="w-6 h-6 text-amber-400" />
           <span>Réclamations & Signalements</span>
         </h1>
-        <p className="text-xs text-[#90A1B9] mt-1">
-          Signalez toute offre trompeuse, fausse entreprise ou comportement abusif à notre équipe de modération.
-        </p>
       </div>
 
       {successMessage && (
@@ -90,7 +86,7 @@ export const Complaints = () => {
               <option value="">-- Choisir une offre d'emploi --</option>
               {jobs.map((j) => (
                 <option key={j._id} value={j._id}>
-                  {j.titre} ({j.entreprise?.nomEntreprise || "Entreprise"})
+                  {j.titre} 
                 </option>
               ))}
             </select>
