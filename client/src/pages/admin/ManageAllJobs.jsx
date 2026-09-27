@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router";
-import {
-  Briefcase,
-  Search,
-  Trash2,
-  MapPin,
-  Calendar,
-  Building2,
-  ExternalLink,
-} from "lucide-react";
+import { Briefcase, Search, Trash2} from "lucide-react";
 import { fetchJobs, deleteJob } from "../../features/offres/offreSlice";
 import { formatDate, formatSalary, getStatusBadge } from "../../utils/formatters";
 
@@ -54,11 +45,10 @@ export const ManageAllJobs = () => {
           <span>Modération & Gestion des Offres</span>
         </h1>
         <p className="text-xs text-[#90A1B9] mt-1">
-          Surveillez toutes les offres publiées sur SkillBridge et supprimez les annonces frauduleuses ou non conformes.
+          Surveillez toutes les offres publiées sur SkillBridge 
         </p>
       </div>
 
-      {/* Search */}
       <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 flex items-center justify-between gap-4">
         <div className="relative flex-1 max-w-md">
           <Search className="w-4 h-4 text-[#90A1B9] absolute left-3.5 top-3" />
@@ -72,14 +62,13 @@ export const ManageAllJobs = () => {
         </div>
       </div>
 
-      {/* Jobs Table */}
       <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-0 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
               <tr className="border-b border-[#374151] bg-[#0B0E14]/60 text-[#90A1B9] uppercase font-bold text-[10px]">
                 <th className="p-4">Offre</th>
-                <th className="p-4">Entreprise</th>
+                <th className="p-4">Email Entreprise</th>
                 <th className="p-4">Contrat</th>
                 <th className="p-4">Ville & Salaire</th>
                 <th className="p-4">Statut</th>
@@ -107,9 +96,6 @@ export const ManageAllJobs = () => {
                       </span>
                     </td>
                     <td className="p-4">
-                      <span className="font-semibold block">
-                        {job.entreprise?.nomEntreprise || "Entreprise"}
-                      </span>
                       <span className="text-[11px] text-[#90A1B9]">
                         {job.entreprise?.email}
                       </span>
