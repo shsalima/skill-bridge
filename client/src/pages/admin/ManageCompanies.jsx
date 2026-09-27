@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Building2,
-  Search,
-  Ban,
-  CheckCircle2,
-  ExternalLink,
-  MapPin,
-  Mail,
-  Phone,
-  AlertTriangle,
-} from "lucide-react";
+import { Building2, Search, Ban, CheckCircle2, ExternalLink, MapPin} from "lucide-react";
 import { fetchAllCompanies, toggleBlockCompany } from "../../features/auth/authSlice";
 
 export const ManageCompanies = () => {
   const dispatch = useDispatch();
-  const { companiesList, loading } = useSelector((state) => state.auth);
+  const { companiesList } = useSelector((state) => state.auth);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -52,18 +42,14 @@ export const ManageCompanies = () => {
           <Building2 className="w-6 h-6 text-purple-400" />
           <span>Gestion des Entreprises Partenaires</span>
         </h1>
-        <p className="text-xs text-[#90A1B9] mt-1">
-          Vérifiez l'authenticité des entreprises et suspendez les comptes suspects ou frauduleux.
-        </p>
       </div>
 
-      {/* Search */}
       <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 flex items-center justify-between gap-4">
         <div className="relative flex-1 max-w-md">
           <Search className="w-4 h-4 text-[#90A1B9] absolute left-3.5 top-3" />
           <input
             type="text"
-            placeholder="Rechercher par nom d'entreprise, ville ou responsable..."
+            placeholder="Rechercher par nom d'entreprise, ville ..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#00E6A5]"
@@ -71,7 +57,6 @@ export const ManageCompanies = () => {
         </div>
       </div>
 
-      {/* Companies List */}
       <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-0 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
@@ -101,15 +86,13 @@ export const ManageCompanies = () => {
                     <td className="p-4">
                       <div className="flex items-center gap-3">
                         <div className="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 font-bold text-xs">
-                          {c.nomEntreprise?.[0]?.toUpperCase() || "E"}
+                          {c.nomEntreprise?.[0]?.toUpperCase()}
                         </div>
                         <div>
                           <span className="font-bold block">
                             {c.nomEntreprise}
                           </span>
-                          <span className="text-[11px] text-[#90A1B9] line-clamp-1 max-w-xs">
-                            {c.description || "Pas de description"}
-                          </span>
+                        
                         </div>
                       </div>
                     </td>
@@ -124,7 +107,7 @@ export const ManageCompanies = () => {
                     <td className="p-4 text-[#90A1B9]">
                       <div className="flex items-center gap-1">
                         <MapPin className="w-3.5 h-3.5 text-[#00E6A5]" />
-                        <span>{c.ville || "—"}</span>
+                        <span>{c.ville || "--"}</span>
                       </div>
                     </td>
                     <td className="p-4">
@@ -133,13 +116,13 @@ export const ManageCompanies = () => {
                           href={c.siteWeb}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-[#00E6A5] hover:underline flex items-center gap-1"
+                          className="text-[#00E6A5]  flex items-center gap-1"
                         >
                           <span>Visiter</span>
                           <ExternalLink className="w-3 h-3" />
                         </a>
                       ) : (
-                        <span className="text-[#62748E]">—</span>
+                        <span className="text-[#62748E]">--</span>
                       )}
                     </td>
                     <td className="p-4">
