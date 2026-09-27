@@ -66,12 +66,8 @@ export const ManageUsers = () => {
           <Users className="w-6 h-6 text-[#00E6A5]" />
           <span>Gestion des Utilisateurs</span>
         </h1>
-        <p className="text-xs text-[#90A1B9] mt-1">
-          Consultez la liste complète des utilisateurs enregistrés et gérez les comptes.
-        </p>
       </div>
 
-      {/* Filter Bar */}
       <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="relative flex-1 max-w-md">
           <Search className="w-4 h-4 text-[#90A1B9] absolute left-3.5 top-3" />
@@ -106,7 +102,6 @@ export const ManageUsers = () => {
         </div>
       </div>
 
-      {/* Users Table */}
       <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-0 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
