@@ -8,7 +8,7 @@ import dashboard from "./routes/dashboard.routes.js"
 import reclamation from "./routes/reclamation.routes.js"
 import savedJobs from "./routes/savedJob.routes.js"
 import cors from "cors"
-import setupSwagger from "../swagger.js";
+import setupSwagger from "./swagger.js";
 
 
 dns.setDefaultResultOrder("ipv4first");
