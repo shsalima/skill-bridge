@@ -8,6 +8,7 @@ import dashboard from "./routes/dashboard.routes.js"
 import reclamation from "./routes/reclamation.routes.js"
 import savedJobs from "./routes/savedJob.routes.js"
 import cors from "cors"
+import setupSwagger from "../swagger.js";
 
 
 dns.setDefaultResultOrder("ipv4first");
@@ -16,6 +17,8 @@ dns.setServers(["8.8.8.8", "8.8.4.4"]);
 const app = express();
 
 app.use(cors())
+
+setupSwagger(app)
 
 app.use(express.json());
 app.use("/api/users", userRouter);
