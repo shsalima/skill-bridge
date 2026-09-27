@@ -3,12 +3,7 @@ import { useParams, useNavigate, Link } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { ArrowLeft, Briefcase, MapPin, Calendar, DollarSign, Building2,FileText, AlertTriangle,CheckCircle2,Send,X,Loader2} from "lucide-react";
 import { fetchJobById } from "../../features/offres/offreSlice";
-import {
-  applyToJob,
-  fetchMyApplications,
-  clearCandidatureSuccess,
-  clearCandidatureError,
-} from "../../features/candidatures/candidatureSlice";
+import { applyToJob,fetchMyApplications,clearCandidatureSuccess, clearCandidatureError} from "../../features/candidatures/candidatureSlice";
 import { createReclamation } from "../../features/reclamations/reclamationSlice";
 import { formatDate, formatSalary } from "../../utils/formatters";
 
@@ -20,7 +15,7 @@ export const JobDetails = () => {
   const { user } = useSelector((state) => state.auth);
   const { selectedJob, selectedJobEntreprise, loading: jobLoading } = useSelector((state) => state.offres)
   const {myApplications,actionLoading: applying,successMessage: applySuccess, error: applyError} = useSelector((state) => state.candidatures);
-  console.log("hhh",myApplications)
+  // console.log("page dyal detailJOB hhhh ",myApplications)
 
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
   const [isComplaintModalOpen, setIsComplaintModalOpen] = useState(false);
@@ -30,7 +25,6 @@ export const JobDetails = () => {
     lettreMotivation: "",
   });
 
-  // Update CV field if user profile loads after component mounts
   useEffect(() => {
     if (user?.cvUrl) {
       setApplyForm((prev) => ({ ...prev, cv: prev.cv || user.cvUrl }));
@@ -337,7 +331,7 @@ export const JobDetails = () => {
             <form onSubmit={handleComplaintSubmit} className="space-y-4">
               {complaintSuccess ? (
                 <div className="p-4 bg-[#00E6A5]/10 border border-[#00E6A5]/30 rounded-xl text-[#00E6A5] text-xs font-semibold text-center">
-                  Votre signalement a été transmis à l'équipe d'administration. Merci pour votre vigilance !
+                  Votre signalement a été transmis à l'équipe d'administration
                 </div>
               ) : (
                 <>
