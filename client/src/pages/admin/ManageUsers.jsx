@@ -6,7 +6,7 @@ import { formatDate } from "../../utils/formatters";
 
 export const ManageUsers = () => {
   const dispatch = useDispatch();
-  const { usersList, loading } = useSelector((state) => state.auth);
+  const { usersList } = useSelector((state) => state.auth);
 
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
