@@ -1,4 +1,4 @@
-import express from "express"
+import express from "express";
 import {
   getProfile,
   login,
@@ -9,16 +9,19 @@ import {
   deleteUser,
   getAllCompanies,
   toggleBlockCompany,
-} from "../controllers/user.controller.js"
-import { loginValidator, registerValidator } from "../validators/authValidator.js"
-import { validate } from "../middleware/validate.js"
-import { authentificationCheck } from "../middleware/authentication.middleware.js"
-import { authorizationCheck } from "../middleware/authorization.middleware.js"
-import { preventRoleUpdate } from "../middleware/preventRoleUpdate.middleware.js"
+} from "../controllers/user.controller.js";
+import {
+  loginValidator,
+  registerValidator,
+} from "../validators/authValidator.js";
+import { validate } from "../middleware/validate.js";
+import { authentificationCheck } from "../middleware/authentication.middleware.js";
+import { authorizationCheck } from "../middleware/authorization.middleware.js";
+import { preventRoleUpdate } from "../middleware/preventRoleUpdate.middleware.js";
 
-const router= express.Router()
+const router = express.Router();
 
-router.post("/register",registerValidator,validate,register)
+router.post("/register", registerValidator, validate, register);
 
 /**
  * @swagger
@@ -44,24 +47,59 @@ router.post("/register",registerValidator,validate,register)
  *             schema:
  *               type: object
  *               properties:
- *                 message: { type: string }
- *                 token: { type: string }
- *                 user: { $ref: '#/components/schemas/User' }
+ *                  success: { type: boolean }
+ *                  message: { type: string }
+ *                  data:
+ *                    type: object
+ *                    properties:
+ *                      utilisateur:
+ *                        type: object
+ *                        properties:
+ *                          id: { type: string , example: 64a1f2e5c3b9a2b1d4e5f6g7 }
+ *                          prenom: { type: string , example: salima }
+ *                          nom: { type: string , example: sahi }
+ *                          telephone: { type: string , example: 1234567890 }
+ *                          email: { type: string , example: salima.sahi@example.com }
+ *                          role: { type: string , example: Candidat }
+ *                          photo: { type: string , example: https://example.com/photo.jpg }
+ *                      token: { type: string , example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YTFmMmU1YzNiOWEyYjFkNGU1ZjZnNyIsInJvbGUiOiJDYW5kaWRhdCIsImlhdCI6MTY4OTQ3MjAwMCwiZXhwIjoxNjg5NTU4NDAwfQ.abc123def456ghi789jkl012mno345pqr678stu901vwx234yz567890abc123 }
+ *
+ *
  *       400: { description: Validation error }
  *       401: { description: Invalid email or password }
  */
 
-router.post("/login",loginValidator,validate,login)
+router.post("/login", loginValidator, validate, login);
 
-router.get("/profile",authentificationCheck,getProfile)
-router.put("/profile",authentificationCheck,preventRoleUpdate,updateProfile)
+router.get("/profile", authentificationCheck, getProfile);
+router.put("/profile", authentificationCheck, preventRoleUpdate, updateProfile);
 
 router.post("/logout", authentificationCheck, logout);
 
 // Admin user & company routes
-router.get("/", authentificationCheck, authorizationCheck("Administrateur"), getAllUsers);
-router.delete("/:id", authentificationCheck, authorizationCheck("Administrateur"), deleteUser);
-router.get("/companies/all", authentificationCheck, authorizationCheck("Administrateur"), getAllCompanies);
-router.patch("/companies/:id/block", authentificationCheck, authorizationCheck("Administrateur"), toggleBlockCompany);
+router.get(
+  "/",
+  authentificationCheck,
+  authorizationCheck("Administrateur"),
+  getAllUsers,
+);
+router.delete(
+  "/:id",
+  authentificationCheck,
+  authorizationCheck("Administrateur"),
+  deleteUser,
+);
+router.get(
+  "/companies/all",
+  authentificationCheck,
+  authorizationCheck("Administrateur"),
+  getAllCompanies,
+);
+router.patch(
+  "/companies/:id/block",
+  authentificationCheck,
+  authorizationCheck("Administrateur"),
+  toggleBlockCompany,
+);
 
-export default router 
+export default router;
