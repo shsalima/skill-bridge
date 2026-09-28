@@ -30,14 +30,13 @@ export const EntrepriseDashboard = () => {
 
   return (
     <div className="space-y-8">
-      {/* Top Banner */}
       <div className="bg-gradient-to-r from-[#161B22] to-[#1F2937] border border-[#374151] rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-2 max-w-xl">
           <span className="text-[10px] font-bold uppercase tracking-wider text-[#00E6A5] bg-[#00E6A5]/10 px-2.5 py-0.5 rounded border border-[#00E6A5]/30">
             Espace Recruteur
           </span>
           <h1 className="text-2xl font-extrabold text-white">
-            Tableau de bord — {user?.nomEntreprise || user?.entreprise?.nomEntreprise || "Mon Entreprise"}
+            Tableau de bord — { user?.entreprise?.nomEntreprise }
           </h1>
           <p className="text-xs text-[#90A1B9]">
             Pilotez vos offres d'emploi et évaluez les candidats en toute simplicité.
@@ -55,7 +54,6 @@ export const EntrepriseDashboard = () => {
         </Link>
       </div>
 
-      {/* KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-2">
           <div className="flex items-center justify-between text-[#90A1B9]">
@@ -63,7 +61,7 @@ export const EntrepriseDashboard = () => {
             <Briefcase className="w-4 h-4 text-[#00E6A5]" />
           </div>
           <p className="text-2xl font-bold text-white">
-            {entrepriseStats.totalJobs || companyJobs.length}
+            {entrepriseStats.totalJobs }
           </p>
           <span className="text-[11px] text-[#62748E]">Total annonces</span>
         </div>
@@ -80,10 +78,10 @@ export const EntrepriseDashboard = () => {
         <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-2">
           <div className="flex items-center justify-between text-[#90A1B9]">
             <span className="text-xs font-medium">Candidatures</span>
-            <Users className="w-4 h-4 text-sky-400" />
+            <Users className="w-4 h-4 text-[#00E6A5]" />
           </div>
           <p className="text-2xl font-bold text-white">
-            {entrepriseStats.totalApplications || 0}
+            {entrepriseStats.totalApplications }
           </p>
           <span className="text-[11px] text-[#62748E]">Reçues au total</span>
         </div>
@@ -91,7 +89,7 @@ export const EntrepriseDashboard = () => {
         <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-2">
           <div className="flex items-center justify-between text-[#90A1B9]">
             <span className="text-xs font-medium">Statut Candidatures</span>
-            <Clock className="w-4 h-4 text-amber-400" />
+            <Clock className="w-4 h-4 text-[#00E6A5]" />
           </div>
           <div className="flex items-center gap-2 pt-1">
             {entrepriseStats.statusBreakdown?.map((item) => (
@@ -107,16 +105,14 @@ export const EntrepriseDashboard = () => {
         </div>
       </div>
 
-      {/* Quick Actions & Recent Jobs */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-base font-bold text-white">Vos offres récentes</h2>
-            <p className="text-xs text-[#90A1B9]">Accès rapide à la gestion des offres</p>
           </div>
           <Link
             to="/entreprise/jobs"
-            className="text-xs text-[#00E6A5] hover:underline flex items-center gap-1 font-semibold"
+            className="text-xs text-[#00E6A5]  flex items-center gap-1 font-semibold"
           >
             <span>Gérer toutes mes offres</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -143,7 +139,7 @@ export const EntrepriseDashboard = () => {
                   <span className="text-xs text-[#90A1B9]">{job.typeContrat}</span>
                 </div>
                 <h3 className="text-sm font-bold text-white line-clamp-1">{job.titre}</h3>
-                <p className="text-xs text-[#90A1B9]">{job.ville} • {job.domaine}</p>
+                <p className="text-xs text-[#90A1B9]">{job.ville} | {job.domaine}</p>
               </div>
 
               <Link
