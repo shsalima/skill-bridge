@@ -190,7 +190,7 @@ Tableau de bord du candidat
 ### Image
 
 ```md
-![Tableau de bord du candidat](./client/public/Imanges/dashboardCandidat.png)
+![Tableau de bord du candidat](./client/public/Imanges/dashboardcandidat.png)
 ```
 
 ### Explication
