@@ -76,7 +76,6 @@ router.put("/profile", authentificationCheck, preventRoleUpdate, updateProfile);
 
 router.post("/logout", authentificationCheck, logout);
 
-// Admin user & company routes
 router.get(
   "/",
   authentificationCheck,
