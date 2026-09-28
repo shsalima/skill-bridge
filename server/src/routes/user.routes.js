@@ -22,7 +22,7 @@ router.post("/register",registerValidator,validate,register)
 
 /**
  * @swagger
- * /api/users/auth/login:
+ * /api/users/login:
  *   post:
  *     summary: Log in and receive a JWT
  *     tags: [Users]
@@ -32,7 +32,7 @@ router.post("/register",registerValidator,validate,register)
  *         application/json:
  *           schema:
  *             type: object
- *             required: [email, password]
+ *             required: [email, motDePasse]
  *             properties:
  *               email: { type: string, format: email }
  *               password: { type: string, format: password }
