@@ -82,7 +82,7 @@ export const Header = () => {
   return (
     <header className="h-16 bg-[#0D1117] border-b border-[#374151] px-6 flex items-center justify-between sticky top-0 z-40">
       <Link to="/" className="flex items-center gap-2.5">
-        <div>{/*  hna icons */}</div>
+        <div></div>
         <span className="text-lg font-bold text-white tracking-tight">
           SkillBridge
         </span>

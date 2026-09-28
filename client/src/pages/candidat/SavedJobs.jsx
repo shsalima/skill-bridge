@@ -33,7 +33,6 @@ export const SavedJobs = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2.5">
           <Bookmark className="w-6 h-6 text-[#00E6A5]" />
@@ -44,7 +43,6 @@ export const SavedJobs = () => {
         </p>
       </div>
 
-      {/* Count */}
       <div className="flex items-center justify-between">
         <span className="text-xs text-[#90A1B9]">
           <strong className="text-white">{savedJobs.length}</strong> offre
@@ -59,7 +57,6 @@ export const SavedJobs = () => {
         </Link>
       </div>
 
-      {/* Content */}
       {loading ? (
         <div className="text-center py-16 text-xs text-[#90A1B9]">
           Chargement de vos offres enregistrées...
@@ -94,7 +91,6 @@ export const SavedJobs = () => {
                 key={jobData._id}
                 className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 hover:border-[#00E6A5]/50 hover:shadow-lg transition-all flex flex-col justify-between space-y-4 relative group"
               >
-                {/* Top Section */}
                 <div className="space-y-3">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-2">
@@ -118,7 +114,6 @@ export const SavedJobs = () => {
                     </div>
                   </div>
 
-                  {/* Title & Company */}
                   <div>
                     <h3 className="text-base font-bold text-white group-hover:text-[#00E6A5] transition-colors line-clamp-1">
                       {jobData.titre}
@@ -128,7 +123,6 @@ export const SavedJobs = () => {
                     </p>
                   </div>
 
-                  {/* Metadata */}
                   <div className="flex flex-wrap items-center gap-3 text-xs text-[#90A1B9] pt-1">
                     <span className="flex items-center gap-1">
                       <MapPin className="w-3.5 h-3.5 text-[#00E6A5]" />
@@ -147,7 +141,6 @@ export const SavedJobs = () => {
                     )}
                   </div>
 
-                  {/* Skills tags preview */}
                   <div className="flex flex-wrap gap-1.5 pt-2">
                     {(jobData.competencesRequises || []).slice(0, 4).map((skill, idx) => {
                       const hasSkill = candidateSkills.some(
@@ -175,7 +168,6 @@ export const SavedJobs = () => {
                   </div>
                 </div>
 
-                {/* Footer Button */}
                 <div className="pt-3 border-t border-[#374151]">
                   <Link
                     to={`/candidat/jobs/${jobData._id}`}

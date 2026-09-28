@@ -2,16 +2,13 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router";
 
-// Layout & Security
 import LayoutShell from "../components/layout/LayoutShell";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
 
-// Auth Pages
 import Login from "../pages/auth/Login";
 import RegisterCandidat from "../pages/auth/RegisterCandidat";
 import RegisterEntreprise from "../pages/auth/RegisterEntreprise";
 
-// Candidat Pages
 import CandidatDashboard from "../pages/candidat/CandidatDashboard";
 import JobList from "../pages/candidat/JobList";
 import JobDetails from "../pages/candidat/JobDetails";
@@ -21,14 +18,12 @@ import Complaints from "../pages/candidat/Complaints";
 import Profile from "../pages/candidat/Profile";
 import SavedJobs from "../pages/candidat/SavedJobs";
 
-// Entreprise Pages
 import EntrepriseDashboard from "../pages/entreprise/EntrepriseDashboard";
 import ManageJobs from "../pages/entreprise/ManageJobs";
 import CreateEditJob from "../pages/entreprise/CreateEditJob";
 import CandidateApplications from "../pages/entreprise/CandidateApplications";
 import CompanyProfile from "../pages/entreprise/CompanyProfile";
 
-// Admin Pages
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import ManageUsers from "../pages/admin/ManageUsers";
 import ManageCompanies from "../pages/admin/ManageCompanies";
@@ -37,7 +32,6 @@ import ManageComplaints from "../pages/admin/ManageComplaints";
 import AdminProfile from "../pages/admin/AdminProfile";
 import NotFound from "../pages/NotFound";
 
-// Root redirect based on role
 const RootRedirect = () => {
   const { token, user } = useSelector((state) => state.auth);
 
@@ -55,11 +49,9 @@ const RootRedirect = () => {
 export const AppRoutes = () => {
   return (
     <Routes>
-      {/* Root redirect */}
       <Route path="/" element={<RootRedirect />} />
 
       <Route path="/login" element={<Login />} />
-      {/* <Route path="/register" element={<RegisterCandidat />} /> */}
       <Route path="/register/candidat" element={<RegisterCandidat />} />
       <Route path="/register/entreprise" element={<RegisterEntreprise />} />
     
@@ -84,7 +76,6 @@ export const AppRoutes = () => {
         <Route path="profil" element={<Profile />} />
       </Route>
 
-      {/* Candidat Aliases for backward compatibility */}
       <Route
         path="/dashboard/candidat"
         element={<Navigate to="/candidat/dashboard" replace />}
@@ -104,7 +95,6 @@ export const AppRoutes = () => {
         <Route index element={<JobDetails />} />
       </Route>
 
-      {/* Entreprise Routes (Protected & encapsulated in LayoutShell) */}
       <Route
         path="/entreprise"
         element={
@@ -123,7 +113,6 @@ export const AppRoutes = () => {
         <Route path="profil" element={<CompanyProfile />} />
       </Route>
 
-      {/* Entreprise Aliases */}
       <Route
         path="/dashboard/entreprise"
         element={<Navigate to="/entreprise/dashboard" replace />}
@@ -133,7 +122,6 @@ export const AppRoutes = () => {
         element={<Navigate to="/entreprise/jobs" replace />}
       />
 
-      {/* Administrateur Routes (Protected & encapsulated in LayoutShell) */}
       <Route
         path="/admin"
         element={
@@ -152,13 +140,11 @@ export const AppRoutes = () => {
         <Route path="profil" element={<AdminProfile />} />
       </Route>
 
-      {/* Admin Alias */}
       <Route
         path="/dashboard/admin"
         element={<Navigate to="/admin/dashboard" replace />}
       />
 
-      {/* Fallback */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

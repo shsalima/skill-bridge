@@ -211,19 +211,15 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // Admin: Fetch All Users
       .addCase(fetchAllUsers.fulfilled, (state, action) => {
         state.usersList = action.payload || [];
       })
-      // Admin: Delete User
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.usersList = state.usersList.filter((u) => u._id !== action.payload);
       })
-      // Admin: Fetch All Companies
       .addCase(fetchAllCompanies.fulfilled, (state, action) => {
         state.companiesList = action.payload || [];
       })
-      // Admin: Toggle Block Company
       .addCase(toggleBlockCompany.fulfilled, (state, action) => {
         const updated = action.payload;
         state.companiesList = state.companiesList.map((c) =>

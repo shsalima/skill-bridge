@@ -81,14 +81,11 @@ export const CompanyProfile = () => {
         </p>
       </div>
 
-      {/* Overview Banner Card */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0B0E14] via-[#111827] to-[#0f172a] border border-[#1E2D3D] p-6">
-        {/* Decorative glow */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-sky-500/5 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-40 h-40 bg-indigo-500/5 rounded-full blur-2xl pointer-events-none" />
 
         <div className="relative flex items-center gap-5">
-          {/* Avatar / Logo */}
           <div className="flex-shrink-0">
             <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-sky-500/20 to-indigo-500/20 border-2 border-sky-500/30 flex items-center justify-center">
               <span className="text-2xl font-bold text-sky-400">
@@ -99,7 +96,6 @@ export const CompanyProfile = () => {
             </div>
           </div>
 
-          {/* Info */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-3 flex-wrap mb-1">
               <h2 className="text-lg font-bold text-white truncate">
@@ -150,7 +146,6 @@ export const CompanyProfile = () => {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Company Info */}
         <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-4">
           <h2 className="text-sm font-bold text-white flex items-center gap-2">
             <Building2 className="w-4 h-4 text-[#00E6A5]" />
@@ -236,7 +231,6 @@ export const CompanyProfile = () => {
           </div>
         </div>
 
-        {/* Manager Contact */}
         <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-4">
           <h2 className="text-sm font-bold text-white flex items-center gap-2">
             <User className="w-4 h-4 text-[#00E6A5]" />

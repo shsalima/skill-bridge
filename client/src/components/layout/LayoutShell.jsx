@@ -10,7 +10,6 @@ export const LayoutShell = () => {
   const { user, token } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    // Always fetch fresh profile on mount so competences/entreprise data is current
     if (token) {
       dispatch(getProfile());
     }

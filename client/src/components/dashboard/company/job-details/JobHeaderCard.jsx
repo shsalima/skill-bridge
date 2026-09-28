@@ -42,7 +42,6 @@ export const JobHeaderCard = ({
                 Entreprise Vérifiée
               </span>
 
-              {/* Badge de statut de l'offre */}
               <span
                 className={`border text-[10px] font-bold px-2 py-0.5 rounded-md ${
                   isClosed

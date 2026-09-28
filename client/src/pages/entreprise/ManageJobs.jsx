@@ -12,14 +12,14 @@ import {
   MapPin,
   Calendar,
   CheckCircle2,
-  XCircle,
+  
 } from "lucide-react";
 import {
   fetchJobs,
   deleteJob,
   toggleJobStatus,
   clearOffreSuccess,
-  clearOffreError,
+ 
 } from "../../features/offres/offreSlice";
 import { formatDate, formatSalary } from "../../utils/formatters";
 
@@ -68,16 +68,12 @@ export const ManageJobs = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2.5">
             <Briefcase className="w-6 h-6 text-[#00E6A5]" />
             <span>Mes Offres d'Emploi</span>
           </h1>
-          <p className="text-xs text-[#90A1B9] mt-1">
-            Gérez vos annonces, modifiez leur statut et consultez les candidatures reçues.
-          </p>
         </div>
 
         <Link to="/entreprise/jobs/create">
@@ -104,7 +100,6 @@ export const ManageJobs = () => {
         </div>
       )}
 
-      {/* Tabs */}
       <div className="flex gap-2">
         {[
           { id: "all", label: "Toutes les offres", count: companyJobs.length },
@@ -142,7 +137,6 @@ export const ManageJobs = () => {
         ))}
       </div>
 
-      {/* Jobs List */}
       {loading ? (
         <div className="text-center py-16 text-xs text-[#90A1B9]">
           Chargement de vos annonces...
@@ -195,7 +189,6 @@ export const ManageJobs = () => {
                   </span>
                 </div>
 
-                {/* Skills */}
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {job.competencesRequises?.map((skill, idx) => (
                     <span
@@ -208,7 +201,6 @@ export const ManageJobs = () => {
                 </div>
               </div>
 
-              {/* Actions */}
               <div className="flex flex-wrap items-center gap-2 pt-3 lg:pt-0 border-t lg:border-t-0 border-[#374151]">
                 <Link
                   to={`/entreprise/applications?jobId=${job._id}`}

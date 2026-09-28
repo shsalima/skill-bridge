@@ -10,7 +10,6 @@ export const ProtectedRoute = ({ children, allowedRoles }) => {
     return <Navigate to="/login" replace />;
   }
 
-  // If token is present but user profile is loading, show spinner
   if (!user && loading) {
     return (
       <div className="min-h-screen bg-[#0B0E14] flex items-center justify-center text-[#00E6A5]">
@@ -22,7 +21,6 @@ export const ProtectedRoute = ({ children, allowedRoles }) => {
   if (allowedRoles && user && !allowedRoles.includes(user.role)) {
 
 
-    // Redirect to proper role dashboard
     if (user.role === "AdministrateurEntreprise") {
 
       return <Navigate to="/entreprise/dashboard" replace />;

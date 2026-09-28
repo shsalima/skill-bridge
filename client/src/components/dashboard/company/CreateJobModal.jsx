@@ -223,7 +223,6 @@ export const CreateJobModal = ({ isOpen, onClose }) => {
             </div>
           </div>
 
-          {/* Compétences requises */}
           <div>
             <label className="block text-xs font-medium text-white mb-1.5 flex items-center justify-between">
               <span>Compétences requises * (Au moins 2 compétences)</span>
@@ -267,7 +266,6 @@ export const CreateJobModal = ({ isOpen, onClose }) => {
             </div>
           </div>
 
-          {/* Description */}
           <div>
             <label className="block text-xs font-medium text-white mb-1.5">Description *</label>
             <textarea
@@ -281,7 +279,6 @@ export const CreateJobModal = ({ isOpen, onClose }) => {
             />
           </div>
 
-          {/* Buttons */}
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#222F46]">
             <button
               type="button"

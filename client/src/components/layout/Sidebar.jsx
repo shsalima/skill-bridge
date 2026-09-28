@@ -92,7 +92,6 @@ export const Sidebar = () => {
         </nav>
       </div>
 
-      {/* Bottom: Logout Button replaces the former SkillBridge Pro card */}
       <div className="pt-4 border-t border-[#374151]">
         <button
           type="button"

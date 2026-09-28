@@ -19,7 +19,6 @@ import {
   updateJob,
   fetchJobById,
   clearOffreError,
-  clearOffreSuccess,
 } from "../../features/offres/offreSlice";
 
 export const CreateEditJob = () => {
@@ -248,7 +247,6 @@ export const CreateEditJob = () => {
             </div>
           </div>
 
-          {/* Skills Requirements Tag Manager */}
           <div className="space-y-2 pt-2">
             <label className="block text-xs font-semibold text-white">
               Compétences requises *
@@ -304,7 +302,6 @@ export const CreateEditJob = () => {
             </div>
           </div>
 
-          {/* Description */}
           <div>
             <label className="block text-xs font-semibold text-white mb-1.5">
               Description détaillée du poste & missions *

@@ -20,7 +20,6 @@ const updateApplicationStatus = async (applicationId, statut) => {
   return response;
 };
 
-// Saved jobs
 const toggleSavedJob = async (jobId) => {
   const response = await api.post("/saved-jobs/toggle", { jobId });
   return response;

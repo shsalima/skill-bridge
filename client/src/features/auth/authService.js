@@ -35,7 +35,6 @@ const logout = async () => {
   localStorage.removeItem("token");
 };
 
-// Admin user & company services
 const getAllUsers = async () => {
   const response = await api.get("/users");
   return response;

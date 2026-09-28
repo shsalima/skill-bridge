@@ -10,8 +10,6 @@ import {
   Phone,
   Mail,
   FileText,
-  Sparkles,
-  ArrowUpDown,
 } from "lucide-react";
 import { fetchJobs } from "../../features/offres/offreSlice";
 import {
@@ -91,7 +89,6 @@ export const CandidateApplications = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2.5">
           <Users className="w-6 h-6 text-[#00E6A5]" />
@@ -109,7 +106,6 @@ export const CandidateApplications = () => {
         </div>
       )}
 
-      {/* Job Selector Bar */}
       <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex-1">
           <label className="block text-xs font-semibold text-white mb-1.5 flex items-center gap-1.5">
@@ -152,7 +148,6 @@ export const CandidateApplications = () => {
         )}
       </div>
 
-      {/* Filter Tabs */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex gap-2">
           {[
@@ -191,7 +186,6 @@ export const CandidateApplications = () => {
 
       </div>
 
-      {/* Candidates List */}
       {loading ? (
         <div className="text-center py-16 text-xs text-[#90A1B9]">
           Chargement et qualification des candidatures...
@@ -213,7 +207,6 @@ export const CandidateApplications = () => {
               key={app._id}
               className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 hover:border-[#00E6A5]/50 hover:shadow-lg transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-5"
             >
-              {/* Candidate Info */}
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-[#00E6A5]/10 border border-[#00E6A5]/30 flex items-center justify-center text-[#00E6A5] font-bold text-sm">
@@ -251,7 +244,6 @@ export const CandidateApplications = () => {
                   </div>
                 </div>
 
-                {/* Motivation snippet */}
                 {app.lettreMotivation && (
                   <div className="bg-[#0B0E14] border border-[#374151] rounded-xl p-3 text-xs text-[#CAD5E2] leading-relaxed max-w-2xl">
                     <span className="text-[#90A1B9] font-bold block mb-1">
@@ -266,13 +258,11 @@ export const CandidateApplications = () => {
                 </div>
               </div>
 
-              {/* Matching Score, Status & Actions */}
               <div className="flex flex-wrap lg:flex-col items-start lg:items-end justify-between gap-3 pt-3 lg:pt-0 border-t lg:border-t-0 border-[#374151]">
                 <div className="flex items-center gap-2">
                   <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${getStatusBadge(app.statut)}`}>{app.statut}</span>
                 </div>
 
-                {/* CV Link */}
                 {(app.cv || app.candidat?.cvUrl) && (
                   <div className="flex items-center gap-2 flex-wrap">
                     <a
@@ -297,7 +287,6 @@ export const CandidateApplications = () => {
                   </div>
                 )}
 
-                {/* Action Buttons */}
                 <div className="flex items-center gap-2 pt-2">
                   <button
                     type="button"
