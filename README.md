@@ -190,7 +190,7 @@ Tableau de bord du candidat
 ### Image
 
 ```md
-![Tableau de bord du candidat](client/public/Imanges/dashboard-candidat.png)
+![Tableau de bord du candidat](client/public/Imanges/dashboardCandidat.png)
 ```
 
 ### Explication
@@ -210,7 +210,7 @@ Gestion des offres d'emploi
 ### Image
 
 ```md
-![Dashboard de l'entreprise](client/public/Imanges/dashoard-entreprise.png)
+![Dashboard de l'entreprise](client/public/Imanges/dashoardEntreprise.png)
 ```
 
 ### Explication
