@@ -17,7 +17,7 @@ export const ManageComplaints = () => {
 
   useEffect(() => {
     if (successMessage) {
-      const t = setTimeout(() => dispatch(clearReclamationSuccess()), 3500);
+      const t = setTimeout(() => dispatch(clearReclamationSuccess()), 4000);
       return () => clearTimeout(t);
     }
   }, [successMessage, dispatch]);
@@ -40,10 +40,13 @@ export const ManageComplaints = () => {
     }
   };
 
+  
   const filtered = reclamations.filter((r) => {
     if (filterStatut === "all") return true;
     return r.statut === filterStatut;
   });
+  
+  
 
   return (
     <div className="space-y-6">

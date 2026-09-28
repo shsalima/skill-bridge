@@ -38,7 +38,9 @@ export const Complaints = () => {
         description: "",
       });
     }
+    console.log("achno mxa",res);
   };
+  
 
   return (
     <div className="space-y-6 max-w-3xl">
