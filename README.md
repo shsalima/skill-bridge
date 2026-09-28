@@ -209,9 +209,8 @@ Gestion des offres d'emploi
 
 ### Image
 
-```md
 ![Dashboard de l'entreprise](./client/public/Imanges/dashboardEntreprise.png)
-```
+
 
 ### Explication
 
