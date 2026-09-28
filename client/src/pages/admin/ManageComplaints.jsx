@@ -63,7 +63,11 @@ export const ManageComplaints = () => {
 
       <div className="flex gap-2">
         {[
-          { id: "all", label: "Tous les signalements", count: reclamations.length },
+          { 
+            id: "all", 
+            label: "Tous les signalements",
+            count: reclamations.length 
+          },
           {
             id: "En attente",
             label: "En attente",
