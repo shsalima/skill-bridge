@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import logo from "../../assets/logo.png";
 import { useNavigate, Link } from "react-router";
 import {
   Bell,
@@ -64,8 +65,6 @@ export const Header = () => {
     }
   };
 
-
-
   const getProfilePath = (role) => {
     switch (role) {
       case "Administrateur":
@@ -82,7 +81,9 @@ export const Header = () => {
   return (
     <header className="h-16 bg-[#0D1117] border-b border-[#374151] px-6 flex items-center justify-between sticky top-0 z-40">
       <Link to="/" className="flex items-center gap-2.5">
-        <div></div>
+        <div>
+          <img src={logo} alt="image de logo" className="w-[40px]" />
+        </div>
         <span className="text-lg font-bold text-white tracking-tight">
           SkillBridge
         </span>

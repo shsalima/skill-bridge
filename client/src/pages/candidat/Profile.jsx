@@ -10,15 +10,22 @@ import {
   Save,
   Calendar,
   Loader2,
+  Camera,
 } from "lucide-react";
-import { updateProfile, getProfile, clearSuccessMessage } from "../../features/auth/authSlice";
+import {
+  updateProfile,
+  getProfile,
+  clearSuccessMessage,
+} from "../../features/auth/authSlice";
 import { formatDate } from "../../utils/formatters";
 
 export const Profile = () => {
   const dispatch = useDispatch();
-  const { user, loading: profileLoading, successMessage } = useSelector(
-    (state) => state.auth
-  );
+  const {
+    user,
+    loading: profileLoading,
+    successMessage,
+  } = useSelector((state) => state.auth);
   const [formData, setFormData] = useState({
     prenom: "",
     nom: "",
@@ -53,6 +60,7 @@ export const Profile = () => {
   }, [successMessage, dispatch]);
 
   const handleChange = (e) => {
+
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -74,11 +82,9 @@ export const Profile = () => {
       updateProfile({
         ...formData,
         competences: skills,
-      })
+      }),
     );
   };
-
-
 
   return (
     <div className="space-y-6 max-w-4xl">
@@ -88,7 +94,8 @@ export const Profile = () => {
           <span>Profil Candidat</span>
         </h1>
         <p className="text-xs text-[#90A1B9] mt-1">
-          Consultez et mettez à jour vos informations personnelles, vos compétences et vos expériences sur la plateforme SkillBridge.
+          Consultez et mettez à jour vos informations personnelles, vos
+          compétences et vos expériences sur la plateforme SkillBridge.
         </p>
       </div>
 
@@ -99,7 +106,7 @@ export const Profile = () => {
         </div>
       )}
 
-      <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 flex flex-col sm:flex-row items-center gap-6 bg-gradient-to-r from-[#161B22] to-[#1F2937]">
+      <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 flex flex-col sm:flex-row items-center gap-6">
         <div className="w-20 h-20 rounded-2xl bg-[#00E6A5]/10 border border-[#00E6A5]/30 flex items-center justify-center text-[#00E6A5] text-2xl font-bold">
           {(user?.prenom?.[0] || user?.nom?.[0] || "C").toUpperCase()}
         </div>
@@ -200,8 +207,19 @@ export const Profile = () => {
             <label className="block text-xs font-semibold text-white mb-1.5">
               Lien vers votre CV (PDF, Google Drive, portfolio...)
             </label>
-            {formData.cvUrl ? (
-              <div className="flex items-center gap-3 bg-[#0B0E14] border border-[#00E6A5]/30 rounded-xl px-3.5 py-2.5">
+           
+
+            <input
+              type="url"
+              name="cvUrl"
+              placeholder="https://drive.google.com/file/mon-cv.pdf"
+              value={formData.cvUrl}
+              onChange={handleChange}
+              className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#00E6A5] placeholder:text-[#62748E]"
+            />
+
+            {formData?.cvUrl && (
+              <div className="mt-4 flex items-center gap-3 bg-[#0B0E14] border border-[#00E6A5]/30 rounded-xl px-3.5 py-2.5">
                 <a
                   href={formData.cvUrl}
                   target="_blank"
@@ -209,25 +227,9 @@ export const Profile = () => {
                   className="flex-1 text-xs text-[#00E6A5] hover:underline flex items-center gap-1.5 font-semibold truncate"
                 >
                   <Camera className="w-3.5 h-3.5 shrink-0" />
-                  <span className="truncate">Voir mon CV actuel ↗</span>
+                  <span className="truncate">Voir mon CV actuel </span>
                 </a>
-                <button
-                  type="button"
-                  onClick={() => setFormData({ ...formData, cvUrl: "" })}
-                  className="text-[10px] text-[#90A1B9] hover:text-red-400 transition-colors font-semibold border border-[#374151] hover:border-red-500/30 px-2 py-1 rounded-lg"
-                >
-                  Remplacer
-                </button>
               </div>
-            ) : (
-              <input
-                type="url"
-                name="cvUrl"
-                placeholder="https://drive.google.com/file/mon-cv.pdf"
-                value={formData.cvUrl}
-                onChange={handleChange}
-                className="w-full bg-[#0B0E14] border border-[#374151] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#00E6A5] placeholder:text-[#62748E]"
-              />
             )}
           </div>
         </div>
@@ -269,7 +271,8 @@ export const Profile = () => {
           <div className="flex flex-wrap gap-2 p-3 bg-[#0B0E14] border border-[#374151] rounded-xl min-h-[48px] items-center">
             {skills.length === 0 ? (
               <span className="text-xs text-[#62748E] italic">
-                Aucune compétence ajoutée pour l'instant. Saisissez-en une ci-dessus.
+                Aucune compétence ajoutée pour l'instant. Saisissez-en une
+                ci-dessus.
               </span>
             ) : (
               skills.map((skill, index) => (
@@ -311,7 +314,6 @@ export const Profile = () => {
           </button>
         </div>
       </form>
-
     </div>
   );
 };

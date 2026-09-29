@@ -81,13 +81,13 @@ export const CompanyProfile = () => {
         </p>
       </div>
 
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0B0E14] via-[#111827] to-[#0f172a] border border-[#1E2D3D] p-6">
+      <div className="relative overflow-hidden rounded-2xl   border border-[#1E2D3D] p-6">
         <div className="absolute top-0 right-0 w-64 h-64 bg-sky-500/5 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-40 h-40 bg-indigo-500/5 rounded-full blur-2xl pointer-events-none" />
 
         <div className="relative flex items-center gap-5">
           <div className="flex-shrink-0">
-            <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-sky-500/20 to-indigo-500/20 border-2 border-sky-500/30 flex items-center justify-center">
+            <div className="w-16 h-16 rounded-xl  border-2 border-sky-500/30 flex items-center justify-center">
               <span className="text-2xl font-bold text-sky-400">
                 {(user?.entreprise?.nomEntreprise || user?.nomEntreprise || user?.prenom || "E")
                   .charAt(0)

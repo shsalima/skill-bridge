@@ -29,7 +29,7 @@ export const AdminDashboard = () => {
 
   return (
     <div className="space-y-8">
-      <div className="bg-gradient-to-r from-[#161B22] to-[#1F2937] border border-[#374151] rounded-3xl p-6 sm:p-8 space-y-2">
+      <div className=" border border-[#374151] rounded-3xl p-6 sm:p-8 space-y-2">
         <span className="text-[10px] font-bold uppercase tracking-wider text-purple-400 bg-purple-500/10 px-2.5 py-0.5 rounded border border-purple-500/30">
           Super Administration
         </span>

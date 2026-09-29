@@ -30,7 +30,7 @@ export const EntrepriseDashboard = () => {
 
   return (
     <div className="space-y-8">
-      <div className="bg-gradient-to-r from-[#161B22] to-[#1F2937] border border-[#374151] rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className=" border border-[#374151] rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-2 max-w-xl">
           <span className="text-[10px] font-bold uppercase tracking-wider text-[#00E6A5] bg-[#00E6A5]/10 px-2.5 py-0.5 rounded border border-[#00E6A5]/30">
             Espace Recruteur

@@ -29,7 +29,7 @@ export const CandidatDashboard = () => {
 
   return (
     <div className="space-y-8">
-      <div className="bg-gradient-to-r from-[#161B22] to-[#1F2937] border border-[#374151] rounded-3xl p-6 sm:p-8 relative overflow-hidden">
+      <div className="border border-[#374151] rounded-3xl p-6 sm:p-8 relative overflow-hidden">
         <div className="relative z-10 max-w-2xl space-y-3">
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             Bonjour, {user?.prenom} {user?.nom} 

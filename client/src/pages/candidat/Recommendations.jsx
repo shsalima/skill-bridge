@@ -7,6 +7,7 @@ import {
   MapPin,
   Calendar,
   ArrowRight,
+  MessageSquareWarning,
 } from "lucide-react";
 import { fetchJobs } from "../../features/offres/offreSlice";
 import { formatDate, formatSalary } from "../../utils/formatters";
@@ -37,7 +38,7 @@ export const Recommendations = () => {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2.5">
-          <Sparkles className="w-6 h-6 text-[#00E6A5]" />
+          <MessageSquareWarning className="w-6 h-6 text-[#00E6A5]" />
           <span>Recommandations Personnalisées</span>
         </h1>
         <p className="text-xs text-[#90A1B9] mt-1">

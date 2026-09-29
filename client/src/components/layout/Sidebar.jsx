@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   LogOut,
   Bookmark,
+  MessageSquareWarning,
 } from "lucide-react";
 import { logoutUser } from "../../features/auth/authSlice";
 
@@ -32,7 +33,7 @@ export const Sidebar = () => {
     { label: "Offres & Smart Matching", path: "/candidat/jobs", icon: Briefcase },
     { label: "Mes Candidatures", path: "/candidat/applications", icon: FileCheck2 },
     { label: "Offres Enregistrées", path: "/candidat/saved-jobs", icon: Bookmark },
-    { label: "Recommandations", path: "/candidat/recommendations", icon: Sparkles },
+    { label: "Recommandations", path: "/candidat/recommendations", icon: MessageSquareWarning },
     { label: "Réclamations", path: "/candidat/complaints", icon: AlertTriangle },
     { label: "Mon Profil", path: "/candidat/profil", icon: UserCheck },
   ];

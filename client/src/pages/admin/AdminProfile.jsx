@@ -69,7 +69,7 @@ export const AdminProfile = () => {
         </div>
       )}
 
-      <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 flex flex-col sm:flex-row items-center gap-6 bg-gradient-to-r from-[#161B22] to-[#1F2937]">
+      <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 flex flex-col sm:flex-row items-center gap-6 ">
         <div className="w-20 h-20 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-2xl font-bold">
           {(user?.prenom?.[0] || user?.nom?.[0] || "A").toUpperCase()}
         </div>

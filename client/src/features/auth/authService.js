@@ -30,7 +30,7 @@ const logout = async () => {
   try {
     await api.post("/users/logout");
   } catch (err) {
-    // Ignore error on logout
+   
   }
   localStorage.removeItem("token");
 };
