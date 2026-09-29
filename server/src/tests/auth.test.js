@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import app from "../app.js";
 
-process.env.JWT_SECRET = process.env.JWT_SECRET || "test_jwt_secret_key_123";
+process.env.JWT_SECRET = "test_jwt_secret_key_123";
 
 let mongoServer;
 

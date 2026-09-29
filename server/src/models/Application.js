@@ -29,7 +29,6 @@ const applicationSchema=new mongoose.Schema(
     },
     {timestamps:true}
 )
-// Compound Unique Index
 applicationSchema.index({candidat:1, job:1}, {unique:true})
 
 

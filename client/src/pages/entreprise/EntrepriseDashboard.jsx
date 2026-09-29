@@ -15,7 +15,7 @@ import { fetchJobs, fetchEntrepriseStats } from "../../features/offres/offreSlic
 export const EntrepriseDashboard = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { jobs, entrepriseStats, loading } = useSelector((state) => state.offres);
+  const { jobs, entrepriseStats } = useSelector((state) => state.offres);
 
   useEffect(() => {
     dispatch(fetchEntrepriseStats());
@@ -71,7 +71,7 @@ export const EntrepriseDashboard = () => {
             <span className="text-xs font-medium">Offres Actives</span>
             <TrendingUp className="w-4 h-4 text-[#00E6A5]" />
           </div>
-          <p className="text-2xl font-bold text-[#00E6A5]">{activeJobsCount}</p>
+          <p className="text-2xl font-bold text-white">{activeJobsCount}</p>
           <span className="text-[11px] text-[#62748E]">Ouvertes aux candidatures</span>
         </div>
 
@@ -86,23 +86,7 @@ export const EntrepriseDashboard = () => {
           <span className="text-[11px] text-[#62748E]">Reçues au total</span>
         </div>
 
-        <div className="bg-[#161B22] border border-[#374151] rounded-2xl p-5 space-y-2">
-          <div className="flex items-center justify-between text-[#90A1B9]">
-            <span className="text-xs font-medium">Statut Candidatures</span>
-            <Clock className="w-4 h-4 text-[#00E6A5]" />
-          </div>
-          <div className="flex items-center gap-2 pt-1">
-            {entrepriseStats.statusBreakdown?.map((item) => (
-              <span
-                key={item._id}
-                className="text-xs font-bold text-white bg-[#0B0E14] px-2 py-0.5 rounded border border-[#374151]"
-              >
-                {item._id} : {item.count}
-              </span>
-            )) || <span className="text-xs text-[#90A1B9]">En attente</span>}
-          </div>
-          <span className="text-[11px] text-[#62748E]">Répartition</span>
-        </div>
+      
       </div>
 
       <div className="space-y-4">

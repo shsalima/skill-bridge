@@ -22,7 +22,6 @@ export const Recommendations = () => {
     dispatch(fetchJobs({ statut: "Ouverte" }));
   }, [dispatch]);
 
-  // Compute by simple skill overlap count (no smart matching percentage)
   const recommendedJobs = jobs
     .map((job) => {
       const jobSkills = job.competencesRequises || job.skillsRequired || job.competences || [];

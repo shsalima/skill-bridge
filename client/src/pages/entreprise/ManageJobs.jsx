@@ -180,9 +180,9 @@ export const ManageJobs = () => {
                     <MapPin className="w-3.5 h-3.5 text-[#00E6A5]" />
                     {job.ville}
                   </span>
-                  <span>•</span>
+                  <span>|</span>
                   <span>{formatSalary(job.salaire)}</span>
-                  <span>•</span>
+                  <span>|</span>
                   <span className="flex items-center gap-1">
                     <Calendar className="w-3.5 h-3.5" />
                     Limite : {formatDate(job.dateLimite)}
@@ -213,7 +213,6 @@ export const ManageJobs = () => {
                 <button
                   type="button"
                   onClick={() => handleToggle(job)}
-                  title={job.statut === "Ouverte" ? "Clôturer l'offre" : "Réactiver l'offre"}
                   className="px-3 py-2 bg-[#0B0E14] hover:bg-[#161B22] border border-[#374151] rounded-xl text-xs font-semibold text-white transition-colors flex items-center gap-1.5 cursor-pointer"
                 >
                   {job.statut === "Ouverte" ? (

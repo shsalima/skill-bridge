@@ -90,7 +90,7 @@ export const deleteJob = async (req, res) => {
 
 export const toggleJobStatus = async (req, res) => {
   try {
-    const { statut } = req.body; // optionnel : "Ouverte" | "Fermée"
+    const { statut } = req.body; 
     const job = await toggleJobStatusService(req.params.id, statut);
     return res.status(200).json({
       success: true,

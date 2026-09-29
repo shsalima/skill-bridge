@@ -7,14 +7,11 @@ export const getEntrepriseDashboardService= async(entrepriseId)=>{
 
     const  entrepriseJobs=await Job.find({entreprise:entrepriseId}).select("_id")
     const jobIds=entrepriseJobs.map((j)=>j._id)
+    
     const totalApplications= await Application.countDocuments({job: {$in:jobIds}})
 
-    const applicationsStatus=await Application.aggregate([
-        {$match:{job:{$in:jobIds}}},
-        {$group :{_id:"$statut" ,count: {$sum :1}}}
-    ])
 
-    return {totalJobs, totalApplications,statusBreakdown: applicationsStatus}
+    return {totalJobs, totalApplications}
 }
 
 export const getAdminDashboardService =async ()=>{

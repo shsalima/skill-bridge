@@ -130,7 +130,7 @@ const initialState = {
   entrepriseStats: {
     totalJobs: 0,
     totalApplications: 0,
-    statusBreakdown: [],
+  
   },
   adminStats: {
     totalUser: 0,
@@ -289,6 +289,8 @@ const offreSlice = createSlice({
       // stats
       .addCase(fetchEntrepriseStats.fulfilled, (state, action) => {
         state.entrepriseStats = action.payload || state.entrepriseStats;
+        console.log(action.payload);
+        
       })
       .addCase(fetchAdminStats.fulfilled, (state, action) => {
         state.adminStats = action.payload || state.adminStats;
