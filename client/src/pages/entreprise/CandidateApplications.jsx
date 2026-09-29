@@ -272,18 +272,9 @@ export const CandidateApplications = () => {
                       className="text-xs text-[#00E6A5] hover:underline flex items-center gap-1.5 font-semibold"
                     >
                       <FileText className="w-4 h-4" />
-                      <span>Voir le CV ↗</span>
+                      <span>Voir le CV </span>
                     </a>
-                    <a
-                      href={app.cv || app.candidat?.cvUrl}
-                      download
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-xs text-[#90A1B9] hover:text-white flex items-center gap-1 font-semibold border border-[#374151] hover:border-[#00E6A5]/50 px-2 py-1 rounded-lg transition-all"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5" />
-                      Télécharger
-                    </a>
+                 
                   </div>
                 )}
 
